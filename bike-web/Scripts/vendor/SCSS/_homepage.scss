@@ -1,0 +1,28 @@
+.banner {
+  background: url(https://phoebe4561.github.io/bick-web/images/banner2.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 50% 25%;
+}
+
+.bannerContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bannerText {
+  max-width: 445px;
+  padding: 95px 0 395px 0;
+  @include phone {
+    padding: 50px 0 200px 0;
+  }
+}
+
+.bannerBtn {
+  width: 40%;
+}
+
+.formTitle {
+  z-index: 10;
+}

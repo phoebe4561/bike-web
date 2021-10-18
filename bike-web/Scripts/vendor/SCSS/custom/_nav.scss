@@ -1,0 +1,18 @@
+.nav-tabs {
+  border: none;
+  .nav-link {
+    background: none;
+    border: none;
+    color: $middleBrown;
+    &:hover,
+    &:focus {
+      font-weight: $font-weight-bold;
+    }
+  }
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    color: $middleBrown;
+    font-weight: $font-weight-bold;
+    border-bottom: 2px solid $primary;
+  }
+}
