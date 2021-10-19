@@ -31,7 +31,15 @@ namespace bike_web.Controllers
                 Session["password"] = login.password;
                 message = "pass";
             }
-            return RedirectToAction("Index");
+            if (Request.IsAjaxRequest())
+            {
+                return Json(message, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
         [HttpPost]
         public ActionResult Register(string name,string email,string password,DateTime birthday)
