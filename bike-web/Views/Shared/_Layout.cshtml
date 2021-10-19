@@ -10,9 +10,9 @@
     <!--bs5 icon-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     @Styles.Render("~/Content/css/all.min.css")
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     @*<link rel="stylesheet" href="./Content/css/all.min.css" />*@
-
 </head>
 <body>
     <!-- header navbar -->
@@ -34,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item px-lg-4 px-0">
-                            <a class="nav-link" href="/Home/officialRoute">官方路線</a>                           
+                            <a class="nav-link" href="/Home/officialRoute">鐵馬路線</a>                           
                         </li>
                         <li class="nav-item px-lg-4 px-0">
                             <a class="nav-link" href="/Home/privateRoute">私人推薦</a>
@@ -81,10 +81,15 @@
                     <a href="https://phoebe4561.github.io/bick-web/homepage.html#" class="font-14 text-lightBrown">忘記密碼？</a>
                 </div>
                 <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-primary w-100 fw-bold">登入</button>
+                    @*<button type="button" class="btn btn-primary w-100 fw-bold">登入</button>*@
+                    @Html.ActionLink("登入", "Login", "Member", new { @class = "btn btn-primary w-100 fw-bold" })
                 </div>
                 <div class="position-relative d-flex justify-content-center my-4 p-1">
-                    <div class="formTitle font-14 bg-white px-1">還沒有帳號？<a href="https://phoebe4561.github.io/bick-web/homepage.html#" class="text-info">註冊一個帳號</a></div>
+                    <div class="formTitle font-14 bg-white px-1">
+                        還沒有帳號？
+                        @*<a href="https://phoebe4561.github.io/bick-web/homepage.html#" class="text-info">註冊一個帳號</a>*@
+                        @Html.ActionLink("註冊一個帳號", "Register", "Member", new { @class ="text-info" })
+                    </div>
                     <div class="formLine position-absolute border-bottom border-1 border-lightBrown w-100 top-50 start-0 translate-middle-y"></div>
                 </div>
             </div>
@@ -125,7 +130,8 @@
                     </div>
                 </div>
                 <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-primary w-100 fw-bold">註冊</button>
+                    @*<button type="button" class="btn btn-primary w-100 fw-bold">註冊</button>*@
+                    @Html.ActionLink("註冊", "Register", "Member", new { @class = "btn btn-primary w-100 fw-bold" })
                 </div>
             </div>
         </div>
