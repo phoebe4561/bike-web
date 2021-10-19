@@ -48,7 +48,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <div>
+                    <div id="divLoginAndLogout">
                         @if (Session["id"] == null)
                         {
                             <button id="LoginForModal" class="btn btn-primary px-4 me-3" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
@@ -61,9 +61,6 @@
                             Session["id"] = null;
                             Session["email"] = null;
                             Session["password"] = null;
-                            @Html.ActionLink("首頁", "Index", controllerName: "Home");
-
-
                         }
 
                     </div>
@@ -159,9 +156,6 @@
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)*@
 <script>
-    $().ready(function () {
-        console.log("@Url.Action("Login","Member")");
-    });
     //非同步註冊
         $("#btnRegister").click(function () {
             var userRegister = {
@@ -230,7 +224,11 @@
             });
             return false;
         });
-
+    //登出
+    $("#Logout").click(function () {
+        $("#divLoginAndLogout").html('<div class="alert alert-success" style="width: 100%;" role="alert">登出成功</div >');
+        setTimeout(function () { window.location.reload(); }, 1000);
+    });
 
 
 
