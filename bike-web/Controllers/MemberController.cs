@@ -10,6 +10,7 @@ namespace bike_web.Controllers
 {
     public class MemberController : Controller
     {
+
         // GET: Member
         [HttpPost]
         public ActionResult Login(string email,string password)
