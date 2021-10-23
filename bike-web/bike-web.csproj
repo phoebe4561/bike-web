@@ -136,6 +136,9 @@
     <Compile Include="Models\hashtag.cs">
       <DependentUpon>KSBike.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Home.cs">
+      <DependentUpon>KSBike.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\KSBike.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -262,8 +265,8 @@
     <Content Include="image_mia\supply1.jpg" />
     <Content Include="Models\KSBike.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>KSBike.Context.cs</LastGenOutput>
       <DependentUpon>KSBike.edmx</DependentUpon>
+      <LastGenOutput>KSBike.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\KSBike.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

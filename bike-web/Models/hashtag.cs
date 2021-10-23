@@ -19,7 +19,7 @@ namespace bike_web.Models
         public int private_route_id { get; set; }
         public string hashtag_name { get; set; }
     
-        public virtual official_route_data official_route_data { get; set; }
+        public virtual Home Home { get; set; }
         public virtual private_route private_route { get; set; }
     }
 }
