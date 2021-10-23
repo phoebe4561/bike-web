@@ -49,7 +49,7 @@ namespace bike_web.Controllers
             
             KSBikeEntities db = new KSBikeEntities();
             var regis = db.users
-                .Where(m => m.email == email && m.password == password)
+                .Where(m => m.email == email)
                 .FirstOrDefault();
             user a = new user();
             if (regis == null)

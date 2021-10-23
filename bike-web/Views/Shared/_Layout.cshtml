@@ -174,7 +174,7 @@
                 success: function (result) {
                     if (result.toString() == "ok") {
                         $('#divResgister').html('<div class="alert alert-success" style="width: 100%;" role="alert">註冊成功,請重新登入</div>');
-                        setTimeout(function () { window.location.reload; }, 1000);
+                        setTimeout(function () { window.location.reload(); }, 1000);
                         //若註冊成功，提示使用者後重新整理回首頁
                     }
                     else if (result.toString() == "emaildobble") {
