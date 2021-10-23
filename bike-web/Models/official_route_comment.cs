@@ -22,7 +22,7 @@ namespace bike_web.Models
         public string comment { get; set; }
         public Nullable<System.DateTime> datetime { get; set; }
     
-        public virtual official_route_data official_route_data { get; set; }
         public virtual user user { get; set; }
+        public virtual Home Home { get; set; }
     }
 }

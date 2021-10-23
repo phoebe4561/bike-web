@@ -129,10 +129,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\shopIndexController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\hashtag.cs">
+      <DependentUpon>KSBike.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Home.cs">
       <DependentUpon>KSBike.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\KSBike.Context.cs">
@@ -176,6 +180,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DBConnectionString.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\all.css" />
@@ -191,6 +196,10 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\home\橋頭.jpg" />
+    <Content Include="Images\home\美濃.jpg" />
+    <Content Include="Images\home\美麗島.jpg" />
+    <Content Include="Images\home\蓮池潭.jpg" />
     <Content Include="maps\map_1.geojson" />
     <EntityDeploy Include="Models\KSBike.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -294,6 +303,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\privateRoute.cshtml" />
     <Content Include="Views\Home\routeEditPage.cshtml" />
+    <Content Include="Views\shopIndex\shopIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

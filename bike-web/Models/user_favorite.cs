@@ -20,8 +20,8 @@ namespace bike_web.Models
         public int official_route_id { get; set; }
         public System.DateTime datetime { get; set; }
     
-        public virtual official_route_data official_route_data { get; set; }
         public virtual private_route private_route { get; set; }
         public virtual user user { get; set; }
+        public virtual Home Home { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model bike_web.ViewModels.HomeViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -77,6 +79,8 @@
         <span class="badge bg-darkBrown px-3 bold">熱門景點</span>
         <h1 class="ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">高雄夯單車路線</h1>
         <div class="row">
+            @foreach(var item in Model.offcialPopularRoute)
+            {
             <li class="col-12 col-md-4">
                 <div class="card mb-3">
                     <div class="position-absolute" style="top: 20px; right: 20px">
@@ -85,66 +89,23 @@
                         </button>
                     </div>
                     <span>
-                        <a href="./officialSingleRoute.html"><img src="images/banner1.jpg" class="card-img-top" alt="..." /></a>
+                        <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /></a>
                     </span>
                     <div class="card-body">
-                        <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
+                        <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
                         <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
-                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
                         </div>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                        <p class="card-text">@item.h_description</p>
                         <div class="d-flex justify-content-between">
                             <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
                         </div>
                     </div>
                 </div>
             </li>
-            <li class="col-12 col-md-4">
-                <div class="card mb-3">
-                    <div class="position-absolute" style="top: 20px; right: 20px">
-                        <button type="button" class="btn btn-outline-danger rounded-pill">
-                            <i class="bi bi-heart fs-5"></i>
-                        </button>
-                    </div>
-                    <img src="images/banner1.jpg" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線02</h5>
-                        <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
-                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
-                        </div>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
-                        <div class="d-flex justify-content-between">
-                            <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="col-12 col-md-4">
-                <div class="card mb-3">
-                    <div class="position-absolute" style="top: 20px; right: 20px">
-                        <button type="button" class="btn btn-outline-danger rounded-pill">
-                            <i class="bi bi-heart fs-5"></i>
-                        </button>
-                    </div>
-                    <img src="images/banner1.jpg" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線03</h5>
-                        <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
-                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
-                        </div>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
-                        <div class="d-flex justify-content-between">
-                            <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
-                        </div>
-                    </div>
-                </div>
-            </li>
+            }
         </div>
     </div>
 </div>
@@ -197,6 +158,7 @@
                 <div class="tab-pane fade show active" id="nav-intro" role="tabpanel" aria-labelledby="nav-intro-tab">
                     <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">官方推薦路線</h3>
                     <div class="row">
+                        @foreach(var item in Model.offcialAllRoute) {                      
                         <div class="col-12 col-md-6">
                             <div class="card mb-3">
                                 <div class="position-absolute" style="top: 20px; right: 20px">
@@ -205,23 +167,23 @@
                                     </button>
                                 </div>
                                 <span>
-                                    <a href="./officialSingleRoute.html"> <img src="images/banner1.jpg" class="card-img-top" alt="..." /> </a>
+                                    <a href="./officialSingleRoute.html"> <img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /> </a>
                                 </span>
                                 <div class="card-body">
-                                    <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
+                                    <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
                                     <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
-                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
                                     </div>
-                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                                    <p class="card-text">@item.h_description</p>
                                     <div class="d-flex justify-content-between">
                                         <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
+                        @*<div class="col-12 col-md-6">
                             <div class="card mb-3">
                                 <div class="position-absolute" style="top: 20px; right: 20px">
                                     <button type="button" class="btn btn-outline-danger rounded-pill">
@@ -286,7 +248,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
+                        }
                     </div>
                 </div>
                 <!-- 常見問答 -->
@@ -410,6 +373,8 @@
             </div>
             <!-- 右cards -->
             <ul class="list-unstyled">
+                @foreach(var item in Model.privatePopularArticle)
+            {
                 <li>
                     <div class="card mb-3">
                         <div class="position-absolute" style="top: 15px; right: 15px">
@@ -417,21 +382,21 @@
                                 <i class="bi bi-heart fs-6"></i>
                             </button>
                         </div>
-                        <img src="images/banner3.jpg" class="card-img-top" alt="..." />
+                        <img src="images/@item.p_artitle_img_info" class="card-img-top" alt="@item.p_artitle_title" />
                         <div class="card-body">
                             <div class="d-flex justify-content-end border-bottom border-1 border-gray-200 pb-2 mb-2">
-                                <span>2 days 20:05:20</span>
+                                <span>@item.p_datetime</span>
                             </div>
-                            <h5 class="card-title fw-bold font-24">高雄最美單車路線</h5>
+                            <h5 class="card-title fw-bold font-24">@item.p_artitle_title</h5>
                             <div class="d-flex justify-content-end py-2">
-                                <div class="badge bg-light text-darkBrown px-3">紀錄者:小明</div>
+                                <div class="badge bg-light text-darkBrown px-3">紀錄者:@item.u_username</div>
                             </div>
                             <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, facilis.</p>
                             <a href="./articlepage.html" class="btn btn-primary w-100 fw-bold">看更多</a>
                         </div>
                     </div>
                 </li>
-                <li>
+                @*<li>
                     <div class="card mb-3">
                         <div class="position-absolute" style="top: 15px; right: 15px">
                             <button type="button" class="btn btn-outline-danger rounded-pill">
@@ -451,7 +416,8 @@
                             <a href="#" class="btn btn-primary w-100 fw-bold">看更多</a>
                         </div>
                     </div>
-                </li>
+                </li>*@
+            }
             </ul>
         </div>
         <!-- end of右側欄 -->

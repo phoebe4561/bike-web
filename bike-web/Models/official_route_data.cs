@@ -14,31 +14,13 @@ namespace bike_web.Models
     
     public partial class official_route_data
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public official_route_data()
-        {
-            this.hashtags = new HashSet<hashtag>();
-            this.official_route_comment = new HashSet<official_route_comment>();
-            this.user_favorite = new HashSet<user_favorite>();
-        }
-    
-        public Nullable<int> officiak_route_type { get; set; }
         public int id { get; set; }
-        public string official_homepage_img { get; set; }
-        public string official_route_title { get; set; }
-        public string official_route_description { get; set; }
         public string official_data_catalog { get; set; }
         public string official_data_img { get; set; }
         public string official_data_img_info { get; set; }
         public string official_data_content { get; set; }
-        public Nullable<decimal> distance_decimal { get; set; }
-        public string rank { get; set; }
+        public int home_id { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hashtag> hashtags { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<official_route_comment> official_route_comment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user_favorite> user_favorite { get; set; }
+        public virtual Home Home { get; set; }
     }
 }
