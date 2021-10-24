@@ -26,6 +26,7 @@ namespace bike_web.Models
         }
     
         public virtual DbSet<hashtag> hashtags { get; set; }
+        public virtual DbSet<Home> Homes { get; set; }
         public virtual DbSet<official_route_comment> official_route_comment { get; set; }
         public virtual DbSet<official_route_data> official_route_data { get; set; }
         public virtual DbSet<order> orders { get; set; }
