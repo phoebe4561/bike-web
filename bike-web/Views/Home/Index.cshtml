@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -56,8 +56,32 @@
                 </div>
             </div>
 
+
+    <!-- banner -->
+    <div class="banner container-fluid px-0">
+        <div class="bannerContainer px-4" id="animate-area">
+            <div class="bannerText">
+                <h5>Let's Go Bike!</h5>
+                <p>在忙碌的生活中，有多久沒有停下腳步、靜下心來，好好體驗生活了呢?來享受一段高雄單車之旅吧!</p>
+                <!-- search area -->
+                @*@using (Html.BeginForm())
+                {
+                    <label>
+                        關鍵字 @Html.TextBox("txtKeyword")
+                        <input type="submit" value="查詢" @@click.prevent="backToBack" class="btn btn-primary goBack" />
+                    </label>
+                }*@
+
+            @*<form class="input-group my-3" action="/Home/Index" method="get">
+                <input name="txtKeyword" id="txtKeyword" class="form-control" placeholder="請輸入關鍵字" type="text" value="" />
+                <input type="submit" @@click="backToBack" class="btn btn-primary goBack" value="搜尋" />
+            </form>*@
+
+                <div class="input-group my-3">
+
             <div class="col-lg-5 mt-3">
                 <div class="input-group mb-3">
+
                     <input type="text" class="form-control" placeholder="請輸入關鍵字" aria-label="請輸入關鍵字" aria-describedby="button-addon2" />
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2">搜尋</button>
                 </div>
