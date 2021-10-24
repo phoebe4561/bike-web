@@ -1,11 +1,61 @@
-﻿@model bike_web.ViewModels.HomeViewModel
-
 @{
     ViewBag.Title = "Home Page";
 }
 
+<!-- banner -->
+<div class="banner container-fluid">
+    <div class="bannerContainer">
+        <div class="bannerText">
+            <h5>Let's go bick!</h5>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium et asperiores beatae praesentium. Iusto soluta, iste labore inventore dignissimos maiores.</p>
+            <div class="d-flex justify-content-center">
+                <a type="button" href="./officialAllRoute.html" class="btn btn-outline-primary bannerBtn">出發吧!</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div id="app">
+<!-- search area+天氣區塊 -->
+<div class="container-fluid py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 d-flex">
+                <div class="d-sm-flex justify-content-between px-3 w-50 border-end border-primary border-1">
+                    <div class="text-center">
+                        <div>今日天氣</div>
+                        <span><img class="my-2" src="./images/weather/sun.svg" width="64" height="64" alt="" /></span>
+                        <p>28-30度</p>
+                    </div>
+                    <div class="text-center">
+                        <div>明日天氣</div>
+                        <span><img class="my-2" src="./images/weather/rain.svg" width="64" height="64" alt="" /></span>
+                        <p>27-28度</p>
+                    </div>
+                    <div class="text-center">
+                        <div>後日天氣</div>
+                        <span><img class="my-2" src="./images/weather/cloudy.svg" width="64" height="64" alt="" /></span>
+                        <p>25-28度</p>
+                    </div>
+                </div>
+                <div class="d-sm-flex justify-content-between px-3 w-50">
+                    <div class="text-center">
+                        <div>降雨機率</div>
+                        <span><img class="my-2" src="./images/weather/mayrain.svg" width="64" height="64" alt="" /></span>
+                        <p>10%</p>
+                    </div>
+                    <div class="text-center">
+                        <div>紫外線</div>
+                        <span><img class="my-2" src="./images/weather/uv.svg" width="64" height="64" alt="" /></span>
+                        <p>低量級</p>
+                    </div>
+                    <div class="text-center">
+                        <div>空氣品質</div>
+                        <span><img class="my-2" src="./images/weather/ok.svg" width="64" height="64" alt="" /></span>
+                        <p>良好</p>
+                    </div>
+                </div>
+            </div>
+
 
     <!-- banner -->
     <div class="banner container-fluid px-0">
@@ -28,423 +78,406 @@
             </form>*@
 
                 <div class="input-group my-3">
+
+            <div class="col-lg-5 mt-3">
+                <div class="input-group mb-3">
+
                     <input type="text" class="form-control" placeholder="請輸入關鍵字" aria-label="請輸入關鍵字" aria-describedby="button-addon2" />
-                    <button @@click="backToBack" class="btn btn-primary goBack" type="button" id="button-addon2">搜尋</button>
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">搜尋</button>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button @@click="backToBack" class="btn btn-outline-secondary goBack">初級路線</button>
-                    <button @@click="backToBack" class="btn btn-outline-secondary goBack">中級路線</button>
-                    <button @@click="backToBack" class="btn btn-outline-secondary goBack">高級路線</button>
+                    <button class="btn btn-outline-secondary">初級路線</button>
+                    <button class="btn btn-outline-secondary">中級路線</button>
+                    <button class="btn btn-outline-secondary">高級路線</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- 天氣區塊 -->
-    <div class="container-fluid py-3">
-        <div id="weather_tool"></div>
+<!-- 熱門路線 -->
+<div class="container-fluid bg-lighter py-5">
+    <div class="container">
+        <span class="badge bg-darkBrown px-3 bold">熱門景點</span>
+        <h1 class="ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">高雄夯單車路線</h1>
+        <div class="row">
+            <li class="col-12 col-md-4">
+                <div class="card mb-3">
+                    <div class="position-absolute" style="top: 20px; right: 20px">
+                        <button type="button" class="btn btn-outline-danger rounded-pill">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+                    </div>
+                    <span>
+                        <a href="./officialSingleRoute.html"><img src="images/banner1.jpg" class="card-img-top" alt="..." /></a>
+                    </span>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
+                        <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
+                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                        </div>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                        <div class="d-flex justify-content-between">
+                            <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="col-12 col-md-4">
+                <div class="card mb-3">
+                    <div class="position-absolute" style="top: 20px; right: 20px">
+                        <button type="button" class="btn btn-outline-danger rounded-pill">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+                    </div>
+                    <img src="images/banner1.jpg" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線02</h5>
+                        <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
+                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                        </div>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                        <div class="d-flex justify-content-between">
+                            <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="col-12 col-md-4">
+                <div class="card mb-3">
+                    <div class="position-absolute" style="top: 20px; right: 20px">
+                        <button type="button" class="btn btn-outline-danger rounded-pill">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+                    </div>
+                    <img src="images/banner1.jpg" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線03</h5>
+                        <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
+                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                        </div>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                        <div class="d-flex justify-content-between">
+                            <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </div>
     </div>
+</div>
 
+<!-- middle navbar -->
+<div class="container-fluid border-bottom border-1 border-gray-300">
+    <div class="container">
+        <ul class="nav nav-tabs justify-content-between justify-content-lg-start" id="nav-tab" role="tablist">
+            <li class="nav-item">
+                <button onclick="goToTab()"
+                        class="nav-link active py-3"
+                        id="nav-intro-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-intro"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-intro"
+                        aria-selected="true">
+                    官方景點
+                </button>
+            </li>
+            <li class="nav-item">
+                <button onclick="goToTab()" class="nav-link py-3" id="nav-faq-tab" data-bs-toggle="tab" data-bs-target="#nav-faq" type="button" role="tab" aria-controls="nav-faq" aria-selected="false">
+                    常見問題
+                </button>
+            </li>
+            <li class="nav-item">
+                <button onclick="goToTab()"
+                        class="nav-link py-3"
+                        id="nav-progress-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-progress"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-progress"
+                        aria-selected="false">
+                    最新活動
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
 
-    <!-- 熱門路線 -->
-    <div class="container-fluid bg-lighter py-5">
-        <div class="container">
-            <span class="badge bg-darkBrown px-3 bold">熱門景點</span>
-            <h1 class="ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">高雄夯單車路線</h1>
-            <div class="row">
-                @foreach (var item in Model.offcialPopularRoute)
-                {
-                    <li class="col-12 col-md-4">
-                        <div class="card mb-3">
-                            <div class="position-absolute" style="top: 20px; right: 20px">
-                                <button type="button" class="btn btn-outline-danger rounded-pill">
-                                    <i class="bi bi-heart fs-5"></i>
-                                </button>
-                            </div>
-                            <span>
-                                <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /></a>
-                            </span>
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
-                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
-                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+<!-- main content -->
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="tab-content" id="myTabContent">
+                <!-- 官方景點介紹 -->
+                <div class="tab-pane fade show active" id="nav-intro" role="tabpanel" aria-labelledby="nav-intro-tab">
+                    <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">官方推薦路線</h3>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="card mb-3">
+                                <div class="position-absolute" style="top: 20px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </button>
                                 </div>
-                                <p class="card-text">@item.h_description</p>
-                                <div class="d-flex justify-content-between">
-                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                <span>
+                                    <a href="./officialSingleRoute.html"> <img src="images/banner1.jpg" class="card-img-top" alt="..." /> </a>
+                                </span>
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
+                                    <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                                    </div>
+                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </li>
-                }
+                        <div class="col-12 col-md-6">
+                            <div class="card mb-3">
+                                <div class="position-absolute" style="top: 20px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </button>
+                                </div>
+                                <img src="images/banner1.jpg" class="card-img-top" alt="..." />
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
+                                    <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                                    </div>
+                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="card mb-3">
+                                <div class="position-absolute" style="top: 20px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </button>
+                                </div>
+                                <img src="images/banner1.jpg" class="card-img-top" alt="..." />
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
+                                    <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                                    </div>
+                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="card mb-3">
+                                <div class="position-absolute" style="top: 20px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </button>
+                                </div>
+                                <img src="images/banner1.jpg" class="card-img-top" alt="..." />
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
+                                    <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
+                                    </div>
+                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 常見問答 -->
+                <div class="tab-pane fade show" id="nav-faq" role="tabpanel" aria-labelledby="nav-faq-tab">
+                    <!-- Q1 -->
+                    <div class="accordion mb-3" id="faq1">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <span>Q1</span>
+                                    <span>如何推薦私人單車路線呢？</span>
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faq1">
+                                <div class="accordion-body">請先註冊加入會員,即可以開通薦私人景點功能喔!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="accordion mb-3" id="faq2">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    <span>Q2</span>
+                                    <span>我是單車新手,不知道怎麼選擇路線怎麼辦？</span>
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#faq2">
+                                <div class="accordion-body">可以參考系統分級:初級(10公里以內)中級(10-20公里)與高級(大於20公里),評估個人能力需求後進行選擇喔!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="accordion mb-3" id="faq3">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                    <span>Q3</span>
+                                    <span>Lorem ipsum dolor sit amet.</span>
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#faq3">
+                                <div class="accordion-body">
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet quae unde odio doloremque commodi natus tenetur distinctio, eaque vitae repellat.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="accordion mb-3" id="faq4">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                    <span>Q4</span>
+                                    <span>Lorem ipsum dolor sit amet.</span>
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#faq4">
+                                <div class="accordion-body">
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem necessitatibus aliquam vitae soluta recusandae doloribus, odio dolor odit rerum deserunt.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 最新活動 -->
+                <div class="tab-pane fade show" id="nav-progress" role="tabpanel" aria-labelledby="nav-progress-tab">
+                    <div class="card overflow-hidden mb-3">
+                        <div class="row g-0">
+                            <div class="col-5 col-md-4">
+                                <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news01" />
+                            </div>
+                            <div class="col-7 col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
+                                    <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
+                                    <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
+                                    <a class="text-info font-14 fw-bold" href="#">MORE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card overflow-hidden mb-3">
+                        <div class="row g-0">
+                            <div class="col-5 col-md-4">
+                                <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news02" />
+                            </div>
+                            <div class="col-7 col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
+                                    <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
+                                    <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
+                                    <a class="text-info font-14 fw-bold" href="#">MORE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card overflow-hidden mb-3">
+                        <div class="row g-0">
+                            <div class="col-5 col-md-4">
+                                <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news03" />
+                            </div>
+                            <div class="col-7 col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
+                                    <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
+                                    <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
+                                    <a class="text-info font-14 fw-bold" href="#">MORE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- middle navbar -->
-    <div class="container-fluid border-bottom border-1 border-gray-300">
-        <div class="container">
-            <ul class="nav nav-tabs justify-content-between justify-content-lg-start" id="nav-tab" role="tablist">
-                <li class="nav-item">
-                    <button onclick="goToTab()"
-                            class="nav-link active py-3"
-                            id="nav-intro-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#nav-intro"
-                            type="button"
-                            role="tab"
-                            aria-controls="nav-intro"
-                            aria-selected="true">
-                        官方景點
-                    </button>
+        <!-- 右側欄 -->
+        <div class="col-lg-3">
+            <!-- 私人路線推薦 -->
+            <div class="mb-3">
+                <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">私人路線推薦</h5>
+            </div>
+            <!-- 右cards -->
+            <ul class="list-unstyled">
+                <li>
+                    <div class="card mb-3">
+                        <div class="position-absolute" style="top: 15px; right: 15px">
+                            <button type="button" class="btn btn-outline-danger rounded-pill">
+                                <i class="bi bi-heart fs-6"></i>
+                            </button>
+                        </div>
+                        <img src="images/banner3.jpg" class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <div class="d-flex justify-content-end border-bottom border-1 border-gray-200 pb-2 mb-2">
+                                <span>2 days 20:05:20</span>
+                            </div>
+                            <h5 class="card-title fw-bold font-24">高雄最美單車路線</h5>
+                            <div class="d-flex justify-content-end py-2">
+                                <div class="badge bg-light text-darkBrown px-3">紀錄者:小明</div>
+                            </div>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, facilis.</p>
+                            <a href="./articlepage.html" class="btn btn-primary w-100 fw-bold">看更多</a>
+                        </div>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <button onclick="goToTab()" class="nav-link py-3" id="nav-faq-tab" data-bs-toggle="tab" data-bs-target="#nav-faq" type="button" role="tab" aria-controls="nav-faq" aria-selected="false">
-                        常見問題
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button onclick="goToTab()"
-                            class="nav-link py-3"
-                            id="nav-progress-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#nav-progress"
-                            type="button"
-                            role="tab"
-                            aria-controls="nav-progress"
-                            aria-selected="false">
-                        最新活動
-                    </button>
+                <li>
+                    <div class="card mb-3">
+                        <div class="position-absolute" style="top: 15px; right: 15px">
+                            <button type="button" class="btn btn-outline-danger rounded-pill">
+                                <i class="bi bi-heart fs-6"></i>
+                            </button>
+                        </div>
+                        <img src="images/banner3.jpg" class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <div class="d-flex justify-content-end border-bottom border-1 border-gray-200 pb-2 mb-2">
+                                <span>2 days 20:05:20</span>
+                            </div>
+                            <h5 class="card-title fw-bold font-24">高雄最美單車路線</h5>
+                            <div class="d-flex justify-content-end py-2">
+                                <div class="badge bg-light text-darkBrown px-3">紀錄者:小明</div>
+                            </div>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, facilis.</p>
+                            <a href="#" class="btn btn-primary w-100 fw-bold">看更多</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
+        <!-- end of右側欄 -->
     </div>
-
-    <!-- main content -->
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-lg-9">
-                <div class="tab-content" id="myTabContent">
-                    <!-- 官方景點介紹 -->
-                    <div class="tab-pane fade show active" id="nav-intro" role="tabpanel" aria-labelledby="nav-intro-tab">
-                        <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">官方推薦路線</h3>
-                        <div class="row">
-                            @foreach (var item in Model.offcialAllRoute)
-                            {
-                                <div class="col-12 col-md-6">
-                                    <div class="card mb-3">
-                                        <div class="position-absolute" style="top: 20px; right: 20px">
-                                            <button type="button" class="btn btn-outline-danger rounded-pill">
-                                                <i class="bi bi-heart fs-5"></i>
-                                            </button>
-                                        </div>
-                                        <span>
-                                            <a href="./officialSingleRoute.html"> <img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /> </a>
-                                        </span>
-                                        <div class="card-body">
-                                            <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
-                                            <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                                <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
-                                                <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
-                                            </div>
-                                            <p class="card-text">@item.h_description</p>
-                                            <div class="d-flex justify-content-between">
-                                                <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                                                <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @*<div class="col-12 col-md-6">
-                                        <div class="card mb-3">
-                                            <div class="position-absolute" style="top: 20px; right: 20px">
-                                                <button type="button" class="btn btn-outline-danger rounded-pill">
-                                                    <i class="bi bi-heart fs-5"></i>
-                                                </button>
-                                            </div>
-                                            <img src="images/banner1.jpg" class="card-img-top" alt="..." />
-                                            <div class="card-body">
-                                                <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
-                                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
-                                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
-                                                </div>
-                                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="card mb-3">
-                                            <div class="position-absolute" style="top: 20px; right: 20px">
-                                                <button type="button" class="btn btn-outline-danger rounded-pill">
-                                                    <i class="bi bi-heart fs-5"></i>
-                                                </button>
-                                            </div>
-                                            <img src="images/banner1.jpg" class="card-img-top" alt="..." />
-                                            <div class="card-body">
-                                                <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
-                                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
-                                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
-                                                </div>
-                                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="card mb-3">
-                                            <div class="position-absolute" style="top: 20px; right: 20px">
-                                                <button type="button" class="btn btn-outline-danger rounded-pill">
-                                                    <i class="bi bi-heart fs-5"></i>
-                                                </button>
-                                            </div>
-                                            <img src="images/banner1.jpg" class="card-img-top" alt="..." />
-                                            <div class="card-body">
-                                                <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">自行車路線01</h5>
-                                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:20km</div>
-                                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">中級</span></div>
-                                                </div>
-                                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, atque?</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">0.00</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>*@
-                            }
-                        </div>
-                    </div>
-                    <!-- 常見問答 -->
-                    <div class="tab-pane fade show" id="nav-faq" role="tabpanel" aria-labelledby="nav-faq-tab">
-                        <!-- Q1 -->
-                        <div class="accordion mb-3" id="faq1">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <span>Q1</span>
-                                        <span>如何推薦私人單車路線呢？</span>
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faq1">
-                                    <div class="accordion-body">請先註冊加入會員,即可以開通薦私人景點功能喔!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Q2 -->
-                        <div class="accordion mb-3" id="faq2">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                        <span>Q2</span>
-                                        <span>我是單車新手,不知道怎麼選擇路線怎麼辦？</span>
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#faq2">
-                                    <div class="accordion-body">可以參考系統分級:初級(10公里以內)中級(10-20公里)與高級(大於20公里),評估個人能力需求後進行選擇喔!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Q3 -->
-                        <div class="accordion mb-3" id="faq3">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                        <span>Q3</span>
-                                        <span>Lorem ipsum dolor sit amet.</span>
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#faq3">
-                                    <div class="accordion-body">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet quae unde odio doloremque commodi natus tenetur distinctio, eaque vitae repellat.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Q4 -->
-                        <div class="accordion mb-3" id="faq4">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                        <span>Q4</span>
-                                        <span>Lorem ipsum dolor sit amet.</span>
-                                    </button>
-                                </h2>
-                                <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#faq4">
-                                    <div class="accordion-body">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem necessitatibus aliquam vitae soluta recusandae doloribus, odio dolor odit rerum deserunt.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 最新活動 -->
-                    <div class="tab-pane fade show" id="nav-progress" role="tabpanel" aria-labelledby="nav-progress-tab">
-                        <div class="card overflow-hidden mb-3">
-                            <div class="row g-0">
-                                <div class="col-5 col-md-4">
-                                    <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news01" />
-                                </div>
-                                <div class="col-7 col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
-                                        <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
-                                        <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
-                                        <a class="text-info font-14 fw-bold" href="#">MORE</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card overflow-hidden mb-3">
-                            <div class="row g-0">
-                                <div class="col-5 col-md-4">
-                                    <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news02" />
-                                </div>
-                                <div class="col-7 col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
-                                        <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
-                                        <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
-                                        <a class="text-info font-14 fw-bold" href="#">MORE</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card overflow-hidden mb-3">
-                            <div class="row g-0">
-                                <div class="col-5 col-md-4">
-                                    <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news03" />
-                                </div>
-                                <div class="col-7 col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
-                                        <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
-                                        <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
-                                        <a class="text-info font-14 fw-bold" href="#">MORE</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 右側欄 -->
-            <div class="col-lg-3">
-                <!-- 私人路線推薦 -->
-                <div class="mb-3">
-                    <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">私人路線推薦</h5>
-                </div>
-                <!-- 右cards -->
-                <ul class="list-unstyled">
-                    @foreach (var item in Model.privatePopularArticle)
-                    {
-                        <li>
-                            <div class="card mb-3">
-                                <div class="position-absolute" style="top: 15px; right: 15px">
-                                    <button type="button" class="btn btn-outline-danger rounded-pill">
-                                        <i class="bi bi-heart fs-6"></i>
-                                    </button>
-                                </div>
-                                <img src="images/@item.p_artitle_img_info" class="card-img-top" alt="@item.p_artitle_title" />
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-end border-bottom border-1 border-gray-200 pb-2 mb-2">
-                                        <span>@item.p_datetime</span>
-                                    </div>
-                                    <h5 class="card-title fw-bold font-24">@item.p_artitle_title</h5>
-                                    <div class="d-flex justify-content-end py-2">
-                                        <div class="badge bg-light text-darkBrown px-3">紀錄者:@item.u_username</div>
-                                    </div>
-                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, facilis.</p>
-                                    <a href="./articlepage.html" class="btn btn-primary w-100 fw-bold">看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                        @*<li>
-                                <div class="card mb-3">
-                                    <div class="position-absolute" style="top: 15px; right: 15px">
-                                        <button type="button" class="btn btn-outline-danger rounded-pill">
-                                            <i class="bi bi-heart fs-6"></i>
-                                        </button>
-                                    </div>
-                                    <img src="images/banner3.jpg" class="card-img-top" alt="..." />
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-end border-bottom border-1 border-gray-200 pb-2 mb-2">
-                                            <span>2 days 20:05:20</span>
-                                        </div>
-                                        <h5 class="card-title fw-bold font-24">高雄最美單車路線</h5>
-                                        <div class="d-flex justify-content-end py-2">
-                                            <div class="badge bg-light text-darkBrown px-3">紀錄者:小明</div>
-                                        </div>
-                                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, facilis.</p>
-                                        <a href="#" class="btn btn-primary w-100 fw-bold">看更多</a>
-                                    </div>
-                                </div>
-                            </li>*@
-                    }
-                </ul>
-            </div>
-            <!-- end of右側欄 -->
-        </div>
-    </div>
-
-    <!-- 回到最頂btn -->
-    <button class="goTop" @@click="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
 </div>
-
-<script src="~/Scripts/js/homePage.js"></script>
-<script src="https://unpkg.com/vue@next"></script>
-<script type="module">
-    const app = Vue.createApp({
-        data() {
-            return { isVisible: false };
-        },
-        methods: {
-            handleScroll() {
-                const backToTopButton = document.querySelector('.goTop');
-                if (window.scrollY > 1000) {
-                    backToTopButton.classList.add('isVisible');
-                    this.isVisible = true;
-                } else {
-                    backToTopButton.classList.remove('isVisible');
-                    this.isVisible = false;
-                }
-            },
-            backToTop: function () {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth',
-                });
-            },
-            handleSearchScroll() {
-                const backToBackButton = document.querySelectorAll('.goBack');
-                backToBackButton.forEach((item) => {
-                    item.addEventListener(onclick, this.backToBack);
-                });
-            },
-            backToBack: function () {
-                window.scrollTo({
-                    top: 1850,
-                    behavior: 'smooth',
-                });
-            },
-        },
-        mounted() {
-            window.addEventListener('scroll', this.handleScroll);
-            window.addEventListener('scroll', this.handleSearchScroll);
-        },
-    });
-    app.mount('#app');
-</script>
