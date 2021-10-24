@@ -1,0 +1,28 @@
+﻿@model IEnumerable<bike_web.Models.product>
+@{
+    ViewBag.Title = "shopIndex";
+}
+
+<h2>套裝行程</h2>
+
+<div class="row" style="margin-top:20px;">
+    @foreach (var item in Model)
+    {
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="thumbnail">
+                <img src="~/images/@item.product_img"
+                     style="width:350px;height:270px;" />
+                <div class="caption">
+                    <h4>@item.product_name</h4>
+                    <p>單價:@item.price</p>
+                    <p>
+                        <a href="@Url.Action("AddCar","Member")?id=@item.id"
+                           class="btn btn-primary">加入購物車</a>
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    }

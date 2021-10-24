@@ -180,7 +180,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DBConnectionString.cs" />
+
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\KeyWordHomeViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModels.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\all.css" />
@@ -196,6 +200,10 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\home\橋頭.jpg" />
+    <Content Include="Images\home\美濃.jpg" />
+    <Content Include="Images\home\美麗島.jpg" />
+    <Content Include="Images\home\蓮池潭.jpg" />
     <Content Include="maps\map_1.geojson" />
     <EntityDeploy Include="Models\KSBike.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -273,6 +281,7 @@
       <DependentUpon>KSBike.edmx</DependentUpon>
       <LastGenOutput>KSBike.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\js\homePage.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.min.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.slim.js" />
@@ -299,12 +308,15 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\privateRoute.cshtml" />
     <Content Include="Views\Home\routeEditPage.cshtml" />
+    <Content Include="Views\shopIndex\shopIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+
     <Folder Include="Scripts\js\" />
     <Folder Include="Views\MemberLogin\" />
     <Folder Include="Views\Member\" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
