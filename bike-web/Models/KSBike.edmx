@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KSBikeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="KSBikeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="hashtag">
           <Key>
             <PropertyRef Name="id" />
@@ -20,7 +20,6 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="hname" Type="varchar" MaxLength="50" />
-
           <Property Name="hdescription" Type="text" />
           <Property Name="hrank" Type="varchar" MaxLength="50" />
           <Property Name="hdistance" Type="decimal" Precision="5" Scale="1" />
@@ -311,7 +310,8 @@
             <End Role="user_favorite" EntitySet="user_favorite" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KSBikeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -323,9 +323,8 @@
           <Property Name="official_route_id" Type="Int32" Nullable="false" />
           <Property Name="private_route_id" Type="Int32" Nullable="false" />
           <Property Name="hashtag_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-
+          <NavigationProperty Name="Home" Relationship="Self.FK_hashtag_Home" FromRole="hashtag" ToRole="Home" />
           <NavigationProperty Name="private_route" Relationship="Self.FK_hashtag_private_route" FromRole="hashtag" ToRole="private_route" />
-          <NavigationProperty Name="Home" Relationship="KSBikeModel.FK_hashtag_Home" FromRole="hashtag" ToRole="Home" />
         </EntityType>
         <EntityType Name="Home">
           <Key>
@@ -353,9 +352,8 @@
           <Property Name="user_give_star_num" Type="Int32" Nullable="false" />
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="datetime" Type="DateTime" Precision="3" />
-
+          <NavigationProperty Name="Home" Relationship="Self.FK_official_route_comment_Home" FromRole="official_route_comment" ToRole="Home" />
           <NavigationProperty Name="user" Relationship="Self.FK_official_route_comment_users" FromRole="official_route_comment" ToRole="users" />
-          <NavigationProperty Name="Home" Relationship="KSBikeModel.FK_official_route_comment_Home" FromRole="official_route_comment" ToRole="Home" />
         </EntityType>
         <EntityType Name="official_route_data">
           <Key>
@@ -367,7 +365,6 @@
           <Property Name="official_data_img_info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="official_data_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="home_id" Type="Int32" Nullable="false" />
-
           <NavigationProperty Name="Home" Relationship="Self.FK_official_route_data_Home" FromRole="official_route_data" ToRole="Home" />
         </EntityType>
         <EntityType Name="order">
@@ -425,10 +422,9 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="product_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-
+          <Property Name="product_price" Type="Int32" Nullable="false" />
           <Property Name="product_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="product_num" Type="Int32" />
-          <Property Name="product_price" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="user_favorite">
           <Key>
@@ -439,10 +435,9 @@
           <Property Name="private_route_id" Type="Int32" Nullable="false" />
           <Property Name="official_route_id" Type="Int32" Nullable="false" />
           <Property Name="datetime" Type="DateTime" Nullable="false" Precision="3" />
-
+          <NavigationProperty Name="Home" Relationship="Self.FK_user_favorite_Home" FromRole="user_favorite" ToRole="Home" />
           <NavigationProperty Name="private_route" Relationship="Self.FK_user_favorite_private_route" FromRole="user_favorite" ToRole="private_route" />
           <NavigationProperty Name="user" Relationship="Self.FK_user_favorite_users" FromRole="user_favorite" ToRole="users" />
-          <NavigationProperty Name="Home" Relationship="KSBikeModel.FK_user_favorite_Home" FromRole="user_favorite" ToRole="Home" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -646,87 +641,7 @@
             <End Role="users" EntitySet="users" />
             <End Role="user_favorite" EntitySet="user_favorite" />
           </AssociationSet>
-          <EntitySet Name="Homes" EntityType="KSBikeModel.Home" />
-          <AssociationSet Name="FK_hashtag_Home" Association="KSBikeModel.FK_hashtag_Home">
-            <End Role="Home" EntitySet="Homes" />
-            <End Role="hashtag" EntitySet="hashtags" />
-          </AssociationSet>
-          <AssociationSet Name="FK_official_route_comment_Home" Association="KSBikeModel.FK_official_route_comment_Home">
-            <End Role="Home" EntitySet="Homes" />
-            <End Role="official_route_comment" EntitySet="official_route_comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_official_route_data_Home" Association="KSBikeModel.FK_official_route_data_Home">
-            <End Role="Home" EntitySet="Homes" />
-            <End Role="official_route_data" EntitySet="official_route_data" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_favorite_Home" Association="KSBikeModel.FK_user_favorite_Home">
-            <End Role="Home" EntitySet="Homes" />
-            <End Role="user_favorite" EntitySet="user_favorite" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Home">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="hname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="hdescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="hrank" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="hdistance" Type="Decimal" Precision="5" Scale="1" />
-          <Property Name="himg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="hashtags" Relationship="KSBikeModel.FK_hashtag_Home" FromRole="Home" ToRole="hashtag" />
-          <NavigationProperty Name="official_route_comment" Relationship="KSBikeModel.FK_official_route_comment_Home" FromRole="Home" ToRole="official_route_comment" />
-          <NavigationProperty Name="official_route_data" Relationship="KSBikeModel.FK_official_route_data_Home" FromRole="Home" ToRole="official_route_data" />
-          <NavigationProperty Name="user_favorite" Relationship="KSBikeModel.FK_user_favorite_Home" FromRole="Home" ToRole="user_favorite" />
-        </EntityType>
-        <Association Name="FK_hashtag_Home">
-          <End Type="KSBikeModel.Home" Role="Home" Multiplicity="1" />
-          <End Type="KSBikeModel.hashtag" Role="hashtag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Home">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="hashtag">
-              <PropertyRef Name="official_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_official_route_comment_Home">
-          <End Type="KSBikeModel.Home" Role="Home" Multiplicity="1" />
-          <End Type="KSBikeModel.official_route_comment" Role="official_route_comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Home">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="official_route_comment">
-              <PropertyRef Name="article_title_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_official_route_data_Home">
-          <End Type="KSBikeModel.Home" Role="Home" Multiplicity="1" />
-          <End Type="KSBikeModel.official_route_data" Role="official_route_data" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Home">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="official_route_data">
-              <PropertyRef Name="home_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_user_favorite_Home">
-          <End Type="KSBikeModel.Home" Role="Home" Multiplicity="1" />
-          <End Type="KSBikeModel.user_favorite" Role="user_favorite" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Home">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_favorite">
-              <PropertyRef Name="official_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -771,14 +686,13 @@
           <EntitySetMapping Name="official_route_data">
             <EntityTypeMapping TypeName="KSBikeModel.official_route_data">
               <MappingFragment StoreEntitySet="official_route_data">
-
-                <ScalarProperty Name="home_id" ColumnName="home_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="official_data_catalog" ColumnName="official_data_catalog" />
                 <ScalarProperty Name="official_data_img" ColumnName="official_data_img" />
                 <ScalarProperty Name="official_data_img_info" ColumnName="official_data_img_info" />
                 <ScalarProperty Name="official_data_content" ColumnName="official_data_content" />
-
+                <ScalarProperty Name="home_id" ColumnName="home_id" />
+              </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="orders">
@@ -830,7 +744,6 @@
           <EntitySetMapping Name="products">
             <EntityTypeMapping TypeName="KSBikeModel.product">
               <MappingFragment StoreEntitySet="products">
-                <ScalarProperty Name="product_price" ColumnName="product_price" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="product_name" ColumnName="product_name" />
                 <ScalarProperty Name="product_price" ColumnName="product_price" />
@@ -859,18 +772,6 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="birthday" ColumnName="birthday" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Homes">
-            <EntityTypeMapping TypeName="KSBikeModel.Home">
-              <MappingFragment StoreEntitySet="Home">
-                <ScalarProperty Name="himg" ColumnName="himg" />
-                <ScalarProperty Name="hdistance" ColumnName="hdistance" />
-                <ScalarProperty Name="hrank" ColumnName="hrank" />
-                <ScalarProperty Name="hdescription" ColumnName="hdescription" />
-                <ScalarProperty Name="hname" ColumnName="hname" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
