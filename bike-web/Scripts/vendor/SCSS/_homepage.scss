@@ -6,6 +6,23 @@
   background-position: 50% 25%;
 }
 
+#animate-area {
+  background-image: url(https://78.media.tumblr.com/28bd9a2522fbf8981d680317ccbf4282/tumblr_p7n8kqHMuD1uy4lhuo3_1280.png);
+  background-position: 0px 0px;
+  background-size: 400px 260px;
+  background-repeat: repeat-x;
+  animation: aninationBg 40s linear infinite;
+}
+
+@keyframes aninationBg {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+
 .bannerContainer {
   display: flex;
   justify-content: flex-end;
@@ -13,9 +30,9 @@
 
 .bannerText {
   max-width: 445px;
-  padding: 95px 0 395px 0;
+  padding: 80px 0 300px 0;
   @include phone {
-    padding: 50px 0 200px 0;
+    padding: 50px 0 50px 0;
   }
 }
 
@@ -25,4 +42,118 @@
 
 .formTitle {
   z-index: 10;
+}
+
+//天氣
+#weather_tool {
+  display: flex;
+  background-color: #fafafa;
+  overflow-x: scroll;
+  padding: 20px 0;
+}
+
+.weather_block {
+  margin: 10px;
+  padding: 15px;
+  box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+.weather_icon {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem auto;
+  width: 130px;
+  img {
+    height: 100px;
+    width: 100px;
+  }
+}
+
+.weather_title {
+  white-space: nowrap;
+  font-size: 20px;
+  text-align: center;
+}
+
+.raining {
+  color: blue;
+  font-size: 20px;
+}
+.raning_block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.raning_block > div {
+  width: fit-content;
+}
+
+.raining_move {
+  transform: translateX(5px);
+}
+.weather_word {
+  font-size: 20px;
+}
+
+#weather_tool::-webkit-scrollbar {
+  height: 8px;
+  background-color: #fafafa;
+}
+
+#weather_tool::-webkit-scrollbar-thumb:horizontal {
+  background: $primary;
+  border-radius: 10px;
+}
+
+.weather_description {
+  font-size: 0.875rem;
+  letter-spacing: 0.6px;
+  line-height: 1.5;
+  color: #fff;
+  background-color: #333;
+  padding: 5px 10px;
+  border-radius: 4px;
+  width: 105%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transition-duration: 0.4s;
+}
+
+.weather_description:hover {
+  opacity: 1;
+}
+
+// 回到首頁
+.goTop {
+  border-radius: 50%;
+  background-color: rgba(1, 14, 27, 0.959);
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  display: block;
+  right: 10px;
+  bottom: 15px;
+  border: none;
+  opacity: 0;
+  z-index: -1;
+  .fas {
+    color: white;
+    font-size: 22px;
+  }
+  &:hover {
+    background-color: $primary;
+    transition: all 0.4s ease-in;
+  }
+}
+
+.isVisible {
+  opacity: 1;
+  z-index: 4;
 }
