@@ -80,5 +80,10 @@ namespace bike_web.Controllers
 
             
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
