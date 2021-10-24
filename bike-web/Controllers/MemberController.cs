@@ -29,7 +29,6 @@ namespace bike_web.Controllers
             {
                 Session["id"] = login.id;
                 Session["email"] = login.email;
-                Session["password"] = login.password;
                 message = "pass";
             }
             if (Request.IsAjaxRequest())

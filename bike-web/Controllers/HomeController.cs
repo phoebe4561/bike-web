@@ -21,20 +21,40 @@ namespace bike_web.Controllers
 
         public ActionResult privateRoute()
         {
-
-            return View();
+            if (Session["id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else {
+                return View();
+            }
+            
         }
 
         public ActionResult memberPage()
         {
 
-            return View();
+            if (Session["id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public ActionResult routeEditPage()
         {
 
-            return View();
+            if (Session["id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }
