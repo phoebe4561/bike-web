@@ -27,40 +27,12 @@ namespace bike_web.Controllers
                             oc_allStar=oc.all_star_summary,
                         }).OrderByDescending(e => e.oc_allStar).Take(3).ToList();
 
-            //List<popularRoute> 所有官方路線 = new List<popularRoute>();
+            
+            List<popularRoute> 所有官方路線 = new List<popularRoute>();
 
-            //string keyword = Request.Form["txtKeyword"];
-            //if (string.IsNullOrEmpty(keyword))
-            //    所有官方路線 = (from h in db.Homes
-            //              join oc in db.official_route_comment on h.id equals oc.article_title_id
-            //              select new popularRoute
-            //              {
-            //                  h_ID = h.id,
-            //                  h_description = h.hdescription,
-            //                  h_name = h.hname,
-            //                  h_distance = (double?)h.hdistance,
-            //                  h_rank = h.hrank,
-            //                  h_img = h.himg,
-            //                  oc_artitleTitleID = oc.article_title_id,
-            //                  oc_allStar = oc.all_star_summary,
-            //              }).OrderBy(e => e.h_ID).ToList();
-            //else
-            //    所有官方路線 = (from h in db.Homes
-            //              join oc in db.official_route_comment on h.id equals oc.article_title_id
-            //              where h.hname.Contains(keyword)
-            //              select new popularRoute
-            //              {
-            //                  h_ID = h.id,
-            //                  h_description = h.hdescription,
-            //                  h_name = h.hname,
-            //                  h_distance = (double?)h.hdistance,
-            //                  h_rank = h.hrank,
-            //                  h_img = h.himg,
-            //                  oc_artitleTitleID = oc.article_title_id,
-            //                  oc_allStar = oc.all_star_summary,
-            //              }).OrderBy(e => e.h_ID).ToList();
-
-            var 所有官方路線 = (from h in db.Homes
+            string keyword = Request.Form["txtKeyword"];
+            if (string.IsNullOrEmpty(keyword))
+                所有官方路線 = (from h in db.Homes
                           join oc in db.official_route_comment on h.id equals oc.article_title_id
                           select new popularRoute
                           {
@@ -73,6 +45,35 @@ namespace bike_web.Controllers
                               oc_artitleTitleID = oc.article_title_id,
                               oc_allStar = oc.all_star_summary,
                           }).OrderBy(e => e.h_ID).ToList();
+            else
+                所有官方路線 = (from h in db.Homes
+                          join oc in db.official_route_comment on h.id equals oc.article_title_id
+                          where h.hname.Contains(keyword)
+                          select new popularRoute
+                          {
+                              h_ID = h.id,
+                              h_description = h.hdescription,
+                              h_name = h.hname,
+                              h_distance = (double?)h.hdistance,
+                              h_rank = h.hrank,
+                              h_img = h.himg,
+                              oc_artitleTitleID = oc.article_title_id,
+                              oc_allStar = oc.all_star_summary,
+                          }).OrderBy(e => e.h_ID).ToList();
+
+            //var 所有官方路線 = (from h in db.Homes
+            //              join oc in db.official_route_comment on h.id equals oc.article_title_id
+            //              select new popularRoute
+            //              {
+            //                  h_ID = h.id,
+            //                  h_description = h.hdescription,
+            //                  h_name = h.hname,
+            //                  h_distance = (double?)h.hdistance,
+            //                  h_rank = h.hrank,
+            //                  h_img = h.himg,
+            //                  oc_artitleTitleID = oc.article_title_id,
+            //                  oc_allStar = oc.all_star_summary,
+            //              }).OrderBy(e => e.h_ID).ToList();
 
             var 熱門文章 = (from p in db.private_route
                         join u in db.users on p.user_id equals u.id

@@ -14,30 +14,36 @@
                 <h5>Let's Go Bike!</h5>
                 <p>在忙碌的生活中，有多久沒有停下腳步、靜下心來，好好體驗生活了呢?來享受一段高雄單車之旅吧!</p>
                 <!-- search area -->
-                @*@using (Html.BeginForm())
-                {
-                    <label>
-                        關鍵字 @Html.TextBox("txtKeyword")
-                        <input type="submit" value="查詢" @@click.prevent="backToBack" class="btn btn-primary goBack" />
-                    </label>
-                }*@
+                @*<div class="input-group my-3">
+                    @using (Html.BeginForm())
+                    {
+                        <label class="d-flex">
+                            @Html.TextBox("txtKeyword", null, new { @class = "form-control" })
+                            <input type="submit" value="查詢" class="btn btn-primary" />
+                            <input type="button" @@click="backToBack" class="btn btn-primary goBack" value="查詢" />
+                        </label>
+                    }
+                </div>*@
 
-            @*<form class="input-group my-3" action="/Home/Index" method="get">
+            <form action="/Home/Index" method="post" class="input-group my-3">
                 <input name="txtKeyword" id="txtKeyword" class="form-control" placeholder="請輸入關鍵字" type="text" value="" />
-                <input type="submit" @@click="backToBack" class="btn btn-primary goBack" value="搜尋" />
-            </form>*@
+                @*<input type="button" @@click="backToBack" class="btn btn-primary goBack position-absolute end-0 opacity-0" value="搜尋"  />*@
+                
+                <input type="submit" class="btn btn-primary goBack" value="搜尋" @@submit.prevent="backToBack"/>
+            </form>
 
-                <div class="input-group my-3">
-                    <input type="text" class="form-control" placeholder="請輸入關鍵字" aria-label="請輸入關鍵字" aria-describedby="button-addon2" />
-                    <button @@click="backToBack" class="btn btn-primary goBack" type="button" id="button-addon2">搜尋</button>
-                </div>
+                @*<div class="input-group my-3">
+            <input type="text" class="form-control" placeholder="請輸入關鍵字" aria-label="請輸入關鍵字" aria-describedby="button-addon2" />
+            <button @@click="backToBack" class="btn btn-primary goBack" type="button" id="button-addon2">搜尋</button>
+        </div>*@
+
                 <div class="d-flex justify-content-between">
                     <button @@click="backToBack" class="btn btn-outline-secondary goBack">初級路線</button>
                     <button @@click="backToBack" class="btn btn-outline-secondary goBack">中級路線</button>
                     <button @@click="backToBack" class="btn btn-outline-secondary goBack">高級路線</button>
                 </div>
             </div>
-        </div>
+            </div>
     </div>
 
     <!-- 天氣區塊 -->
@@ -431,7 +437,7 @@
             handleSearchScroll() {
                 const backToBackButton = document.querySelectorAll('.goBack');
                 backToBackButton.forEach((item) => {
-                    item.addEventListener(onclick, this.backToBack);
+                    item.addEventListener(onsubmit, this.backToBack);
                 });
             },
             backToBack: function () {
