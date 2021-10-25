@@ -278,6 +278,7 @@
       <DependentUpon>KSBike.edmx</DependentUpon>
       <LastGenOutput>KSBike.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\js\homePage.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.min.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.slim.js" />
@@ -307,7 +308,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\js\" />
     <Folder Include="Views\MemberLogin\" />
     <Folder Include="Views\Member\" />
   </ItemGroup>
