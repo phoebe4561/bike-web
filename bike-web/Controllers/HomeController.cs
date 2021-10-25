@@ -24,7 +24,7 @@ namespace bike_web.Controllers
                             h_rank=h.hrank,
                             h_img=h.himg,
                             oc_artitleTitleID=oc.article_title_id,
-                            oc_allStar=oc.all_star_summary,
+                            oc_allStar= (double?)oc.all_star_summary,
                         }).OrderByDescending(e => e.oc_allStar).Take(3).ToList();
 
             
@@ -43,7 +43,7 @@ namespace bike_web.Controllers
                               h_rank = h.hrank,
                               h_img = h.himg,
                               oc_artitleTitleID = oc.article_title_id,
-                              oc_allStar = oc.all_star_summary,
+                              oc_allStar = (double?)oc.all_star_summary,
                           }).OrderBy(e => e.h_ID).ToList();
             else
                 所有官方路線 = (from h in db.Homes
@@ -58,7 +58,7 @@ namespace bike_web.Controllers
                               h_rank = h.hrank,
                               h_img = h.himg,
                               oc_artitleTitleID = oc.article_title_id,
-                              oc_allStar = oc.all_star_summary,
+                              oc_allStar = (double?)oc.all_star_summary,
                           }).OrderBy(e => e.h_ID).ToList();
 
             //var 所有官方路線 = (from h in db.Homes
@@ -104,32 +104,45 @@ namespace bike_web.Controllers
 
         public ActionResult officialRoute()
         {
-
-
-            KSBikeEntities db = new KSBikeEntities();
-
-            var off_routes = db.Homes.OrderBy(m => m.id).ToList();
-            return View(off_routes);
+            return View();
         }
 
         public ActionResult privateRoute()
         {
-
-            return View();
+            if (Session["id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else {
+                return View();
+            }
+            
         }
 
         public ActionResult memberPage()
         {
 
-            return View();
+            if (Session["id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public ActionResult routeEditPage()
         {
 
-            return View();
+            if (Session["id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
-
-       
     }
 }

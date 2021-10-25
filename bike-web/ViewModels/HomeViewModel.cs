@@ -47,5 +47,6 @@ namespace bike_web.ViewModels
         public List<popularRoute> offcialPopularRoute { get; set; }
         public List<popularRoute> offcialAllRoute { get; set; }
         public List<popularArticle> privatePopularArticle { get; set; }
+
     }
 }
