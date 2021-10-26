@@ -121,11 +121,11 @@ namespace bike_web.Controllers
 
         public ActionResult memberPage()
         {
-            KSBikeEntities db = new KSBikeEntities();
-            var id = Convert.ToInt32(Session["id"]);
-            var mem = db.users
-                .Where(m => m.id == id)
-                .FirstOrDefault();
+            //KSBikeEntities db = new KSBikeEntities();
+            //var id = Convert.ToInt32(Session["id"]);
+            //var mem = db.users
+            //    .Where(m => m.id == id)
+            //    .FirstOrDefault();
             if (Session["id"] == null)
             {
                
