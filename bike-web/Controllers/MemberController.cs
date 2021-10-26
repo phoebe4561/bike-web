@@ -84,7 +84,7 @@ namespace bike_web.Controllers
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }
-        public ActionResult MemberInfo()
+        public ActionResult MemberPage()
         {
             KSBikeEntities db = new KSBikeEntities();
             var id = Convert.ToInt32(Session["id"]);
@@ -97,7 +97,7 @@ namespace bike_web.Controllers
             }
             else
             {
-                return RedirectToAction("memberPage", "Home");
+                return View(mem);
             }
             
         }
