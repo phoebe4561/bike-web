@@ -109,14 +109,8 @@ namespace bike_web.Controllers
 
         public ActionResult privateRoute()
         {
-            if (Session["id"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else {
                 return View();
-            }
-            
+           
         }
 
         public ActionResult memberPage()
