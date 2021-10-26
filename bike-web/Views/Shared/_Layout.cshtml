@@ -38,43 +38,35 @@
                         <li class="nav-item px-lg-4 px-0">
                             <a class="nav-link" href="/Home/officialRoute">鐵馬路線</a>
                         </li>
-                        <li class="nav-item px-lg-4 px-0">
-                            <a class="nav-link" href="/Home/privateRoute">私人推薦</a>
-                        </li>
-                        <li class="nav-item px-lg-4 px-0">
-                            <a class="nav-link" href="/shopIndex/shopIndex">套裝行程</a>
-                        </li>
-
-
                         @if (Session["id"] != null)
                         {
+                            <li class="nav-item px-lg-4 px-0">
+                                <a class="nav-link" href="/Home/privateRoute">私人推薦</a>
+                            </li>
+                            <li class="nav-item dropdown px-lg-4 px-0">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 會員中心 </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a  href="/Member/MemberPage" class="dropdown-item">我的推薦&收藏</a></li>
+                                    <li><a class="dropdown-item" href="/Home/routeEditPage">路線編輯</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else { 
 
-            <li class="nav-item dropdown px-lg-4 px-0">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 會員中心 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/Home/memberPage">我的推薦&收藏</a></li>
-                    <li><a class="dropdown-item" href="/Home/routeEditPage">路線編輯</a></li>
-                    <li><a class="dropdown-item" href="/shopIndex/myorder">我的訂單</a></li>
-                </ul>
-            </li>
-}
-        else
-        {
-
-        }
+                        }
 
                     </ul>
-                    @if (Session["id"] != null)
-                    {
-        <a href="/shopIndex/shoppingCar"><img src="~/Images/winni/cart.png" style="height:45px;"></img></a>}&emsp;&emsp;
                     <div id="divLoginAndLogout">
                         @if (Session["id"] == null)
                         {
-            <button id="LoginForModal" class="btn btn-primary px-4 me-3" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
-                            <button id="RegisterForMal" class="btn btn-outline-secondary px-4 me-3" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</button> }
+                            <button id="LoginForModal" class="btn btn-primary px-4 me-3" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
+                            <button id="RegisterForMal" class="btn btn-outline-secondary px-4 me-3" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</button>
+                        }
                         else
-                        { @*<button id="Logout" class="btn btn-outline-secondary px-4 me-3">登出</button>*@
-                                        <a href="@Url.Action("Logout","Member")" id="Logout" class="btn btn-outline-secondary px-4 me-3">登出</a>}
+                        {
+                            @*<button id="Logout" class="btn btn-outline-secondary px-4 me-3">登出</button>*@
+                            <a href="@Url.Action("Logout","Member")" id="Logout" class="btn btn-outline-secondary px-4 me-3">登出</a>
+                        }
 
                     </div>
                 </div>
@@ -90,7 +82,6 @@
     <!-- login form -->
     @using (Html.BeginForm("Login", "Member"))
     {
-
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <!--aria-hidden="true" 在f12會看不到整個的modal dialog屬性-->
     <div class="modal-dialog modal-dialog-centered">
@@ -120,7 +111,6 @@
         </div>
     </div>
 </div>
-
     }
     <!-- Register form -->
     @using (Html.BeginForm("Register", "Member"))
@@ -171,7 +161,7 @@
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)*@
-    <script>
+<script>
     //非同步註冊
         $("#btnRegister").click(function () {
             var userRegister = {
@@ -248,7 +238,7 @@
 
 
 
-    </script>
+</script>
 </body>
 
 </html>

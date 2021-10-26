@@ -11,33 +11,21 @@ namespace bike_web.Models
 {
     using System;
     using System.Collections.Generic;
-
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class order
     {
         public int id { get; set; }
         public int user_id { get; set; }
-        [DisplayName("會員帳號")]
         public string user_name { get; set; }
-        [DisplayName("產品名稱")]
         public string product_name { get; set; }
-        [DisplayName("產品圖示")]
         public string product_img { get; set; }
-        [DisplayName("優惠價")]
         public Nullable<int> product_price { get; set; }
-        [DisplayName("購買數量")]
         public Nullable<int> order_num { get; set; }
-        [DisplayName("訂單總價")]
         public Nullable<int> order_price_total { get; set; }
-        [DisplayName("下單日期")]
         public string order_date { get; set; }
-        [DisplayName("出發日期")]
         public string go_date { get; set; }
-        [DisplayName("付款狀況")]
         public string order_pay { get; set; }
-
+    
         public virtual user user { get; set; }
     }
 }
