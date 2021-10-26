@@ -1,4 +1,5 @@
-﻿@{
+﻿@model  bike_web.Models.user
+@{
     ViewBag.Title = "memberPage";
 }
 
@@ -9,17 +10,18 @@
             <div class="card-header bg-primary">個人資訊</div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
-                        <img src="./images/banner1.jpg" class="img-fluid" />
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="list-unstyled mb-0">
-                            <li class="py-2">姓名：<span></span></li>
-                            <li class="py-2">信箱：<span></span></li>
-                            <li class="py-2">生日：<span></span></li>
-                            <li class="py-2">性別：<span></span></li>
-                        </ul>
-                    </div>
+                    @{
+                        
+
+                            <div class="col-md-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="py-2">姓名：<span>@Model.username</span></li>
+                                    <li class="py-2">信箱：<span>@Model.email</span></li>
+                                    <li class="py-2">生日：<span>@String.Format("{0:yyyy/MM/dd}", Model.birthday)</span></li>
+                                </ul>
+                            </div>
+                        
+                    }
                 </div>
             </div>
             <div class="card-footer"></div>

@@ -84,5 +84,22 @@ namespace bike_web.Controllers
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }
+        public ActionResult MemberInfo()
+        {
+            KSBikeEntities db = new KSBikeEntities();
+            var id = Convert.ToInt32(Session["id"]);
+            var mem = db.users
+                .Where(m => m.id == id)
+                .FirstOrDefault();
+            if (mem == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("memberPage", "Home");
+            }
+            
+        }
     }
 }
