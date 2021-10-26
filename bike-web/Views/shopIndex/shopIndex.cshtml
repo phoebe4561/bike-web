@@ -1,0 +1,188 @@
+﻿@model IEnumerable<bike_web.Models.product>
+@{
+    ViewBag.Title = "shopIndex";
+}
+
+<!-- banner -->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/winni/A01.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/winni/A02.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/winni/A03.jpg" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<div class="container-fluid py-1 mb-0 mt-3 px-0">
+    <div class="container ">
+        <h4 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3 mb-0">精 選 套 裝 行 程</h4>
+
+        <!-- product -->
+
+        <div class="row text-center mt-0">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-md-6 col-lg-4 mb-3 g-5 my-4 mx-auto">
+                    <div class="thumbnail">
+
+                        <img src="~/images/winni/@item.product_img"
+                             style="width:340px;height:270px;" />
+                        <div class="position-absolute" style="top: 20px; right: 20px">
+                            <button type="button" class="btn btn-outline-danger rounded-pill">
+                                <i class="bi bi-heart fs-5"></i>
+                            </button>
+                        </div>
+                        <div class="caption text-center">
+                            <h5 class="my-3 ">@item.product_name</h5>
+                            <h5 class="my-1 text-danger mb-3"><strong>優惠價:@item.product_price</strong></h5>
+
+                            <div class="row justify-content-center mt-2">
+                                <div class="col-6">
+                                    <a href="@Url.Action("AddCar","Member")?id=@item.id"
+                                       class="btn btn-primary">加入購物車</a>
+                                </div>
+
+                                <!-- Button trigger modal -->
+                                <div class="col-6 ">
+                                    <button type="button" class="btn btn-info text-white " data-bs-toggle="modal" data-bs-target="#staticBackdrop_@item.id">
+                                        想了解行程
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Modal 1-->
+
+                            <div class="modal fade mx-2" id="staticBackdrop_1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content ">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="staticBackdropLabel">漫遊．旗山人文三日遊</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body ">
+                                            <p class="badge bg-darkBrown font-18 px-3 ">第一天</p>
+                                            <p class="font-18">鍾理和紀念館 →雙溪熱帶樹木園 →東門樓 →原鄉緣紙傘文化村 </p>
+                                            <p class="font-16 text-danger mt-2"><strong>早餐:&nbsp;</strong>敬請自理 &emsp;&nbsp;<strong>午餐:&nbsp;</strong>大一食堂 &emsp;&nbsp;<strong>晚餐:&nbsp;</strong>旗山米粉亮&emsp;&emsp;<strong>入住:&nbsp;</strong>旗山三合院民宿</p>
+                                            <img src="~/images/winni/CC02.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>東門樓</p>
+                                            <p class="badge bg-darkBrown font-18 px-3 ">第二天</p>
+                                            <p>敬字亭 →旗山糖廠 →旗山老街 →旗山生活文化園區 </p>
+                                            <p class="font-16 text-danger mt-2"><strong>早餐:&nbsp;</strong>民宿早餐 &emsp;&nbsp;<strong>午餐:&nbsp;</strong>旗山紅糟肉 &emsp;&nbsp;<strong>晚餐:&nbsp;</strong>六梅草堂&emsp;&emsp;<strong>入住:&nbsp;</strong>旗山三合院民宿</p>
+                                            <img src="~/images/winni/CC03.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>旗山糖廠</p>
+                                            <p class="badge bg-darkBrown font-18 px-3 ">第三天</p>
+                                            <p>旗山中山公園 →高雄孔廟 →紫竹寺．宋江文化園區 →內門順賢宮 →308高地 </p>
+                                            <p class="font-16 text-danger mt-2"><strong>早餐:&nbsp;</strong>民宿早餐 &emsp;<strong>午餐:&nbsp;</strong>奇山石窯景觀餐廳 &emsp;<strong>晚餐:&nbsp;</strong>敬請自理&emsp;&emsp;<strong>入住:&nbsp;</strong>溫暖的家</p>
+                                            <img src="~/images/winni/CC06.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>旗山生活文化園區</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Model 2-->
+                            <div class="modal fade mx-2" id="staticBackdrop_2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">漫遊．高雄美濃生態之旅二日</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="badge bg-darkBrown font-18 px-3 ">第一天</p>
+                                            <p class="font-18">美濃市區 →原鄉緣紙傘文化村 →美濃環湖觀景自行車道 →美濃客家文物館 </p>
+                                            <p class="font-16 text-danger mt-2">
+                                                <strong>早餐:&nbsp;</strong>敬請自理 &emsp;&nbsp;<strong>午餐:&nbsp;</strong>
+                                                美濃林家粄條總店 &emsp;&nbsp;<strong>晚餐:&nbsp;</strong>
+                                                阿香的廚房&emsp;&emsp;<strong>入住:&nbsp;</strong>美濃雲山居民宿
+                                            </p>
+                                            <img src="~/images/winni/M05.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>美濃環湖觀景</p>
+                                            <img src="~/images/winni/CC01.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>原鄉緣紙傘文化村</p>
+                                            <img src="~/images/winni/M03.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>美濃客家文物館</p>
+                                            <p class="badge bg-darkBrown font-18 px-3 ">第二天</p>
+                                            <p>雙溪熱帶樹木園 →黃蝶翠谷 →神威天台山 →十八羅漢山 →扇平森林生態科學園區 </p>
+                                            <p class="font-16 text-danger mt-2"><strong>早餐:&nbsp;</strong>民宿早餐 &emsp;&nbsp;<strong>午餐:&nbsp;</strong>美濃古老客家菜餐廳 &emsp;&nbsp;<strong>晚餐:&nbsp;</strong>敬請自理&emsp;&emsp;<strong>入住:&nbsp;</strong>溫暖的家</p>
+                                            <img src="~/images/winni/CC07.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>雙溪熱帶樹木園</p>
+                                            <img src="~/images/winni/CC05.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>扇平森林生態科學園區</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Model 3-->
+                            <div class="modal fade mx-2" id="staticBackdrop_4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">漫騎小旅．高雄港都單車騎遊1日</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="badge bg-darkBrown font-18 px-3 ">一日輕旅行</p>
+                                            <p class="font-18">光榮碼頭 →西臨港線自行車道 →真愛碼頭(十二號碼頭) →駁二藝術特區 →高雄港漁人碼頭 →河邊海鮮餐廳D →旗津環島踩風自行車道 →旗后燈塔。高雄燈塔 →旗后砲台 →星空隧道 →旗津海岸公園 →彩虹教堂 →旗津海水浴場 →旗津活海產 →旗津風車公園 </p>
+                                            <p class="font-16 text-danger mt-2">
+                                                <strong>早餐:&nbsp;</strong>敬請自理 &emsp;&nbsp;<strong>午餐:&nbsp;</strong>
+                                                旗后活海產 &emsp;&nbsp;<strong>晚餐:&nbsp;</strong>
+                                                敬請自理&emsp;&emsp;<strong>入住:&nbsp;</strong>溫暖的家
+                                            </p>
+                                            <img src="~/images/winni/DD06.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>光榮碼頭</p>
+                                            <img src="~/images/winni/DD05.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>旗津老街</p>
+                                            <img src="~/images/winni/DD03.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>星空隧道</p>
+                                            <img src="~/images/winni/DD04.jpg"
+                                                 style="width:550px;height:350px;" /><br /><p>旗津海岸公園及彩虹教堂</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+
+            <br />
+
+        </div>
+
+    </div>

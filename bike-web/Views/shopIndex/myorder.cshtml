@@ -1,0 +1,84 @@
+﻿@model IEnumerable<bike_web.Models.order>
+
+@{
+    ViewBag.Title = "我的訂單";
+}
+
+<div class="container1 mt-4 px-4 mb-3">
+    <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3 mb-3" style="width:250px;"> 我 的 訂 單</h5>
+
+
+    <table class="table table-striped text-center">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.user_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_img)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.order_num)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.order_price_total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.order_date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.go_date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.order_pay)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product_img)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product_price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order_num)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order_price_total)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.go_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order_pay)
+                </td>
+
+                <td>
+                    <a href="@Url.Action("DeleteCar")?id=@item.id"
+                       class="btn btn-danger"
+                       onclick="return confirm('確定放棄購買 @item.product_name 嗎?')">刪除購物車</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
