@@ -88,18 +88,44 @@ namespace bike_web.Controllers
         }
         public ActionResult MemberPage()
         {
+            //KSBikeEntities db = new KSBikeEntities();
+            MemberPageViewModel MPVM = new MemberPageViewModel();
             KSBikeEntities db = new KSBikeEntities();
-            var id = Convert.ToInt32(Session["id"]);
-            var mem = db.users
-                .Where(m => m.id == id)
-                .FirstOrDefault();
-            if (mem == null)
+            var userid = Convert.ToInt32(Session["id"]);
+            MPVM.User = db.users.Where(e => e.id == userid).FirstOrDefault();
+            MPVM.private_Routes = db.private_route.Where(p => p.user_id == userid).ToList();
+            MPVM.userFavoritesByOF = (from o in db.Homes
+                                         join f in db.user_favorite on o.id equals f.official_route_id
+                                         select new UserFavorite
+                                         {
+                                             user_fav_id=f.user_fav_id,//哪一位使用者點了喜歡
+                                             fav_id=f.id,//我的最愛的ID
+                                             official_route_id =o.id,//網站路線的ID
+                                             official_By_Home_title=o.hname//網站路線的標題
+                                         }).Take(5).ToList();
+            MPVM.userFavoritesByPR = (from p in db.private_route
+                                      join f in db.user_favorite on p.id equals f.private_route_id
+                                      select new UserFavorite
+                                      {
+                                          user_fav_id = f.user_fav_id,//哪一位使用者點了喜歡
+                                          fav_id = f.id,//我的最愛的ID
+                                          private_route_id=f.private_route_id,//私人路線的ID
+                                          article_title = p.article_title,//私人路線的標題
+                                      }).Take(5).ToList();
+          
+
+            //var mem = db.users
+            //    .Where(m => m.id == id)
+            //    .FirstOrDefault();
+
+
+            if (Session["id"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                return View(mem);
+                return View(MPVM);
             }
             
         }

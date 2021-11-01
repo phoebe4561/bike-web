@@ -182,7 +182,9 @@
     <Compile Include="ViewModels\DBConnectionString.cs" />
     <Compile Include="ViewModels\EditPrivateRouteViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\MemberPageViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModels.cs" />
+    <Compile Include="ViewModels\UserFavorite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\all.css" />
