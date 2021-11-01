@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DBConnectionString.cs" />
+    <Compile Include="ViewModels\EditPrivateRouteViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModels.cs" />
   </ItemGroup>
@@ -306,9 +307,11 @@
     <Content Include="Views\Home\privateRoute.cshtml" />
     <Content Include="Views\Home\routeEditPage.cshtml" />
     <Content Include="Views\Member\MemberPage.cshtml" />
+    <Content Include="Views\Member\routeEditPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="imageForPrivateRoute\" />
     <Folder Include="Views\MemberLogin\" />
   </ItemGroup>
   <ItemGroup>
