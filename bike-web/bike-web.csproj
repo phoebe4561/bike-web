@@ -130,6 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\offRouteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -183,6 +184,7 @@
     <Compile Include="ViewModels\EditPrivateRouteViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\MemberPageViewModel.cs" />
+    <Compile Include="ViewModels\offRouteViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModels.cs" />
     <Compile Include="ViewModels\UserFavorite.cs" />
   </ItemGroup>
@@ -310,6 +312,10 @@
     <Content Include="Views\Home\routeEditPage.cshtml" />
     <Content Include="Views\Member\MemberPage.cshtml" />
     <Content Include="Views\Member\routeEditPage.cshtml" />
+    <Content Include="Views\offRoute\List.cshtml" />
+    <Content Include="Views\offRoute\初級List.cshtml" />
+    <Content Include="Views\offRoute\中級List.cshtml" />
+    <Content Include="Views\offRoute\高級List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

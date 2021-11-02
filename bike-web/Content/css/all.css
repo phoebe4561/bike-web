@@ -12926,3 +12926,128 @@ a {
   padding: 8px 12px;
   margin-top: 10px;
 }
+
+.nav-tabs .nav-link.active {
+  border-bottom: 4px solid #f4d19b;
+  font-size: 1.25rem;
+}
+
+.portfolio-item {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-item:hover img {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.portfolio-item:hover .portfolio-info {
+  opacity: 1;
+  top: calc(50% - 30px);
+}
+
+.portfolio-img {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.portfolio-info {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  text-align: center;
+  top: 10%;
+  left: 0;
+  right: 0;
+  color: #fff;
+}
+
+.heartbtn {
+  z-index: 100;
+}
+
+.closebtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 32px 8px;
+  border-radius: 10px;
+  background-color: #d7e9f7;
+  color: #d7e9f7;
+  position: absolute;
+  top: 50%;
+  right: -60px;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  z-index: 900;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.closebtn:hover {
+  background-color: #f4d19b;
+  color: #fff;
+}
+
+.closebtn:hover i {
+  color: #fff;
+}
+
+.closebtn i {
+  color: #73c0d8;
+  font-size: 30px;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+
+.sidenav {
+  background-color: #d7e9f7;
+  -webkit-box-shadow: 0px 3px 6px #000029;
+          box-shadow: 0px 3px 6px #000029;
+  width: 320px;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  z-index: 999;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.sidenav.toggle {
+  left: -320px;
+}
+
+.sidenav.toggle .closebtn {
+  background-color: #f4d19b;
+  color: #fff;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.sidenav.toggle .closebtn:hover {
+  background-color: #d7e9f7;
+}
+
+.sidenav.toggle .closebtn i {
+  color: #fff;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.custom-select {
+  width: 50%;
+}
