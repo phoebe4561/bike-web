@@ -38,8 +38,8 @@
                     <li class="py-2">
                         <a href="@Url.Action("", "")" class="text-black">@item.article_title</a><!--連到私人路線-->
                         @*<a class="float-end" href="@Url.Action("DeleteByPR","Member")">刪除</a>*@
-                        <button id="EditForModal" class="btn btn-primary px-4 me-3" data-bs-toggle="modal" data-bs-target="#EditModal">編輯</button>
-                        <a href="@Url.Action("DeleteByPrivate", "Member", new { PRid = item.id})" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
+                        <a href="@Url.Action("EditbyPrivateRoute","Member",new { id = item.id})" class="btn btn-primary" px-4 me-5>編輯</a>
+                        <a href="@Url.Action("DeleteByPrivate", "Member", new { id = item.id})" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
                         @*<a class="float-end" href="@Url.Action("EditByPR","Member")">編輯</a>*@
                     </li>
                     }
@@ -61,14 +61,14 @@
                     {
                         <li class="py-2">
                             <a href="@Url.Action("","")">@item.official_By_Home_title</a><!--連到網站路線-->
-                            <a href="@Url.Action("DeleteByoffical", "Member", new {officailByHomeId=item.official_route_id })" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
+                            <a href="@Url.Action("DeleteByoffical_fav", "Member", new {id=item.official_route_id })" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
                         </li>
                     }
                     @foreach(var item in Model.userFavoritesByPR)
                     {
                         <li class="py-2">
                             <a href="@Url.Action("","")">@item.article_title</a><!--連到私人路線-->
-                            <a href="@Url.Action("DeleteByPrivate", "Member", new {PrivateRouteId=item.private_route_id})" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
+                            <a href="@Url.Action("DeleteByPrivate_fav", "Member", new {id=item.private_route_id})" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
                         </li>
                     }
 
@@ -79,79 +79,5 @@
         </div>
     </div>
 </div>
-
-
-<!--私人推薦編輯-->
-
-    <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-lightBlue">
-                    <h5 class="modal-title fw-bold font-24" id="EditModalLabel">編輯私人推薦</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="User" class="form-label">作者</label>
-                        <input type="text" class="form-control my-2" id="inputUser" value="@Session["username"]" readonly="readonly" />
-                    </div>
-                    <div class="mb-1">
-                        <label for="inputTitle" class="form-label">圖片上傳</label>
-                        <input type="file" class="form-control my-2" id="inputImg" multiple="multiple"/>
-                    </div>
-                    <div class="mb-1">
-                        <label for="inputTitle" class="form-label">文章標題</label>
-                        <input type="text" class="form-control my-2" id="inputArticleTitle" />
-                    </div>
-                    <div class="mb-1">
-                        <label for="inputContext" class="form-label">文章內容</label>
-                        <input type="text" class="form-control my-2" id="inputArticleContext" />
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="submit" id="btnEditPR" class="btn btn-primary w-100 fw-bold">送出</button>
-
-                </div>
-                <div id="divEditPR" class="position-relative d-flex justify-content-center my-4 p-1">
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <script>
-    $("#btnSubmit").click(function () {
-
-            $.ajax({
-            url: '@Url.Action("editByPrivateRoute", "Member")',
-                type: 'POST',
-                data: JSON.stringify(),//記得檢查
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    if (result.toString() == "ok") {
-                        $('#divUploadSuccessORFail').html('<div class="alert alert-success" style="width: 100%;" role="alert">路線上傳成功</div>');
-                        setTimeout(function () {window.location.href='@Url.Action("MemberPage","Member")' }, 1000);
-                    }
-                    else if (result.toString() == "titleAndUserdouble") {
-                        $("#divUploadSuccessORFail").html('<div class="alert alert-warning" style="width: 100%; text-align:center;" role="alert">您所發表的主題已存在</div>');
-                        setTimeout(function () { $('#inputArticleTitle').html(''); }, 3000);
-                    }
-                    else {
-                        $("#divUploadSuccessORFail").html('<div class="alert alert-danger" role="alert">上傳失敗，請再試一次！</div>');
-                        setTimeout(function () { $('#divUploadSuccessORFail').html(''); }, 3000);
-                    }
-                },
-                error: function (result) {
-                    $('#divRegister').html('<div class="alert alert-danger" role="alert">連線錯誤，請重開網頁再試一次</div>');
-                    setTimeout(function () { $('#divUploadSuccessORFail').html(''); }, 3000);
-                }
-
-            });
-            return false;
-
-    })
-
-    </script>
+       
 

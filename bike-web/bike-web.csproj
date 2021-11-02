@@ -184,6 +184,7 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\MemberPageViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModels.cs" />
+    <Compile Include="ViewModels\RoutePageDataViewModel.cs" />
     <Compile Include="ViewModels\UserFavorite.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +311,7 @@
     <Content Include="Views\Home\routeEditPage.cshtml" />
     <Content Include="Views\Member\MemberPage.cshtml" />
     <Content Include="Views\Member\routeEditPage.cshtml" />
+    <Content Include="Views\Member\editByPrivateRoute.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
