@@ -14,6 +14,6 @@ namespace bike_web.ViewModels
         public List<Home> official_Route_BY_Home{get; set;}
         public List<UserFavorite> userFavoritesByOF { get; set; }
         public List<UserFavorite> userFavoritesByPR { get; set; }
-        
+        public List<private_route> private_Routes_For_Ones { get; set; }
     }
 }
