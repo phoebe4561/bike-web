@@ -1,0 +1,506 @@
+﻿@model bike_web.ViewModels.OfficialVM
+@*@using MvcPaging*@
+
+<head>
+    <!--map-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <!--!fontawsome-->
+    <script src="https://kit.fontawesome.com/eb2b622fe6.js" crossorigin="anonymous"></script>
+    <!--bs5 icon-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/Content/css/all.min.css" />
+    <style>
+        .arrow {
+            width: 25px;
+        }
+    </style>
+    @*<script src="~/Scripts/js/jquery-ui.min.js"></script>*@
+    <script src="~/Scripts/js/jquery-3.6.0.min.js"></script>
+</head>
+
+<!-- 路線介紹 -->
+
+<div class="routeTitle">
+    @{
+        if (@Model.RouteHome.Count > 1)
+        { <h3>Error : Home資料</h3> }
+        foreach (var data in Model.RouteHome)
+        {
+            string rank = $"{@data.hrank}路線";
+            <h1 class="bg-primary px-5 py-3">
+                @data.hname
+                <span>
+                    <a href="#" class="btn btn-light mx-3">@rank</a>
+                    <!-- hashtag -->
+                    <a class="btn font-16 btn-outline-secondary" href="#">#hashtag1</a>
+                    <a class="btn font-16 btn-outline-secondary" href="#">#hashtag2</a>
+                    <a class="btn font-16 btn-outline-secondary" href="#">#hashtag3</a>
+                </span>
+            </h1>
+        } }
+
+
+</div>
+
+<div class="container-fluid">
+    <div class="row py-2">
+        @{
+            foreach (var data in Model.RouteInfo)
+            {
+                if (@data.official_data_catalog == "banner")
+                {
+                    string[] split1 = @data.official_data_img_info.Split('*');
+                    string[] split2 = @data.official_data_content.Split('*');
+                    <div class="col-12 col-md-6">
+                        <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">路線介紹</h3>
+                        @foreach (string aaa in split1)
+                        {<p class="card-text pl-3">@aaa</p>}
+                        <br />
+                        <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">交通資訊</h3>
+                        @foreach (string aaa in split2)
+                        {<p class="card-text pl-3">@aaa</p>}
+                    </div>
+                    @*<div class="col-12 col-md-6">
+                            <img src="~/images/image_mia/@data.official_data_img" alt="" class="img-fluid" />
+                        </div>*@
+
+
+                }
+
+            }
+        }
+
+        <!--carosuel-->
+
+        <div id="carouselExampleControls" class="carousel slide col-12 col-md-6" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @{
+                    int count = 0;
+                    foreach (var data in Model.RouteInfo)
+                    {
+                        if (@data.official_data_catalog.Contains("point"))
+                        {
+                            if (count == 0)
+                            {
+                                <div class="carousel-item active">
+                                    <img src="~/Images/image_mia/@data.official_data_img" class="d-block w-100" alt="...">
+                                    <div class="carousel-caption">
+                                        <h3>@data.official_data_img_info</h3>
+                                    </div>
+                                </div>
+                            }
+                            if (count > 0)
+                            {
+                                <div class="carousel-item">
+                                    <img src="~/Images/image_mia/@data.official_data_img" class="d-block w-100" alt="...">
+                                    <div class="carousel-caption">
+                                        <h3>@data.official_data_img_info</h3>
+                                    </div>
+                                </div>
+                            }
+                            count++;
+                        }
+                    }
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-info" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon  bg-info" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- 路線地圖 -->
+
+<div class="container-fluid bg-lighter py-2">
+    <h5 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">路線地圖</h5>
+    <hr />
+    <!-- map -->
+    <div class="row">
+        <!-- 路線地圖 -->
+        <div class="col-12 col-md-8">
+            <!--地圖的 收尋列-->
+            @*<div class="form-group">
+                    <input placeholder="輸入景點名稱" type="text" class="form-control" ref="site" v-model="site" />
+                </div>*@
+            <div id="map" class="embed-responsive embed-responsive-16by9"></div>
+            <!--<div class="d-flex my-2 align-items-center">
+            <div>騎車路線:</div>-->
+            @* <button type="button" class="btn btn-outline-secondary mx-1" v-for="f in features" click="openInfoWindows(f.properties.id)">{{ f.properties.name }}</button>*@
+            <!--</div>
+            <div class="d-flex my-2 align-items-center">
+                <div>鄰近美食:</div>-->
+            @*<button type="button" class="btn btn-outline-secondary mx-1" v-for="f in foods" click="openInfoWindows(f.properties.id)">{{ f.properties.name }}</button>*@
+            <!--</div>-->
+            <!-- 放評論摘要的div at map-search-location-comment-->
+            @*<div class="row" v-if="place != null" id="mapComment">
+                    <div class="col" v-if="place.reviews != null">
+                        <h5>網友評論：</h5>
+                        <div class="row" v-for="p in place.reviews">
+                            <div class="col">
+                                <ul class="list-unstyled">
+                                    <li class="media">
+                                        <img :src="p.profile_photo_url" class="img-fluid mr-3" />
+                                        <div class="media-body">
+                                            <h5 class="mt-0 mb-1">
+                                                <a target="_blank" :href="p.author_url">{{ p.author_name }}</a>
+                                            </h5>
+                                            <p>{{ p.text }}</p>
+                                            <h6>{{ p.relative_time_description }}</h6>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+        <!-- 路線評論  -->
+        <div class="col-12 col-md-4 py-md-0 py-3">
+            <div class="card mb-2">
+                <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">路線相關評價</h5>
+
+                @*<div class="card-body">
+                        @{
+                            foreach (var data in Model.RouteComment)
+                            {
+                                var stars = data.user_give_star_num;
+                                var timeSTR = @data.datetime.ToString();
+                                var time = timeSTR.Substring(0, timeSTR.IndexOf(' '));
+                                <div class="card-title">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <label class="font-18"> @data.userName </label>
+                                            @for (int i = 0; i < stars; i++)
+                                            {<img src="~/images/image_mia/star.png" style="width: 25px" />}
+                                        </div>
+                                        <p>@time</p>
+                                    </div>
+                                    <h6>@data.comment</h6>
+                                </div>
+                            }
+                        }
+                    </div>*@
+                <!--MVC PAGING-->
+                <div class="card-body">
+                    @*@using (Html.BeginForm("theRoute", "COfficialR", FormMethod.Post))*@
+                    @*{*@
+
+                    <div class="card-body">
+                        @*@{*@
+                        @*//foreach (var data in Model.CommentPaged)
+                            //{
+                            <h2>@data.datetime</h2>*@
+                        @*var stars = data.user_give_star_num;
+                            var timeSTR = @data.datetime.ToString();
+                            var time = timeSTR.Substring(0, timeSTR.IndexOf(' '));
+                            <div class="card-title">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <label class="font-18"> @data.userName </label>
+                                        @for (int i = 0; i < stars; i++)
+                                        {<img src="~/images/image_mia/star.png" style="width: 25px" />}
+                                    </div>
+                                    <p>@time</p>
+                                </div>
+                                <h6>@data.comment</h6>
+                            </div>*@
+                        @* } *@
+                        @* } *@
+                    </div>
+                    <div class="pager">
+                        @*@Html.Pager()*@
+                        @*@Html.Pager(Model.CommentPaged.PageSize, Model.CommentPaged.PageNumber, Model.CommentPaged.TotalItemCount)*@
+                        @*Displaging @Model.CommentPaged.ItemStart - @Model.CommentPaged.ItemEnd of @Model.CommentPaged.TotalItemCount item(s)*@
+                    </div>
+                    @*}*@
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col bg-light m-2 mx-4 p-1" id="arrowF"><img src="~/Images/image_mia/left-arrow.png" class="arrow"></div>
+                <div class="col bg-light m-2 mx-4 p-1" id="arrowN"><img src="~/Images/image_mia/right-arrow.png" class="arrow"></div>
+            </div>
+
+            <script type="">
+                $("#arrowN").click(function () { console.log("右鍵按紐"); postPage(page); })
+                                    //-----------------
+
+            </script>
+            @*<div class="card-columns text-center padding-left:20px">
+                    <div class="card">
+                        <img src="~/Images/image_mia/left-arrow.png" class="arrow card-img-top" />
+                    </div>
+                    <div class="card text-center">
+                        <img src="~/Images/image_mia/right-arrow.png" class="arrow  card-img-top" />
+                    </div>
+                </div>*@
+
+
+        </div>
+    </div>
+
+    <!-- 評價留言 -->
+    <form class="py-3">
+        <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">我的評價</h5>
+        <div class="card-body">
+            <!-- 暱稱直接抓資料庫註冊的名字(信箱)即可 -->
+            <div class="row">
+                @*<div class="col-6 my-2">
+                        <input type="date" class="form-control" id="exampleFormControlInput1" />
+                    </div>*@
+                <div class="col-6">
+                    <span id="star1" class="font-32 s">☆</span>
+                    <span id="star2" class="font-32 s">☆</span>
+                    <span id="star3" class="font-32 s">☆</span>
+                    <span id="star4" class="font-32 s">☆</span>
+                    <span id="star5" class="font-32 s">☆</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="my-2">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="內容" rows="3"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">送出</button>
+        </div>
+    </form>
+    <!-- 後面加個上下頁 查看評分 -->
+</div>
+
+<!-- middle navbar -->
+<div class="container-fluid border-bottom border-1 border-gray-300">
+    <div class="container">
+        <ul class="nav nav-tabs justify-content-between justify-content-lg-start" id="nav-tab" role="tablist">
+            <li class="nav-item">
+                <button @*onclick="goToTab()"*@
+                        class="nav-link active py-3"
+                        id="nav-intro-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-intro"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-intro"
+                        aria-selected="true">
+                    景點
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link py-3"
+                        id="nav-food-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-food"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-food"
+                        aria-selected="false">
+                    美食
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link py-3"
+                        id="nav-supply-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-supply"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-supply"
+                        aria-selected="false">
+                    補給站
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link py-3"
+                        id="nav-fix-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-fix"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-fix"
+                        aria-selected="false">
+                    維修站
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- main content -->
+<div class="container py-2">
+    <div class="row">
+        <div class="tab-content" id="myTabContent">
+            <!-- 官方景點介紹 -->
+            <div class="tab-pane fade show active" id="nav-intro" role="tabpanel" aria-labelledby="nav-intro-tab">
+                <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">景點</h3>
+                <div class="row">
+                    @{
+                        foreach (var data in Model.RouteInfo)
+                        {
+                            if (@data.official_data_catalog.Contains("point"))
+                            {
+                                var stars = Int32.Parse(@data.official_data_catalog.Substring(@data.official_data_catalog.Length - 1));
+                                string[] split1 = @data.official_data_content.Split('*');
+                                <div class="col-12 col-md-6">
+                                    <div class="card mb-3">
+                                        <img src="~/images/image_mia/@data.official_data_img" class="card-img-top img-fluid" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@data.official_data_img_info</h5>
+                                            <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                                <div class="badge bg-light font-20 text-darkBrown px-3">
+                                                    @for (int i = 0; i < stars; i++)
+                                                    {<img src="~/images/image_mia/star.png" height="22" />}
+                                                </div>
+                                                @*<div class="badge bg-darkBrown font-18 px-2 align-self-center"><span class="text-primary">5分鐘路程</span></div>*@
+                                            </div>
+                                            @*@string change= @data.official_data_content.ToString().IndexOf('*');*@
+                                            @foreach (string aaa in split1)
+                                            {<p class="card-text">@aaa</p>}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+
+                </div>
+            </div>
+            <!-- 官方美食介紹 -->
+            <div class="tab-pane fade show" id="nav-food" role="tabpanel" aria-labelledby="nav-food-tab">
+                <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">美食</h3>
+                <div class="row">
+
+                    @{
+                        foreach (var data in Model.RouteInfo)
+                        {
+                            if (@data.official_data_catalog.Contains("food"))
+                            {
+                                var stars = Int32.Parse(@data.official_data_catalog.Substring(@data.official_data_catalog.Length - 1));
+                                string[] split1 = @data.official_data_content.Split('*');
+                                <div class="col-12 col-md-6">
+                                    <div class="card mb-3">
+                                        <img src="~/images/image_mia/@data.official_data_img" class="card-img-top" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@data.official_data_img_info</h5>
+                                            <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                                <div class="badge bg-light font-20 text-darkBrown px-3">
+                                                    @for (int i = 0; i < stars; i++)
+                                                    {<img src="~/images/image_mia/star.png" height="22" />}
+                                                </div>
+                                                @* <div class="badge bg-darkBrown font-18 px-2 align-self-center">推薦:<span class="text-primary">大腸包小腸</span></div>*@
+                                            </div>
+                                            @foreach (string aaa in split1)
+                                            {<p class="card-text">@aaa</p>}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        } }
+
+
+                </div>
+            </div>
+            <!-- 補給站 -->
+            <div class="tab-pane fade show" id="nav-supply" role="tabpanel" aria-labelledby="nav-supply-tab">
+
+                @{
+                    foreach (var data in Model.RouteInfo)
+                    {
+                        if (@data.official_data_catalog == "supply")
+                        {
+                            string[] split1 = @data.official_data_content.Split('*');
+                            <div class="card overflow-hidden mb-3">
+                                <div class="row g-0">
+                                    <div class="col-5 col-md-4">
+                                        <img class="w-100 h-100 object-fit: cover" src="~/images/image_mia/@data.official_data_img" alt="helper" />
+                                    </div>
+                                    <div class="col-7 col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold">@data.official_data_img_info</h5> <hr />
+                                            @foreach (string aaa in split1)
+                                            {<p class="card-text mb-2 font-14 text-lightBrown">@aaa</p>}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+                }
+
+            </div>
+            <!-- 維修站 -->
+            <div class="tab-pane fade show" id="nav-fix" role="tabpanel" aria-labelledby="nav-fix-tab">
+                <!-- 維修車站 -->
+                <div class="accordion mb-3" id="faq1">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <span>維修車站</span>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faq1">
+                            @{
+                                foreach (var data in Model.RouteInfo)
+                                {
+                                    if (@data.official_data_catalog == "helper" && data.official_data_img_info == "維修車站")
+                                    {
+                                        <div class="accordion-body">@data.official_data_content</div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- 顧路幫手 -->
+                <div class="accordion mb-3" id="faq2">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                <span>顧路幫手</span>
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#faq2">
+                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#faq2">
+                                @{
+                                    foreach (var data in Model.RouteInfo)
+                                    {
+                                        if (@data.official_data_catalog == "helper" && data.official_data_img_info == "顧路幫手")
+                                        {
+                                            <div class="accordion-body">@data.official_data_content</div>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 將 YOUR_API_KEY 替換成你的 API Key 即可 -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUX6kQOm-gu6o6Gl48_pkCuWkPfOeVjKw&libraries=places"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+
+@*<script type="module">
+                import { googleMap } from "../../Scripts/js/mapJ.js";
+                googleMap;
+    </script>*@
+
+
+
+
+
+
+
