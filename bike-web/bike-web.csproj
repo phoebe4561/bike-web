@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -132,6 +132,7 @@
     <Compile Include="Controllers\COfficialRController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\offRouteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -183,9 +184,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DBConnectionString.cs" />
+    <Compile Include="ViewModels\EditPrivateRouteViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\MemberPageViewModel.cs" />
+    <Compile Include="ViewModels\offRouteViewModel.cs" />
     <Compile Include="ViewModels\OfficialVM.cs" />
     <Compile Include="ViewModels\RegisterViewModels.cs" />
+    <Compile Include="ViewModels\RoutePageDataViewModel.cs" />
+    <Compile Include="ViewModels\UserFavorite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\all.css" />
@@ -347,7 +353,14 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="imageForPrivateRoute\" />
     <Folder Include="Views\MemberLogin\" />
+    <Content Include="Views\Member\routeEditPage.cshtml" />
+    <Content Include="Views\offRoute\List.cshtml" />
+    <Content Include="Views\offRoute\初級List.cshtml" />
+    <Content Include="Views\offRoute\中級List.cshtml" />
+    <Content Include="Views\offRoute\高級List.cshtml" />
+    <Content Include="Views\Member\editByPrivateRoute.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

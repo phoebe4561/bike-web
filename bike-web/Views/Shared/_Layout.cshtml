@@ -38,8 +38,7 @@
                         <li class="nav-item px-lg-4 px-0">
                             <a class="nav-link" href="/Home/officialRoute">鐵馬路線</a>
                         </li>
-                        @if (Session["id"] != null)
-                        {
+
                             <li class="nav-item px-lg-4 px-0">
                                 <a class="nav-link" href="/Home/privateRoute">私人推薦</a>
                             </li>
@@ -47,13 +46,10 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 會員中心 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a  href="/Member/MemberPage" class="dropdown-item">我的推薦&收藏</a></li>
-                                    <li><a class="dropdown-item" href="/Home/routeEditPage">路線編輯</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("routeEditPage","Member")">路線編輯</a></li>
                                 </ul>
                             </li>
-                        }
-                        else { 
 
-                        }
 
                     </ul>
                     <div id="divLoginAndLogout">
@@ -82,34 +78,35 @@
     <!-- login form -->
     @using (Html.BeginForm("Login", "Member"))
     {
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-lightBlue">
-                    <h5 class="modal-title fw-bold font-24" id="loginModalLabel">登入</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <!--aria-hidden="true" 在f12會看不到整個的modal dialog屬性-->
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-lightBlue">
+                <h5 class="modal-title fw-bold font-24" id="loginModalLabel">登入</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="account" class="form-label">帳號</label>
+                    <input type="text" name="account" id="account" class="form-control" />
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="account" class="form-label">帳號</label>
-                        <input type="text" name="account" id="account" class="form-control" />
-                    </div>
-                    <div class="mb-1">
-                        <label for="password" class="form-label">密碼</label>
-                        <input type="password" name="password" id="password" class="form-control" />
-                    </div>
-                    <a href="https://phoebe4561.github.io/bick-web/homepage.html#" class="font-14 text-lightBrown">忘記密碼？</a>
+                <div class="mb-1">
+                    <label for="password" class="form-label">密碼</label>
+                    <input type="password" name="password" id="password" class="form-control" />
                 </div>
-                <div class="modal-footer border-0">
-                    <button id="btnLogin" class="btn btn-primary w-100 fw-bold">登入</button>
+                <a href="https://phoebe4561.github.io/bick-web/homepage.html#" class="font-14 text-lightBrown">忘記密碼？</a>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="submit" id="btnLogin" class="btn btn-primary w-100 fw-bold">登入</button>
 
-                </div>
-                <div type="submit" id="divLogin" class="position-relative d-flex justify-content-center my-4 p-1">
+            </div>
+            <div id="divLogin" class="position-relative d-flex justify-content-center my-4 p-1">
 
-                </div>
             </div>
         </div>
     </div>
+</div>
     }
     <!-- Register form -->
     @using (Html.BeginForm("Register", "Member"))
@@ -189,12 +186,12 @@
 
                     else {
                         $("#divRegister").html('<div class="alert alert-danger" role="alert">註冊失敗，請再試一次！</div>');
-                        setTimeout(function() { $('#msgregister').html(''); }, 3000);
+                        setTimeout(function() { $('#divRegister').html(''); }, 3000);
                     }
                 },
                 error: function (result) {
                     $('#divRegister').html('<div class="alert alert-danger" role="alert">連線錯誤，請重開網頁再試一次</div>');
-                    setTimeout(function () { $('#msgregister').html(''); }, 3000);
+                    setTimeout(function () { $('#divRegister').html(''); }, 3000);
                 }
 
             });

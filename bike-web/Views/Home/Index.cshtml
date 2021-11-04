@@ -13,33 +13,17 @@
                 <h5>Let's Go Bike!</h5>
                 <p>在忙碌的生活中，有多久沒有停下腳步、靜下心來，好好體驗生活了呢?來享受一段高雄單車之旅吧!</p>
                 <!-- search area -->
-                @*<div class="input-group my-3">
-                        @using (Html.BeginForm())
-                        {
-                            <label class="d-flex">
-                                @Html.TextBox("txtKeyword", null, new { @class = "form-control" })
-                                <input type="submit" value="查詢" class="btn btn-primary" />
-                                <input type="button" @@click="backToBack" class="btn btn-primary goBack" value="查詢" />
-                            </label>
-                        }
-                    </div>*@
-
-                <form action="/Home/Index" method="post" class="input-group my-3">
+                <form action="/Home/Index" method="post" class="input-group my-3" id="searchForm">
                     <input name="txtKeyword" id="txtKeyword" class="form-control" placeholder="請輸入關鍵字" type="text" value="" />
                     @*<input type="button" @@click="backToBack" class="btn btn-primary goBack position-absolute end-0 opacity-0" value="搜尋"  />*@
+                    <input type="submit" class="btn btn-primary gotoBack goBack" value="搜尋" @@click="backToBack" />
 
-                    <input type="submit" class="btn btn-primary goBack" value="搜尋" @@submit.prevent="backToBack" />
                 </form>
 
-                @*<div class="input-group my-3">
-                    <input type="text" class="form-control" placeholder="請輸入關鍵字" aria-label="請輸入關鍵字" aria-describedby="button-addon2" />
-                    <button @@click="backToBack" class="btn btn-primary goBack" type="button" id="button-addon2">搜尋</button>
-                    </div>*@
-
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-outline-secondary">初級路線</button>
-                    <button class="btn btn-outline-secondary">中級路線</button>
-                    <button class="btn btn-outline-secondary">高級路線</button>
+                    <a href="@Url.Action("初級List","offRoute")" class="btn btn-outline-secondary">初級路線</a>
+                    <a href="@Url.Action("中級List","offRoute")" class="btn btn-outline-secondary">中級路線</a>
+                    <a href="@Url.Action("高級List","offRoute")" class="btn btn-outline-secondary">高級路線</a>
                 </div>
             </div>
         </div>
@@ -367,4 +351,13 @@
     });
     app.mount('#app');
 </script>
+
+<script>
+        function test() {
+            const backToBackBtn = document.querySelector('.gotoBack');
+            console.log(backToBackBtn);
+            backToBackBtn.addEventListener('click', scrollTo(0, 1850))
+        }
+        test();
+    </script>
 
