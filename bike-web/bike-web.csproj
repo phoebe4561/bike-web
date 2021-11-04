@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -126,8 +126,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\COfficialRController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\offRouteController.cs" />
@@ -155,6 +157,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KSBike.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\OfficialR_F.cs" />
     <Compile Include="Models\official_route_comment.cs">
       <DependentUpon>KSBike.tt</DependentUpon>
     </Compile>
@@ -185,6 +188,7 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\MemberPageViewModel.cs" />
     <Compile Include="ViewModels\offRouteViewModel.cs" />
+    <Compile Include="ViewModels\OfficialVM.cs" />
     <Compile Include="ViewModels\RegisterViewModels.cs" />
     <Compile Include="ViewModels\RoutePageDataViewModel.cs" />
     <Compile Include="ViewModels\UserFavorite.cs" />
@@ -207,6 +211,54 @@
     <Content Include="Images\home\美濃.jpg" />
     <Content Include="Images\home\美麗島.jpg" />
     <Content Include="Images\home\蓮池潭.jpg" />
+    <Content Include="Images\image_mia\eat1-2.jpg" />
+    <Content Include="Images\image_mia\eat1-3.jpg" />
+    <Content Include="Images\image_mia\eat1-4.jpg" />
+    <Content Include="Images\image_mia\eat1.jpg" />
+    <Content Include="Images\image_mia\eat2-1-1厚德福.jpg" />
+    <Content Include="Images\image_mia\eat2-1厚德福.jpg" />
+    <Content Include="Images\image_mia\eat2-2天池冬瓜茶.jpg" />
+    <Content Include="Images\image_mia\eat2-3早頓小室.jpg" />
+    <Content Include="Images\image_mia\eat2-4-1奶茶街.jpg" />
+    <Content Include="Images\image_mia\eat3-1-1鹿仔草冰店.jpg" />
+    <Content Include="Images\image_mia\eat3-2龍鶴家.jpeg" />
+    <Content Include="Images\image_mia\eat3-3郭家肉粽.jpg" />
+    <Content Include="Images\image_mia\eat3-4港園牛肉麵.jpg" />
+    <Content Include="Images\image_mia\left-arrow.png" />
+    <Content Include="Images\image_mia\point01.jpg" />
+    <Content Include="Images\image_mia\point1-2-1.jpg" />
+    <Content Include="Images\image_mia\point1-2.jpg" />
+    <Content Include="Images\image_mia\point1-3.jpg" />
+    <Content Include="Images\image_mia\point1-4.jpg" />
+    <Content Include="Images\image_mia\point1-5.jpg" />
+    <Content Include="Images\image_mia\point1.jpg" />
+    <Content Include="Images\image_mia\point2-1-1展覽館.jpg" />
+    <Content Include="Images\image_mia\point2-1-2展覽館.jpg" />
+    <Content Include="Images\image_mia\point2-1展覽館.jpg" />
+    <Content Include="Images\image_mia\point2-2光榮碼頭.jpg" />
+    <Content Include="Images\image_mia\point2-3駁二.jpg" />
+    <Content Include="Images\image_mia\point2-4西子灣.jpg" />
+    <Content Include="Images\image_mia\point2-5柴山.jpg" />
+    <Content Include="Images\image_mia\point3-0高雄市電影館.jpg" />
+    <Content Include="Images\image_mia\point3-1愛河之心.jpg" />
+    <Content Include="Images\image_mia\point3-2高雄市立美術館.jpg" />
+    <Content Include="Images\image_mia\point3-3中都濕地公園.jpg" />
+    <Content Include="Images\image_mia\point3-4高雄市立歷史博物館.jpg" />
+    <Content Include="Images\image_mia\right-arrow.png" />
+    <Content Include="Images\image_mia\route002西子灣-slope.jpg" />
+    <Content Include="Images\image_mia\route003愛河.jpg" />
+    <Content Include="Images\image_mia\slope01.jpg" />
+    <Content Include="Images\image_mia\slope02.jpg" />
+    <Content Include="Images\image_mia\star.png" />
+    <Content Include="Images\image_mia\supply1-2.jpg" />
+    <Content Include="Images\image_mia\supply1-3.jpg" />
+    <Content Include="Images\image_mia\supply1.jpg" />
+    <Content Include="Images\image_mia\supply2-1流行音樂中心.jpg" />
+    <Content Include="Images\image_mia\supply2-2駁二.jpg" />
+    <Content Include="Images\image_mia\supply2-3棧貳庫KW2.jpg" />
+    <Content Include="Images\image_mia\supply3-1高雄市客家文物館.jpg" />
+    <Content Include="Images\image_mia\supply3-2家樂福.jpg" />
+    <Content Include="Images\image_mia\supply3-3高雄市電影館.jpg" />
     <Content Include="maps\map_1.geojson" />
     <EntityDeploy Include="Models\KSBike.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -215,6 +267,7 @@
     <Content Include="Models\KSBike.edmx.diagram">
       <DependentUpon>KSBike.edmx</DependentUpon>
     </Content>
+    <Content Include="Images\image_mia\map_1.geojson" />
     <None Include="Scripts\vendor\js\jquery-3.4.1.intellisense.js" />
     <Content Include="Images\0f5fbb52-895a-4639-a534-b041afcaa39a.jpg" />
     <Content Include="Images\2b20c764-26f7-4dae-83ee-8a7aa034be0a.jpg" />
@@ -257,23 +310,6 @@
     <Content Include="Images\weather\rain.svg" />
     <Content Include="Images\weather\sun.svg" />
     <Content Include="Images\weather\uv.svg" />
-    <Content Include="image_mia\eat1-2.jpg" />
-    <Content Include="image_mia\eat1-3.jpg" />
-    <Content Include="image_mia\eat1-4.jpg" />
-    <Content Include="image_mia\eat1.jpg" />
-    <Content Include="image_mia\point01.jpg" />
-    <Content Include="image_mia\point1-2-1.jpg" />
-    <Content Include="image_mia\point1-2.jpg" />
-    <Content Include="image_mia\point1-3.jpg" />
-    <Content Include="image_mia\point1-4.jpg" />
-    <Content Include="image_mia\point1-5.jpg" />
-    <Content Include="image_mia\point1.jpg" />
-    <Content Include="image_mia\slope01.jpg" />
-    <Content Include="image_mia\slope02.jpg" />
-    <Content Include="image_mia\star.png" />
-    <Content Include="image_mia\supply1-2.jpg" />
-    <Content Include="image_mia\supply1-3.jpg" />
-    <Content Include="image_mia\supply1.jpg" />
     <Content Include="Models\KSBike.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>KSBike.edmx</DependentUpon>
@@ -312,17 +348,19 @@
     <Content Include="Views\Home\privateRoute.cshtml" />
     <Content Include="Views\Home\routeEditPage.cshtml" />
     <Content Include="Views\Member\MemberPage.cshtml" />
+    <Content Include="Views\COfficialR\theRoute.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
+    <Folder Include="imageForPrivateRoute\" />
+    <Folder Include="Views\MemberLogin\" />
     <Content Include="Views\Member\routeEditPage.cshtml" />
     <Content Include="Views\offRoute\List.cshtml" />
     <Content Include="Views\offRoute\初級List.cshtml" />
     <Content Include="Views\offRoute\中級List.cshtml" />
     <Content Include="Views\offRoute\高級List.cshtml" />
     <Content Include="Views\Member\editByPrivateRoute.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="imageForPrivateRoute\" />
-    <Folder Include="Views\MemberLogin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
