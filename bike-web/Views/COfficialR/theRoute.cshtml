@@ -1,5 +1,5 @@
 ﻿@model bike_web.ViewModels.OfficialVM
-@*@using MvcPaging*@
+
 
 <head>
     <!--map-->
@@ -188,40 +188,7 @@
                             }
                         }
                     </div>*@
-                <!--MVC PAGING-->
-                <div class="card-body">
-                    @*@using (Html.BeginForm("theRoute", "COfficialR", FormMethod.Post))*@
-                    @*{*@
-
-                    <div class="card-body">
-                        @*@{*@
-                        @*//foreach (var data in Model.CommentPaged)
-                            //{
-                            <h2>@data.datetime</h2>*@
-                        @*var stars = data.user_give_star_num;
-                            var timeSTR = @data.datetime.ToString();
-                            var time = timeSTR.Substring(0, timeSTR.IndexOf(' '));
-                            <div class="card-title">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <label class="font-18"> @data.userName </label>
-                                        @for (int i = 0; i < stars; i++)
-                                        {<img src="~/images/image_mia/star.png" style="width: 25px" />}
-                                    </div>
-                                    <p>@time</p>
-                                </div>
-                                <h6>@data.comment</h6>
-                            </div>*@
-                        @* } *@
-                        @* } *@
-                    </div>
-                    <div class="pager">
-                        @*@Html.Pager()*@
-                        @*@Html.Pager(Model.CommentPaged.PageSize, Model.CommentPaged.PageNumber, Model.CommentPaged.TotalItemCount)*@
-                        @*Displaging @Model.CommentPaged.ItemStart - @Model.CommentPaged.ItemEnd of @Model.CommentPaged.TotalItemCount item(s)*@
-                    </div>
-                    @*}*@
-                </div>
+             
             </div>
             <div class="row text-center">
                 <div class="col bg-light m-2 mx-4 p-1" id="arrowF"><img src="~/Images/image_mia/left-arrow.png" class="arrow"></div>

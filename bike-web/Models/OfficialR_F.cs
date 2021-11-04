@@ -30,8 +30,9 @@ namespace bike_web.Models
             return 路線資訊;
         }
 
-        public List<routeComment> QrouteComment(int articleID)
+        public List<routeComment> QrouteComment(int? articleID)
         {
+            if (articleID == null) { articleID = 1; }
             var 路線評論 = (from info in db.official_route_comment
                         join cmt in db.users on info.comment_user_id equals cmt.id
                         where info.article_title_id == articleID
@@ -51,8 +52,9 @@ namespace bike_web.Models
             return 路線評論;
         }
 
-        public List<routeHome> QrouteHome(int articleID)
+        public List<routeHome> QrouteHome(int? articleID)
         {
+            if (articleID == null) { articleID = 1; }
             var 路線 = (from info in db.Homes
                       where info.id == articleID
                       select new routeHome
