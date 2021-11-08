@@ -1,5 +1,4 @@
 ﻿@model bike_web.ViewModels.offRouteViewModel
-
 @{
     ViewBag.Title = "中級List";
 }
@@ -105,11 +104,34 @@
             };
         },
         methods: {
+            btnSubmit() {
+                const keywordInput = document.querySelector('input');
+                const levelOptions = document.querySelectorAll('.searchRank option[value]');
+                const distanceOption = document.querySelector('[value=nodistance]');
+                const searchBtn = document.querySelector(".searchBtn");
+                searchBtn.addEventListener("click", (e) => {
+                    if (keywordInput.value == '') {
+
+                        e.preventDefault();
+
+                        alert("關鍵字請勿空白");
+                    }
+                    levelOptions.forEach(lop => {
+                        console.log(lop.value);
+                        if (lop.value == 'nolevel') {
+
+                            e.preventDefault();
+
+                            alert("等級請勿空白");
+                        }
+                    })
+                });
+            }
         },
         mounted() {
             this.isToggle = true;
+            this.btnSubmit();
         },
     });
     app.mount('#app');
 </script>
-

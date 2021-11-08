@@ -12,9 +12,10 @@ namespace bike_web.ViewModels
         public List<offRoute> offcialLowRoute { get; set; }
         public List<offRoute> offcialMiddleRoute { get; set; }
         public List<offRoute> offcialHighRoute { get; set; }
-        public string searchKeyword { get; set; }
-        public string searchRank { get; set; }
+        public string searchKeyword {get; set;}
+        public string searchRank {get; set;}
         public double searchDistance { get; set; }
+
     }
 
     public class offRoute
@@ -33,5 +34,12 @@ namespace bike_web.ViewModels
         public double? oc_allStar { get; set; }
         [DisplayName("星星評分")]
         public int oc_artitleTitleID { get; set; }
+        public string od_official_data_catalog { get; set; }
+        public string od_official_data_img { get; set; }
+        public string od_official_data_img_info { get; set; }
+        public string od_official_data_img_content { get; set; }
+        public int od_homeID { get; set; }
+        public int od_offRouteID { get; set; }
+
     }
 }

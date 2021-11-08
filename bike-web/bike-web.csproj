@@ -131,6 +131,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\offRouteController.cs" />
+    <Compile Include="Controllers\OnlyOffRouteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -316,6 +317,7 @@
     <Content Include="Views\offRoute\初級List.cshtml" />
     <Content Include="Views\offRoute\中級List.cshtml" />
     <Content Include="Views\offRoute\高級List.cshtml" />
+    <Content Include="Views\OnlyOffRoute\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
