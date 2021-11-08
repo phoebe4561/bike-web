@@ -78,15 +78,15 @@
                         </div>
 
                         <!-- 放評論摘要的div -->
-                        <div class="row" v-if="place != null">
+                        <!--<div class="row" v-if="place != null">
                             <div class="col" v-if="place.reviews != null">
-                                <h5>網友評論：</h5>
+                                <div class="font-24 my-2">網友評論：</div>
                                 <div class="row" v-for="p in place.reviews">
                                     <div class="col">
                                         <ul class="list-unstyled">
-                                            <li class="media">
+                                            <li class="media d-flex align-items-center">
                                                 <img :src="p.profile_photo_url" class="img-fluid mr-3" />
-                                                <div class="media-body">
+                                                <div class="media-body ms-3">
                                                     <h5 class="mt-0 mb-1">
                                                         <a target="_blank" :href="p.author_url">{{ p.author_name }}</a>
                                                     </h5>
@@ -98,7 +98,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <!-- 右邊路線評論  -->
                     <div class="col-md-3 py-md-0 py-3">
@@ -115,6 +115,31 @@
                                     </div>
                                 </h6>
                                 <p class="card-text font-12">沿途風景很美，有很多拍照打卡的景點，超推薦!!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 放評論摘要的div -->
+                <div class="row" v-if="place != null">
+                    <div class="col" v-if="place.reviews != null">
+                        <div class="commentContainer p-3">
+                            <div class="font-24 text-center my-2">網友評論：</div>
+                            <div class="row" v-for="p in place.reviews">
+                                <div class="col">
+                                    <ul class="list-unstyled">
+                                        <li class="media d-flex align-items-center">
+                                            <img :src="p.profile_photo_url" class="img-fluid mr-3" />
+                                            <div class="media-body ms-3">
+                                                <h5 class="mt-0 mb-1">
+                                                    <a target="_blank" :href="p.author_url">{{ p.author_name }}</a>
+                                                </h5>
+                                                <p>{{ p.text }}</p>
+                                                <h6>{{ p.relative_time_description }}</h6>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

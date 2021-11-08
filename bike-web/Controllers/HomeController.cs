@@ -149,5 +149,10 @@ namespace bike_web.Controllers
                 return View();
             }
         }
+        public ActionResult chatroom()
+        {
+
+            return View();
+        }
     }
 }

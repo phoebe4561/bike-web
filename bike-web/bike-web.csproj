@@ -207,7 +207,6 @@
     <Content Include="Images\home\美濃.jpg" />
     <Content Include="Images\home\美麗島.jpg" />
     <Content Include="Images\home\蓮池潭.jpg" />
-    <Content Include="maps\map_1.geojson" />
     <EntityDeploy Include="Models\KSBike.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KSBike.Designer.cs</LastGenOutput>
@@ -215,6 +214,12 @@
     <Content Include="Models\KSBike.edmx.diagram">
       <DependentUpon>KSBike.edmx</DependentUpon>
     </Content>
+    <Content Include="maps\map_1.json" />
+    <Content Include="maps\map_2.json" />
+    <Content Include="maps\map_3.json" />
+    <Content Include="maps\map_4.json" />
+    <Content Include="maps\map_5.json" />
+    <Content Include="maps\map_6.json" />
     <None Include="Scripts\vendor\js\jquery-3.4.1.intellisense.js" />
     <Content Include="Images\0f5fbb52-895a-4639-a534-b041afcaa39a.jpg" />
     <Content Include="Images\2b20c764-26f7-4dae-83ee-8a7aa034be0a.jpg" />
@@ -318,6 +323,7 @@
     <Content Include="Views\offRoute\中級List.cshtml" />
     <Content Include="Views\offRoute\高級List.cshtml" />
     <Content Include="Views\OnlyOffRoute\List.cshtml" />
+    <Content Include="Views\Home\chatroom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
