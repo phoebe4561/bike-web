@@ -17,10 +17,7 @@ namespace bike_web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Home()
         {
-            this.hashtags = new HashSet<hashtag>();
             this.official_route_comment = new HashSet<official_route_comment>();
-            this.official_route_data = new HashSet<official_route_data>();
-            this.user_favorite = new HashSet<user_favorite>();
         }
     
         public int id { get; set; }
@@ -31,12 +28,6 @@ namespace bike_web.Models
         public string himg { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<hashtag> hashtags { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<official_route_comment> official_route_comment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<official_route_data> official_route_data { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user_favorite> user_favorite { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace bike_web.Models
         public string comment { get; set; }
         public System.DateTime datetime { get; set; }
     
-        public virtual private_route private_route { get; set; }
         public virtual user user { get; set; }
+        public virtual private_route private_route { get; set; }
     }
 }

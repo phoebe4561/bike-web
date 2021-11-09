@@ -20,7 +20,5 @@ namespace bike_web.Models
         public string official_data_img_info { get; set; }
         public string official_data_content { get; set; }
         public int home_id { get; set; }
-    
-        public virtual Home Home { get; set; }
     }
 }

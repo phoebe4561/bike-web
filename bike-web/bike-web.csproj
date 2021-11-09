@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -212,7 +212,6 @@
     <Content Include="Images\home\美濃.jpg" />
     <Content Include="Images\home\美麗島.jpg" />
     <Content Include="Images\home\蓮池潭.jpg" />
-
     <Content Include="Images\image_mia\eat1-2.jpg" />
     <Content Include="Images\image_mia\eat1-3.jpg" />
     <Content Include="Images\image_mia\eat1-4.jpg" />
@@ -262,7 +261,6 @@
     <Content Include="Images\image_mia\supply3-2家樂福.jpg" />
     <Content Include="Images\image_mia\supply3-3高雄市電影館.jpg" />
     <Content Include="maps\map_1.geojson" />
-
     <EntityDeploy Include="Models\KSBike.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KSBike.Designer.cs</LastGenOutput>
@@ -270,15 +268,12 @@
     <Content Include="Models\KSBike.edmx.diagram">
       <DependentUpon>KSBike.edmx</DependentUpon>
     </Content>
-
     <Content Include="maps\map_1.json" />
     <Content Include="maps\map_2.json" />
     <Content Include="maps\map_3.json" />
     <Content Include="maps\map_4.json" />
     <Content Include="maps\map_5.json" />
     <Content Include="maps\map_6.json" />
-
-
     <None Include="Scripts\vendor\js\jquery-3.4.1.intellisense.js" />
     <Content Include="Images\0f5fbb52-895a-4639-a534-b041afcaa39a.jpg" />
     <Content Include="Images\2b20c764-26f7-4dae-83ee-8a7aa034be0a.jpg" />
@@ -367,13 +362,8 @@
     <Content Include="Views\OnlyOffRoute\List.cshtml" />
     <Content Include="Views\Home\chatroom.cshtml" />
     <Content Include="Views\COfficialR\theRoute.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Data\" />
-    <Folder Include="imageForPrivateRoute\" />
-    <Folder Include="Views\MemberLogin\" />
     <Content Include="Views\Member\routeEditPage.cshtml" />
     <Content Include="Views\offRoute\List.cshtml" />
     <Content Include="Views\offRoute\初級List.cshtml" />
@@ -483,6 +473,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
+    <Folder Include="imageForPrivateRoute\" />
+    <Folder Include="Views\MemberLogin\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
