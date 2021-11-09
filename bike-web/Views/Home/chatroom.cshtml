@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "chatroom";
+}
+
+<div id="app" class="container my-3">
+    <div class="row justify-content-center">
+        <div class="d-flex align-items-center justify-content-center">
+            <h1 class="fs-3 text-center my-3">線上約騎鐵馬聊天室</h1>
+            <button @@click="showModal = true" class="btn btn-outline-primary rounded-circle ms-2"><i class="far fa-bell"></i></button>
+            <transition name="fade" appear>
+                <div class="modal-overlay" v-if="showModal" @@click="showModal = false"></div>
+            </transition>
+            <transition name="pop" appear>
+                <div class="mymodal mx-3" role="dialog" v-if="showModal">
+                    <h2 class="border-bottom border-3 border-primary p-1">聊天室使用規則</h2>
+                    <div class="p-1 text-start bg-light rounded-3 my-3">
+                        <div class="my-2">注意:本聊天室僅提供車友們線上揪團使用,揪團發起人留言請標明<span class="text-info">出發時間/集合地點</span></div>
+                        <p>(1)請勿輸入個人隱私資訊</p>
+                        <p>(2)請勿輸入不雅詞彙或進行人身攻擊</p>
+                        <p>(3)不合時宜之言論將會由資料庫刪除</p>
+                    </div>
+                    <button @@click="showModal = false" class="btn btn-info">我同意</button>
+                </div>
+            </transition>
+        </div>
+        <div class="row justify-content-center flex-column-reverse flex-md-row">
+            <div class="col-md-6">
+                <div class="card rounded-3 chatroom" id="chatroom">
+                    <div class="card-body pt-0">
+                        <div class="input-group py-3 bg-white">
+                            <input type="text"
+                                   class="form-control"
+                                   v-model="message"
+                                   :disabled="!username"
+                                   @@keyup.enter="addMessage"
+                                   placeholder="揪團騎車專用，不合時宜留言將被刪除" />
+                            <button class="btn btn-outline-secondary"
+                                    type="button"
+                                    :disabled="!username"
+                                    @@click="addMessage">
+                                送出
+                            </button>
+                        </div>
+
+                        <div class="message-block">
+                            <div class="row gx-2 mb-3"
+                                 v-for="(item, key) in chatroom"
+                                 :key="item.key"
+                                 :class="{ 'text-end flex-row-reverse': item.username === username }">
+                                <div class="col-2 d-flex justify-content-center">
+                                    <div class="mt-1">
+                                        <img class="memberlogo mt-1" src="~/Images/home/member.svg" alt="memberLogo" />
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div>
+                                        <strong>{{ item.username }}</strong>
+                                        <small class="text-muted ms-2">
+                                            {{ new Date(item.time).toLocaleDateString() }}
+                                            {{ new Date(item.time).toLocaleTimeString() }}
+                                        </small>
+                                    </div>
+                                    <div class="message-content p-2 mt-2 rounded-3"
+                                         :class="{ 'bg-primary text-white': item.username === username,'bg-light': item.username !== username}">
+                                        <p class="mb-0">{{ item.message }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">輸入使用者名稱</label>
+                            <input id="username"
+                                   type="text"
+                                   class="form-control"
+                                   v-model="tempUsername"
+                                   :disabled="username.length"
+                                   autofocus
+                                   @@keyup.enter="addUsername" />
+                            <small class="form-text text-muted">請輸入名稱開始使用聊天室</small>
+                        </div>
+                        <button type="button"
+                                class="btn btn-info"
+                                @@click="addUsername"
+                                :disabled="username.length">
+                            開始使用
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+
+<script type="module">
+      const firebaseConfig = {
+        apiKey: "AIzaSyCeXwACVqKZdOLqezkAujt8cMQvzsN3dzc",
+        authDomain: "test-bd7d1.firebaseapp.com",
+        databaseURL: "https://test-bd7d1.firebaseio.com",
+        projectId: "test-bd7d1",
+        storageBucket: "test-bd7d1.appspot.com",
+        messagingSenderId: "229988175897",
+        appId: "1:229988175897:web:86ac0428148deab4f05a88",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+      const msgRef = db.ref("messages");
+
+      import {
+        createApp,
+        ref,
+        onMounted,
+        nextTick
+      } from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.0-beta.7/vue.esm-browser.min.js";
+    createApp({
+        setup() {
+            const message = ref("");
+            const username = ref("");
+            const chatroom = ref([]);
+            const tempUsername = ref("");
+            const showModal = ref(true);
+
+
+            const addUsername = function () {
+                username.value = tempUsername.value;
+            };
+            async function addMessage() {
+                const key = msgRef.push().key;
+
+                msgRef.child(key).set({
+                    message: message.value,
+                    username: username.value,
+                    time: Date.now(),
+                    key,
+                });
+                message.value = "";
+                await nextTick(() => {
+                    const el = document.querySelector('#chatroom');
+                    el.scrollTop = el.scrollHeight;
+
+                })
+                window.scrollTo(0, document.body.scrollHeight);
+            };
+            onMounted(() => {
+                msgRef.on("value", (snapshot) => {
+                    chatroom.value = snapshot.val();
+                });
+            });
+
+            return {
+                message,
+                username,
+                tempUsername,
+                chatroom,
+                addMessage,
+                addUsername,
+                showModal,
+            };
+        },
+    }).mount("#app");
+</script>
+

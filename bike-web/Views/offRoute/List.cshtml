@@ -1,5 +1,4 @@
 ﻿@model bike_web.ViewModels.offRouteViewModel
-
 @{
     ViewBag.Title = "List";
 }
@@ -45,7 +44,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="portfolio-item card mb-3">
                             <span>
-                                <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
                                 <div class="portfolio-info">
                                     <h3>@item.h_name</h3>
                                 </div>
@@ -80,7 +79,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="portfolio-item card mb-3">
                             <span>
-                                <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
                                 <div class="portfolio-info">
                                     <h3>@item.h_name</h3>
                                 </div>
@@ -115,7 +114,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="portfolio-item card mb-3">
                             <span>
-                                <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
                                 <div class="portfolio-info">
                                     <h3>@item.h_name</h3>
                                 </div>
@@ -150,7 +149,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="portfolio-item card mb-3">
                             <span>
-                                <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
                                 <div class="portfolio-info">
                                     <h3>@item.h_name</h3>
                                 </div>

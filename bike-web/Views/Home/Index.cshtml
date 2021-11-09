@@ -4,6 +4,7 @@
     ViewBag.Title = "Home Page";
 }
 
+
 <div id="app">
 
     <!-- banner -->
@@ -34,6 +35,7 @@
         <div id="weather_tool"></div>
     </div>
 
+
     <!-- 熱門路線 -->
     <div class="container-fluid bg-lighter py-5">
         <div class="container">
@@ -41,7 +43,6 @@
             <h1 class="ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">高雄夯單車路線</h1>
             <div class="row">
                 @foreach (var item in Model.offcialPopularRoute)
-
                 {
                     <li class="col-12 col-md-4">
                         <div class="card mb-3">
@@ -51,7 +52,7 @@
                                 </button>
                             </div>
                             <span>
-                                <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /></a>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /></a>
                             </span>
                             <div class="card-body">
                                 <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
@@ -112,7 +113,7 @@
     </div>
 
     <!-- main content -->
-    <div class="container py-5">
+    <div class="container py-5" id="hotroute">
         <div class="row">
             <div class="col-lg-9">
                 <div class="tab-content" id="myTabContent">
@@ -130,12 +131,12 @@
                                             </button>
                                         </div>
                                         <span>
-                                            <a href="./officialSingleRoute.html"> <img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /> </a>
+                                            <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"> <img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /> </a>
                                         </span>
                                         <div class="card-body">
                                             <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
                                             <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                                <div class="badge bg-light font-20 text-darkBrown px-3">長度: @item.h_distance km</div>
+                                                <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
                                                 <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
                                             </div>
                                             <p class="card-text">@item.h_description</p>
@@ -147,7 +148,6 @@
                                     </div>
                                 </div>
                             }
-
                         </div>
                     </div>
                     <!-- 常見問答 -->
@@ -280,7 +280,7 @@
                                         <i class="bi bi-heart fs-6"></i>
                                     </button>
                                 </div>
-                                <img src="~/images/@item.p_artitle_img_info" class="card-img-top" alt="@item.p_artitle_title" />
+                                <img src="images/@item.p_artitle_img_info" class="card-img-top" alt="@item.p_artitle_title" />
                                 <div class="card-body">
                                     <div class="d-flex justify-content-end border-bottom border-1 border-gray-200 pb-2 mb-2">
                                         <span>@item.p_datetime</span>
@@ -300,11 +300,11 @@
             <!-- end of右側欄 -->
         </div>
     </div>
+
     <!-- 回到最頂btn -->
     <button class="goTop" @@click="backToTop">
         <i class="fas fa-arrow-up"></i>
     </button>
-
 </div>
 
 <script src="~/Scripts/js/homePage.js"></script>
@@ -334,7 +334,7 @@
             handleSearchScroll() {
                 const backToBackButton = document.querySelectorAll('.goBack');
                 backToBackButton.forEach((item) => {
-                    item.addEventListener(onsubmit, this.backToBack);
+                    item.addEventListener(onclick, this.backToBack);
                 });
             },
             backToBack: function () {
@@ -352,12 +352,45 @@
     app.mount('#app');
 </script>
 
-<script>
+@*<script>
+            function scrollToDiv() {
+                const backToBackBtn = document.querySelector('.gotoBack');
+                console.log(backToBackBtn);
+                backToBackBtn.addEventListener(onclick, ()=>setTimeout(function () {
+                    window.scrollTo({
+                        top: 1850,
+                        behavior: 'smooth',
+                    });
+                },1000));
+
+            }
+            ScriptManager.RegisterStartupScript(Page, typeof (Page), "backToBackBtn", "scrollToDiv()", true);
+    </script>*@
+
+@*<script>
         function test() {
             const backToBackBtn = document.querySelector('.gotoBack');
             console.log(backToBackBtn);
             backToBackBtn.addEventListener('click', scrollTo(0, 1850))
         }
         test();
-    </script>
+    </script>*@
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    console.log('hi1');
+    $('#searchForm').on('submit', function () {
+        console.log('hi2');
+        $('html, body').animate({
+            scrollTop: $("#hotroute").offset().top
+        }, 3000);
+        return false;
+    });
+    @*$("#searchForm").submit(function () {
+        console.log('hi2')
+        $('html, body').animate({
+            scrollTop: $("#hotroute").offset().top
+        }, 2000);
+        return false;
+    });*@
+</script>
