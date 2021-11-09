@@ -11,13 +11,26 @@ namespace bike_web.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class product
     {
         public int id { get; set; }
+
+        [Required(ErrorMessage = "品名不可為空白")]
+        [DisplayName("品名")]
         public string product_name { get; set; }
+
+        [DisplayName("優惠價")]
         public int product_price { get; set; }
+
+
+        [DisplayName("圖示")]
         public string product_img { get; set; }
+
+        [DisplayName("名額")]
         public Nullable<int> product_num { get; set; }
     }
 }
