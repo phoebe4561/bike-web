@@ -1,0 +1,81 @@
+﻿@model bike_web.Models.product
+
+
+
+<div class="container-fluid py-1 mt-3 px-0">
+    <div class="container">
+        <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3 mb-4 mt-2" style="letter-spacing: 0.5em;">加入購物車</h5>
+
+        <div class="row text-center ">
+            <div class="col-12 col-md-6 mb-3 g-1 mx-auto mt-0 p-2 align-self-center" >
+                <img src="~/images/winni/@Model.product_img" class="w-100 img-thumbnail align-self-center" />
+            </div>
+            
+                <div class="col-12 col-md-6 mb-3  mx-auto p-2 align-self-center" >
+                   
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+
+                    <div class="form-horizontal p-2 text-center">
+                        <h5 class="text-success ">請選擇出發日期及人數</h5>
+                        <hr />
+                        <input type="hidden" name="AddId" value="@Model.id" />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @*<div class="form-group">
+            <div class="col-12 text-center">
+                <span class="input-group-text " id="inputGroupPrepend" style="letter-spacing: 0.2em;">您選購的行程</span>
+                    @Html.TextBox("AddProName", @Model.product_name, new { placeholder = "", @class = "form-control mt-0 " })
+            </div>
+        </div><br />*@
+
+                        <div class="input-group has-validation">
+                            <span class="input-group-text" id="inputGroupPrepend">您選購的行程</span>
+                            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required value="@Model.product_name" disabled>
+                            <div class="invalid-feedback">
+                                @Model.product_name
+                            </div>
+                        </div><br />
+
+                        <div class="input-group has-validation">
+                            <span class="input-group-text" id="inputGroupPrepend">優惠價</span>
+                            <input type="text" class="form-control" id="validationCustomUsername"  aria-describedby="inputGroupPrepend" required value="@Model.product_price 元" disabled>
+                            <div class="invalid-feedback">
+                                @Model.product_price
+                            </div>
+                        </div><br />
+
+                        <div class="form-group">
+                       <div class="col-12 ">
+                       <span class="input-group-text " id="inputGroupPrepend" style="letter-spacing: 0.2em;">參加人數</span>
+                        @Html.TextBox("AddCount", "1", new { placeholder = "", required = "required", @class = "form-control mt-0 " })
+                       </div>
+                       </div><br />
+
+                      
+                        <div class="form-group">
+                            <div class="col-12 ">
+                                <span class="input-group-text " id="inputGroupPrepend" style="letter-spacing: 0.2em;">出發日期</span>
+                                @Html.TextBox("AddGoDate", null, new { type = "date", required = "required", placeholder = "請選擇出發日期", @class = "form-control mt-0 required" })
+                            </div>
+                        </div><br />
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-12">
+                                <input type="submit" value="確定加入" class="btn btn-primary" />&emsp;&emsp;
+                                <a href="@Url.Action("shopIndex", "shopIndex")?id=@Model.id"
+                                   class="btn btn-outline-secondary text-dark">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                        }
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
