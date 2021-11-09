@@ -1,0 +1,93 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "林園堤防",
+        "site": "832高雄市林園區林園堤防"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.483608452130078, 120.41685859540308]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "舊鐵橋溼地公園",
+        "site": "840高雄市九大路河濱二巷"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.657233521203707, 120.42816243890107]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "竹寮取水站",
+        "site": "840高雄市大樹區竹寮路47號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.668138587280385, 120.42641741196636]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "佛光山佛陀紀念館",
+        "site": "84049高雄市大樹區統嶺路1號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.756258083545827, 120.44524282454883]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "斜張橋下",
+        "site": "840高雄市大樹區玉山景觀公路水里玉山線"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.766308298505606, 120.44767968776543]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "一勾堂",
+        "site": "840高雄市大樹區久堂路鐵路巷8號",
+        "phone": "+88676520391"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.658406034587717, 120.42115653009965]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "小本愛玉",
+        "site": "840高雄市大樹區竹寮段1061號",
+        "phone": "+88673608486"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.66354709475513, 120.4268141236026]
+      }
+    }
+  ]
+}

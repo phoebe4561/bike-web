@@ -1,0 +1,93 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "糖廠宿舍",
+        "site": "825高雄市橋頭區興糖路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.755201240369278, 120.31480356821058]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "橋頭老街",
+        "site": "825高雄市橋頭區橋南路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.75543213148909, 120.31208324815141]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "水流莊牧場",
+        "site": "825高雄市橋頭區里林東路99號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.764680418694695, 120.29890297618256]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "竹林公園",
+        "site": "825高雄市橋頭區隆豐路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.756557566561895, 120.30555811340592]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "橋頭糖廠",
+        "site": "825高雄市橋頭區糖廠路24號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.755200530358486, 120.3137882324057]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "橋頭太成肉包",
+        "site": "825高雄市橋頭區成功路164號",
+        "phone": "+88676110153"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.757817318331593, 120.31045743895008]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "橋頭七十年老担仔",
+        "site": "825高雄市橋頭區橋南路102號",
+        "phone": "+886963222001"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.754952760923697, 120.31219499662284]
+      }
+    }
+  ]
+}

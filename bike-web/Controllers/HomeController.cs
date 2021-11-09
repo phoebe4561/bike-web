@@ -104,7 +104,7 @@ namespace bike_web.Controllers
 
         public ActionResult officialRoute()
         {
-            return View();
+            return RedirectToAction("List", "offRoute");
         }
 
         public ActionResult privateRoute()
@@ -148,6 +148,11 @@ namespace bike_web.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult chatroom()
+        {
+
+            return View();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿@model bike_web.ViewModels.offRouteViewModel
-
 @{
     ViewBag.Title = "高級List";
 }
@@ -58,38 +57,37 @@
             }
         </div>
     </div>
-
     <div class="container pt-4">
         <div class="row">
             @foreach (var item in Model.offcialAllRoute)
             {
-                <div class="col-lg-4 col-md-6">
-                    <div class="portfolio-item card mb-3">
-                        <span>
-                            <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="..." /></a>
-                            <div class="portfolio-info">
-                                <h3>@item.h_name</h3>
-                            </div>
-                        </span>
-                        <div class="card-body">
-                            <div class="position-absolute" style="top: 20px; right: 20px">
-                                <button type="button" class="btn btn-outline-danger rounded-pill heartbtn">
-                                    <i class="bi bi-heart fs-5"></i>
-                                </button>
-                            </div>
-                            <h5 class="border-bottom border-3 border-primary"></h5>
-                            <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
-                                <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
-                            </div>
-                            <p class="card-text">@item.h_description</p>
-                            <div class="d-flex justify-content-between">
-                                <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                                <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
-                            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="portfolio-item card mb-3">
+                    <span>
+                        <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                        <div class="portfolio-info">
+                            <h3>@item.h_name</h3>
+                        </div>
+                    </span>
+                    <div class="card-body">
+                        <div class="position-absolute" style="top: 20px; right: 20px">
+                            <button type="button" class="btn btn-outline-danger rounded-pill heartbtn">
+                                <i class="bi bi-heart fs-5"></i>
+                            </button>
+                        </div>
+                        <h5 class="border-bottom border-3 border-primary"></h5>
+                        <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                        </div>
+                        <p class="card-text">@item.h_description</p>
+                        <div class="d-flex justify-content-between">
+                            <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
                         </div>
                     </div>
                 </div>
+            </div>
             }
         </div>
 
@@ -112,4 +110,3 @@
     });
     app.mount('#app');
 </script>
-

@@ -1,5 +1,5 @@
-﻿@model bike_web.ViewModels.offRouteViewModel
-
+﻿
+@model bike_web.ViewModels.offRouteViewModel
 @{
     ViewBag.Title = "初級List";
 }
@@ -66,7 +66,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="portfolio-item card mb-3">
                         <span>
-                            <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="..." /></a>
+                            <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
                             <div class="portfolio-info">
                                 <h3>@item.h_name</h3>
                             </div>
@@ -104,7 +104,7 @@
                 isToggle: false,
             };
         },
-        methods: {
+        methods: {       
         },
         mounted() {
             this.isToggle = true;
@@ -112,4 +112,3 @@
     });
     app.mount('#app');
 </script>
-

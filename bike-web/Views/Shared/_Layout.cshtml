@@ -34,38 +34,46 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item px-lg-4 px-0">
-                            <a class="nav-link" href="/Home/officialRoute">鐵馬路線</a>
-                        </li>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    @if (Session["id"] == null)
+                    {
+                            <li class="nav-item px-lg-4 px-0">
+                                <a class="nav-link" href="/Home/officialRoute">鐵馬路線</a>
+                            </li>
 
                             <li class="nav-item px-lg-4 px-0">
                                 <a class="nav-link" href="/Home/privateRoute">私人推薦</a>
                             </li>
+                    }
+                    else{
                             <li class="nav-item dropdown px-lg-4 px-0">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 會員中心 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a  href="/Member/MemberPage" class="dropdown-item">我的推薦&收藏</a></li>
+                                    <li><a href="/Member/MemberPage" class="dropdown-item">我的推薦&收藏</a></li>
                                     <li><a class="dropdown-item" href="@Url.Action("routeEditPage","Member")">路線編輯</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item px-lg-4 px-0">
+                                <a class="nav-link" href="/Home/chatroom">聊天室</a>
+                            </li>
+                            }
 
 
-                    </ul>
-                    <div id="divLoginAndLogout">
-                        @if (Session["id"] == null)
-                        {
-                            <button id="LoginForModal" class="btn btn-primary px-4 me-3" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
-                            <button id="RegisterForMal" class="btn btn-outline-secondary px-4 me-3" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</button>
-                        }
-                        else
-                        {
-                            @*<button id="Logout" class="btn btn-outline-secondary px-4 me-3">登出</button>*@
-                            <a href="@Url.Action("Logout","Member")" id="Logout" class="btn btn-outline-secondary px-4 me-3">登出</a>
-                        }
+                        </ul>
+                        <div id="divLoginAndLogout">
+                            @if (Session["id"] == null)
+                            {
+                                <button id="LoginForModal" class="btn btn-primary px-4 me-3" data-bs-toggle="modal" data-bs-target="#loginModal">登入</button>
+                                <button id="RegisterForMal" class="btn btn-outline-secondary px-4 me-3" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</button>
+                            }
+                            else
+                            {
+                                @*<button id="Logout" class="btn btn-outline-secondary px-4 me-3">登出</button>*@
+                                <a href="@Url.Action("Logout","Member")" id="Logout" class="btn btn-outline-secondary px-4 me-3">登出</a>
+                            }
 
+                        </div>
                     </div>
-                </div>
             </div>
         </nav>
     </header>
