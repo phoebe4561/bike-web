@@ -1,0 +1,181 @@
+﻿@model bike_web.ViewModels.offRouteViewModel
+@{
+    ViewBag.Title = "List";
+}
+
+
+<!-- navbar -->
+<div class="container-fluid my-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active py-3 bold" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">
+                        全部路線
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link py-3 bold" id="nav-low-tab" data-bs-toggle="tab" data-bs-target="#nav-low" type="button" role="tab" aria-controls="nav-low" aria-selected="false">
+                        初級路線
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link py-3 bold" id="nav-middle-tab" data-bs-toggle="tab" data-bs-target="#nav-middle" type="button" role="tab" aria-controls="nav-middle" aria-selected="false">
+                        中級路線
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link py-3 bold" id="nav-high-tab" data-bs-toggle="tab" data-bs-target="#nav-high" type="button" role="tab" aria-controls="nav-high" aria-selected="false">
+                        高級路線
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- all route -->
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+            <div class="row">
+                @foreach (var item in Model.offcialAllRoute)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="portfolio-item card mb-3">
+                            <span>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                <div class="portfolio-info">
+                                    <h3>@item.h_name</h3>
+                                </div>
+                            </span>
+                            <div class="card-body">
+                                <div class="position-absolute" style="top: 20px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill heartbtn">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </button>
+                                </div>
+                                <h5 class="border-bottom border-3 border-primary"></h5>
+                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                </div>
+                                <p class="card-text">@item.h_description</p>
+                                <div class="d-flex justify-content-between">
+                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- low route -->
+        <div class="row tab-pane fade show" id="nav-low" role="tabpanel" aria-labelledby="nav-low-tab">
+            <div class="row">
+                @foreach (var item in Model.offcialLowRoute)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="portfolio-item card mb-3">
+                            <span>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                <div class="portfolio-info">
+                                    <h3>@item.h_name</h3>
+                                </div>
+                            </span>
+                            <div class="card-body">
+                                <div class="position-absolute" style="top: 20px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill heartbtn">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </button>
+                                </div>
+                                <h5 class="border-bottom border-3 border-primary"></h5>
+                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                </div>
+                                <p class="card-text">@item.h_description</p>
+                                <div class="d-flex justify-content-between">
+                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- middle route -->
+        <div class="row tab-pane fade show" id="nav-middle" role="tabpanel" aria-labelledby="nav-middle-tab">
+            <div class="row">
+                @foreach (var item in Model.offcialMiddleRoute)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="portfolio-item card mb-3">
+                            <span>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                <div class="portfolio-info">
+                                    <h3>@item.h_name</h3>
+                                </div>
+                            </span>
+                            <div class="card-body">
+                                <div class="position-absolute" style="top: 20px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill heartbtn">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </button>
+                                </div>
+                                <h5 class="border-bottom border-3 border-primary"></h5>
+                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                </div>
+                                <p class="card-text">@item.h_description</p>
+                                <div class="d-flex justify-content-between">
+                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- high route -->
+        <div class="row tab-pane fade show" id="nav-high" role="tabpanel" aria-labelledby="nav-high-tab">
+            <div class="row">
+                @foreach (var item in Model.offcialHighRoute)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="portfolio-item card mb-3">
+                            <span>
+                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                <div class="portfolio-info">
+                                    <h3>@item.h_name</h3>
+                                </div>
+                            </span>
+                            <div class="card-body">
+                                <div class="position-absolute" style="top: 20px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill heartbtn">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </button>
+                                </div>
+                                <h5 class="border-bottom border-3 border-primary"></h5>
+                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                </div>
+                                <p class="card-text">@item.h_description</p>
+                                <div class="d-flex justify-content-between">
+                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

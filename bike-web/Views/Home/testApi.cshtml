@@ -1,0 +1,273 @@
+﻿
+@{
+    ViewBag.Title = "testApi";
+}
+
+<head>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+
+<div id="app">
+    <!-- 路線介紹 -->
+    <div class="routeTitle">
+        <h1 class="bg-primary px-5 py-3">
+            藤枝路線
+            <span>
+                <a href="#" class="btn btn-light mx-3">高級路線</a>
+                <a class="btn font-16 btn-outline-secondary" href="#">#爬坡</a>
+                <a class="btn font-16 btn-outline-secondary" href="#">#溪流</a>
+                <a class="btn font-16 btn-outline-secondary" href="#">#大自然</a>
+            </span>
+        </h1>
+        <!-- hashtag -->
+    </div>
+    <a href="~/maps/map_1.json">content</a>
+    <div class="container-fluid">
+        <div class="row py-2">
+            <div class="col-12 col-md-6">
+                <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">路線介紹</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio in, maiores nesciunt eius voluptatem perferendis quos error ab, accusamus inventore dolor consequuntur quam odio
+                    rem eaque recusandae officiis ducimus corrupti?
+                </p>
+                <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">交通資訊</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, velit?</p>
+            </div>
+            <div class="col-12 col-md-6">
+            </div>
+        </div>
+    </div>
+    <!-- 路線地圖 -->
+    <div class="container-fluid bg-lighter py-2">
+        <h5 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">路線地圖</h5>
+        <hr />
+        <!-- map -->
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <div class="form-group">
+                    <input placeholder="輸入景點名稱" type="text" class="form-control" ref="site" v-model="site" />
+                </div>
+                <div id="map" class="embed-responsive embed-responsive-16by9"></div>
+                <div class="d-flex my-2 align-items-center">
+                    <div>騎車路線:</div>
+                    <button type="button" class="btn btn-outline-secondary mx-1" v-for="f in features" @@click="openInfoWindows(f.properties.id)">{{ f.properties.name }}</button>
+                </div>
+                <div class="d-flex my-2 align-items-center">
+                    <div>鄰近美食:</div>
+                    <button type="button" class="btn btn-outline-secondary mx-1" v-for="f in foods" @@click="openInfoWindows(f.properties.id)">{{ f.properties.name }}</button>
+                </div>
+
+                <!-- 放評論摘要的div -->
+                <div class="row" v-if="place != null">
+                    <div class="col" v-if="place.reviews != null">
+                        <h5>網友評論：</h5>
+                        <div class="row" v-for="p in place.reviews">
+                            <div class="col">
+                                <ul class="list-unstyled">
+                                    <li class="media">
+                                        <img :src="p.profile_photo_url" class="img-fluid mr-3" />
+                                        <div class="media-body">
+                                            <h5 class="mt-0 mb-1">
+                                                <a target="_blank" :href="p.author_url">{{ p.author_name }}</a>
+                                            </h5>
+                                            <p>{{ p.text }}</p>
+                                            <h6>{{ p.relative_time_description }}</h6>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 右邊路線評論  -->
+            <div class="col-12 col-md-4 py-md-0 py-3">
+                <div class="card">
+                    <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">路線相關評價</h5>
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>陳小鐵</strong>
+                                </div>
+                                <div>2021/10/01</div>
+                            </div>
+                        </h6>
+                        <p class="card-text font-12">沿途風景很美，有很多拍照打卡的景點，超推薦!!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 將 YOUR_API_KEY 替換成你的 API Key 即可 -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUX6kQOm-gu6o6Gl48_pkCuWkPfOeVjKw&libraries=places"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+
+<script>
+      const googleMap = new Vue({
+        el: '#app',
+        data: {
+          map: null,
+          features: [], // 存入每一個地點
+          foods: [], // 存入每一個食物
+          infowindowAll: {}, // 存入每一個marker上的info windows
+          polylinePathPoints: [
+            //路線連線
+            { lat: 22.899016535135793, lng: 120.5370653 },
+            { lat: 22.88293629047007, lng: 120.54693822546191 },
+            { lat: 22.866751303316644, lng: 120.57983621687488 },
+          ],
+          autocomplete: null,
+          site: '', // place API要綁定的搜尋框
+          place: null, // 存place確定後回傳的資料
+        },
+        methods: {
+          // init google map
+          initMap() {
+            // 預設顯示的地點
+            let location = {
+              lat: 22.899016535135793, // 經度
+              lng: 120.5370653, // 緯度
+            };
+
+            // 建立地圖
+            this.map = new google.maps.Map(document.getElementById('map'), {
+              center: location,
+              zoom: 13,
+              mapTypeId: 'terrain',
+            });
+            console.log(this.map);
+
+            //建立路線
+            let polylinePath = new google.maps.Polyline({
+              path: this.polylinePathPoints,
+              geodesic: true,
+              strokeColor: '#fa8072',
+              strokeOpacity: 0.8,
+              strokeWeight: 10,
+              editable: false,
+              geodesic: false,
+              draggable: false,
+            });
+
+            polylinePath.setMap(this.map);  
+
+            // 放置多個marker
+               fetch('https://localhost:44322/maps/map_1.json')
+              .then((results) => results.json())
+              .then((result) => {
+                console.log(result);
+                this.features = result.features;
+                this.foods = result.foods;
+
+                Array.prototype.forEach.call(this.features, (r) => {
+                  let latLng = new google.maps.LatLng(r.geometry.coordinates[0], r.geometry.coordinates[1]);
+                  let marker = new google.maps.Marker({
+                    position: latLng,
+                    map: this.map,
+                    animation: google.maps.Animation.DROP, // DROP掉下來、BOUNCE一直彈跳
+                    draggable: false,
+                  });
+
+                  // info window
+                  let infowindow = new google.maps.InfoWindow({
+                    content: `
+                    <h6>${r.properties.name}</h6>
+                    <div>${r.properties.site}</div>
+                    `,
+                  });
+
+                  // 監聽 marker click 事件
+                  marker.addListener('click', (e) => {
+                    infowindow.open(this.map, marker);
+                  });
+
+                  // 加一個open的method，就可由外部按鈕開啟
+                  this.infowindowAll[r.properties.id] = {
+                    open: function () {
+                      infowindow.open(this.map, marker);
+                    },
+                  };
+                });
+
+                Array.prototype.forEach.call(this.foods, (r) => {
+                  let latLng1 = new google.maps.LatLng(r.geometry.coordinates[0], r.geometry.coordinates[1]);
+                  let marker1 = new google.maps.Marker({
+                    position: latLng1,
+                    map: this.map,
+                    animation: google.maps.Animation.DROP, // DROP掉下來、BOUNCE一直彈跳
+                    draggable: false,
+                  });
+
+                  // info window
+                  let infowindow1 = new google.maps.InfoWindow({
+                    content: `
+                        <h6>${r.properties.name}</h6>
+                        <div>${r.properties.site}</div>
+                        <div>${r.properties.phone}</div>
+                        `,
+                  });
+
+                  // 監聽 marker click 事件
+                  marker1.addListener('click', (e) => {
+                    infowindow1.open(this.map, marker1);
+                  });
+
+                  // 加一個open的method，就可由外部按鈕開啟
+                  this.infowindowAll[r.properties.id] = {
+                    open: function () {
+                      infowindow1.open(this.map, marker1);
+                    },
+                  };
+                });
+              });
+          },
+
+          // 由外部按鈕開啟info windows
+          openInfoWindows(id) {
+            this.infowindowAll[id].open();
+          },
+          siteAuto() {
+            let options = {
+              componentRestrictions: { country: 'tw' }, // 限制在台灣範圍
+            };
+            this.autocomplete = new google.maps.places.Autocomplete(this.$refs.site, options);
+            this.autocomplete.addListener('place_changed', () => {
+              this.place = this.autocomplete.getPlace();
+                @*console.log(this.place);*@
+
+              if (this.place.geometry) {
+                let searchCenter = this.place.geometry.location;
+                this.map.panTo(searchCenter); // panTo是平滑移動、setCenter是直接改變地圖中心
+
+                // 放置標記
+                let search_marker = new google.maps.Marker({
+                  position: searchCenter,
+                  map: this.map,
+                  icon: 'flag.svg',
+                });
+
+                // info window
+                let search_infowindow = new google.maps.InfoWindow({
+                  content: this.place.formatted_address,
+                });
+                search_infowindow.open(this.map, search_marker);
+              }
+            });
+          },
+        },
+        created() {
+          window.addEventListener('load', () => {
+            this.initMap();
+            this.siteAuto();
+          });
+            let url = location.href.split("/");
+            console.log(url);
+        },
+      });
+</script>
+
+@*<script src='~/Scripts/js/testapi.js'></script>*@

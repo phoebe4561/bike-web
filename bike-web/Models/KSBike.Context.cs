@@ -10,6 +10,9 @@
 //------------------------------------------------------------------------------
 
 
+namespace bike_web.Models
+{
+
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -48,6 +51,8 @@ public partial class KSBikeEntities : DbContext
     public virtual DbSet<user_favorite> user_favorite { get; set; }
 
     public virtual DbSet<user> users { get; set; }
+
+}
 
 }
 

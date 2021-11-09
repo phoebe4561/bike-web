@@ -1,0 +1,105 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "高雄火車站",
+        "site": "807高雄市三民區建國二路318號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.639650819090814, 120.30256153894763]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "六合夜市",
+        "site": "801高雄市前金區自立二路111號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.63226936697752, 120.29912880825626]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "華南夜市",
+        "site": "800高雄市新興區南華路38號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.631375447715776, 120.30289709662007]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "中央公園",
+        "site": "801高雄市前金區"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.625906671427725, 120.29928593887912]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "新堀江商圈",
+        "site": "800高雄市新興區"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.62345555095056, 120.30185928127439]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "新光園道",
+        "site": "806高雄市前鎮區中華五路1361巷48-4號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.611848950848092, 120.30211483311771]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "逸之牛日式炸牛排",
+        "site": "800高雄市新興區中正四路46號",
+        "phone": "+88672860606"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.631176441651974, 120.30005844019914]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "六合夜市海產粥",
+        "site": "800高雄市新興區六合二路130號",
+        "phone": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.632129806104043, 120.29874404380121]
+      }
+    }
+  ]
+}
