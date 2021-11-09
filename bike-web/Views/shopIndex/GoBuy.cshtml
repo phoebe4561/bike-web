@@ -1,0 +1,204 @@
+﻿@using bike_web.ViewModels
+@using bike_web.Models
+@model bike_web.Models.order
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>高雄鐵馬行</title>
+    <!--!fontawsome-->
+    <script src="https://kit.fontawesome.com/eb2b622fe6.js" crossorigin="anonymous"></script>
+    <!--bs5 icon-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    @Styles.Render("~/Content/css/all.min.css")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    @*<link rel="stylesheet" href="./Content/css/all.min.css" />*@
+
+</head>
+<body>
+
+    <div class="container-fluid py-1 mt-3 px-0">
+        <div class="container">
+            <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3 mb-4 mt-4" style="letter-spacing: 0.4em;">確認訂單及付款</h5>
+            <section>
+
+                <!-- ======= 步驟條 ======= -->
+                <div class="d-flex flex-sm-row justify-content-center">
+                    <div class="col-1"></div>
+                    <div class="align-middle text-info">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle-thin fa-stack-2x"></i>
+                            <span class="fa fa-stack-1x fa-check"></span>
+                        </span>
+                        <div class="d-inline-block">
+                            <p class="mb-1">購物車</p>
+                            <!-- <p class="position-absolute text-muted"></p> -->
+                        </div>
+                    </div>
+                    <span class="col-1 border border-info mx-3 my-auto"></span>
+                    <div class="align-middle text-info">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <span class="fa-stack-1x text-white">2</span>
+                        </span>
+                        <div class="d-inline-block">
+                            <p class="mb-1"><strong>選擇付款方式</strong></p>
+                            <!-- <p class="position-absolute text-muted"></p> -->
+                        </div>
+                    </div>
+                    <span class="col-1 border mx-3 my-auto"></span>
+                    <div class="align-middle text-muted">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle-thin fa-stack-2x"></i>
+                            <span class="fa-stack-1x">3</span>
+                        </span>
+                        <div class="d-inline-block">
+                            <p class="mb-1">購買完成</p>
+                            <!-- <p class="position-absolute text-muted"></p> -->
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div><!-- End .row -->
+
+            </section>
+
+            <div class="row text-center mt-3">
+                <div class="col-12 col-md-6 mb-3 g-1 mx-auto mt-0 p-2 align-self-center">
+                    <img src="~/images/winni/@Model.product_img" class="w-100 img-thumbnail align-self-center" />
+                </div>
+                <div class="col-12 col-md-6 mb-3  mx-auto p-2 align-self-center">
+
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+
+                        <div class="form-horizontal p-2 text-center">
+                            <h5 class="text-success ">請確認出發日期及人數</h5>
+                            <hr />
+                            <input type="hidden" name="AddId" value="@Model.id" />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">您選購的行程</span>
+                                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required value="@Model.product_name" disabled>
+                                <div class="invalid-feedback">
+                                    @Model.product_name
+                                </div>
+                            </div><br />
+
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">優惠價</span>
+                                <input type="text" class="form-control" id="price" aria-describedby="inputGroupPrepend" required value="@Model.product_price" disabled>
+                                <div class="invalid-feedback">
+                                    @Model.product_price
+                                </div>
+                            </div><br />
+
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">參加人數</span>
+                                <input type="text" class="form-control" id="AddCount" name="AddCount" aria-describedby="inputGroupPrepend" required value="@Model.order_num">
+
+                                <div class="invalid-feedback" id="changeMeg">
+
+                                </div>
+                            </div><br />
+
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">出發日期</span>
+                                <input type="date" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required value="@Model.go_date" name="AddGoDate">
+                                <div class="invalid-feedback">
+                                    @Model.go_date
+                                </div>
+                            </div> <br />
+
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">總計金額</span>
+                                <input type="text" class="form-control" id="TotalPrice" name="TotalPrice" aria-describedby="inputGroupPrepend" required value="@Model.order_price_total" disabled>
+                                <div class="invalid-feedback">
+
+                                </div>
+                            </div><br />
+
+
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="inputGroupPrepend">付款方式</span>
+
+                                <select class="form-select" aria-label="Default select example " aria-describedby="inputGroupPrepend">
+                                    <option selected>信用卡</option>
+                                    <option value="1" disabled>ATM轉帳</option>
+                                </select>
+                                <div class="invalid-feedback">
+
+                                </div>
+                            </div><br /><br />
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-12">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        確認付款
+                                    </button>&emsp;&emsp;
+
+                                    <a href="@Url.Action("shoppingCar", "shopIndex")?id=@Model.id"
+                                       class="btn btn-outline-secondary text-dark">回上頁</a>
+
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">扣款通知</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-center " style="letter-spacing: 0.1em; font-size:16px;">
+                                                    您確定要以信用卡扣款總計金額 <span class="text-info" id="total_1" style="letter-spacing: 0.1em; font-size:16px;"></span><br><br>
+                                                    購買 <span class="text-info" style="letter-spacing: 0.1em; font-size:16px;">@Model.product_name </span>行程嗎?
+                                                </div>
+                                                <div class="modal-footer">
+                                                   
+                                                    <input type="submit" value="確認付款" class="btn btn-primary" />
+                                                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">取消</button>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+    <script>
+
+    document.getElementById("AddCount").onblur = function () {
+
+
+        var NUM = parseInt(document.querySelector("#AddCount").value);
+        var PRICE = parseInt(document.querySelector("#price").value);
+        var Total = parseInt(NUM * PRICE);
+        console.log(Total);
+        document.querySelector("#TotalPrice").value = ` ${Total} 元`;
+        document.querySelector("#total_1").innerHTML = ` ${Total} 元`;
+    }
+
+    </script>
+
+</body>
+
+</html>
