@@ -1,0 +1,69 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "美濃水橋",
+        "site": "843高雄市美濃區永安路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.899016535135793, 120.5370653]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "原鄉緣紙傘文化村",
+        "site": "843高雄市美濃區中興路一段147號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.88293629047007, 120.54693822546191]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "竹門發電廠",
+        "site": "843高雄市美濃區"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.866751303316644, 120.57983621687488]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "美濃林家粄條總店",
+        "site": "843高雄市美濃區美興街25號",
+        "phone": "+88676813147"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.900340949610193, 120.53942412546222]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "東門冰菓室",
+        "site": "843高雄市美濃區民族路20號",
+        "phone": "+88676812270"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.897730066803298, 120.54955710093074]
+      }
+    }
+  ]
+}

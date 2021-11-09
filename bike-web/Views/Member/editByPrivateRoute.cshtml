@@ -1,0 +1,48 @@
+﻿@model bike_web.Models.private_route
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container" id="uploadForm">
+        <h1 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">路線文章編輯</h1>
+        <div class="content-box">
+            <div class="row">
+                <label for="inputUser" class="col-sm-2 col-form-label border-end border-2">作者</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputUser" readonly="readonly" value="@Session["username"]" />
+                </div>
+            </div>
+        </div>
+        @*<div class="content-box">
+            <div class="row">
+                @Html.LabelFor(model => model.article_img_info, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.article_img_info, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.article_img_info, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@
+        <div class="content-box">
+            <div class="form-group row">
+                @Html.LabelFor(model => model.article_title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.article_title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.article_title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.article_context, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.article_context, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.article_context, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="my-4 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary px-4 me-3" id="btnSubmitByPR">存檔</button>
+            <a href="@Url.Action("Index","Home")" class="btn btn-outline-secondary ms-3">返回頁面</a>
+        </div>
+    </div>
+        }
