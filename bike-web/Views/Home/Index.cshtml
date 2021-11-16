@@ -11,20 +11,18 @@
     <div class="banner container-fluid px-0">
         <div class="bannerContainer px-4" id="animate-area">
             <div class="bannerText">
-                <h5>Let's Go Bike!</h5>
-                <p>在忙碌的生活中，有多久沒有停下腳步、靜下心來，好好體驗生活了呢?來享受一段高雄單車之旅吧!</p>
+                <h5 class="bannerTitle">Let's Go Bike!</h5>
+                <p class="bannerMsg">在忙碌的生活中，有多久沒有停下腳步、靜下心來，好好體驗生活了呢?來享受一段高雄單車之旅吧!</p>
                 <!-- search area -->
-                <form action="/Home/Index" method="post" class="input-group my-3" id="searchForm">
+                <form action="/Home/Index" method="post" class="input-group my-3" id="searchForm" >
                     <input name="txtKeyword" id="txtKeyword" class="form-control" placeholder="請輸入關鍵字" type="text" value="" />
-                    @*<input type="button" @@click="backToBack" class="btn btn-primary goBack position-absolute end-0 opacity-0" value="搜尋"  />*@
-                    <input type="submit" class="btn btn-primary gotoBack goBack" value="搜尋" @@click="backToBack" />
-
+                    <input type="submit" class="btn btn-primary goBack" value="搜尋" />
                 </form>
 
                 <div class="d-flex justify-content-between">
-                    <a href="@Url.Action("初級List","offRoute")" class="btn btn-outline-secondary">初級路線</a>
-                    <a href="@Url.Action("中級List","offRoute")" class="btn btn-outline-secondary">中級路線</a>
-                    <a href="@Url.Action("高級List","offRoute")" class="btn btn-outline-secondary">高級路線</a>
+                    <a href="@Url.Action("初級List", "offRoute")" class="btn btn-outline-secondary">初級路線</a>
+                    <a href="@Url.Action("中級List", "offRoute")" class="btn btn-outline-secondary">中級路線</a>
+                    <a href="@Url.Action("高級List", "offRoute")" class="btn btn-outline-secondary">高級路線</a>
                 </div>
             </div>
         </div>
@@ -36,23 +34,61 @@
     </div>
 
 
+
     <!-- 熱門路線 -->
     <div class="container-fluid bg-lighter py-5">
-        <div class="container">
+        <div class="container hotspot">
             <span class="badge bg-darkBrown px-3 bold">熱門景點</span>
             <h1 class="ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">高雄夯單車路線</h1>
             <div class="row">
+
                 @foreach (var item in Model.offcialPopularRoute)
                 {
+                    int count = 0; bool btn = true;
                     <li class="col-12 col-md-4">
                         <div class="card mb-3">
                             <div class="position-absolute" style="top: 20px; right: 20px">
-                                <button type="button" class="btn btn-outline-danger rounded-pill">
-                                    <i class="bi bi-heart fs-5"></i>
-                                </button>
+                                @*//mia:我的最愛*@
+                                @if (Session["id"] != null)
+                                {
+                                    if (@Model.checkFav.Count > 0)
+                                    {
+                                        <form method="post">
+                                            @foreach (var fav in @Model.checkFav)
+                                            {
+                                                count++;
+                                                if (fav.official_route_id == item.h_ID)
+                                                {
+                                                    btn = false;
+                                                    <button type="button" value="@item.h_ID" class="btnFav2 rounded-pill btn btn-danger ">
+                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID" @*value="@Model.p_ID"*@></i>
+                                                    </button>
+                                                    //count++;
+                                                }
+                                                else if (btn)
+                                                {
+                                                    if (count < @Model.checkFav.Count()) { continue; }
+                                                    <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                    </button>}
+                                            }
+                                        </form> }
+                                    else
+                                    { <form method="post">
+                                            <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                            </button>
+                                        </form> }
+                                }
+                                else
+                                {
+                                    <button v-on:click="greet" type="button" class="btnLoginYet btn rounded-pill btn-outline-danger " value="">
+                                        <i class="bi fs-5 bi-heart"></i>
+                                    </button>}
+                                @*//END---我的最愛*@
                             </div>
                             <span>
-                                <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /></a>
+                                <a href="@Url.Action("List", "OnlyOffRoute", new { id = item.h_ID })"><img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /></a>
                             </span>
                             <div class="card-body">
                                 <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
@@ -61,14 +97,18 @@
                                     <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
                                 </div>
                                 <p class="card-text">@item.h_description</p>
-                                <div class="d-flex justify-content-between">
-                                    <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                <div class="d-flex justify-content-end">
+                                    @*<div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>*@
+
                                     <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
                                 </div>
                             </div>
                         </div>
                     </li>
                 }
+
+
+
             </div>
         </div>
     </div>
@@ -87,25 +127,12 @@
                             role="tab"
                             aria-controls="nav-intro"
                             aria-selected="true">
-                        官方景點
+                        鐵馬景點
                     </button>
                 </li>
                 <li class="nav-item">
                     <button onclick="goToTab()" class="nav-link py-3" id="nav-faq-tab" data-bs-toggle="tab" data-bs-target="#nav-faq" type="button" role="tab" aria-controls="nav-faq" aria-selected="false">
                         常見問題
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button onclick="goToTab()"
-                            class="nav-link py-3"
-                            id="nav-progress-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#nav-progress"
-                            type="button"
-                            role="tab"
-                            aria-controls="nav-progress"
-                            aria-selected="false">
-                        最新活動
                     </button>
                 </li>
             </ul>
@@ -119,34 +146,72 @@
                 <div class="tab-content" id="myTabContent">
                     <!-- 官方景點介紹 -->
                     <div class="tab-pane fade show active" id="nav-intro" role="tabpanel" aria-labelledby="nav-intro-tab">
-                        <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">官方推薦路線</h3>
-                        <div class="row">
+                        <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">鐵馬推薦路線</h3>
+                        <div class="row"> 
                             @foreach (var item in Model.offcialAllRoute)
                             {
+                                int count = 0; bool btn = true;
                                 <div class="col-12 col-md-6">
                                     <div class="card mb-3">
-                                        <div class="position-absolute" style="top: 20px; right: 20px">
-                                            <button type="button" class="btn btn-outline-danger rounded-pill">
-                                                <i class="bi bi-heart fs-5"></i>
-                                            </button>
-                                        </div>
-                                        <span>
-                                            <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"> <img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /> </a>
-                                        </span>
-                                        <div class="card-body">
-                                            <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
-                                            <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                                                <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
-                                                <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                        <div class="card-box">
+                                            <div class="position-absolute" style="top: 20px; right: 20px">
+                                                @*//mia:我的最愛*@
+                                                @if (Session["id"] != null)
+                                                {
+                                                    if (@Model.checkFav.Count > 0)
+                                                    {
+                                                        <form method="post">
+                                                            @foreach (var fav in @Model.checkFav)
+                                                            {
+                                                                count++;
+                                                                if (fav.official_route_id == item.h_ID)
+                                                                {
+                                                                    btn = false;
+                                                                    <button type="button" value="@item.h_ID" class="btnFav2 rounded-pill btn btn-danger ">
+                                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID" @*value="@Model.p_ID"*@></i>
+                                                                    </button>
+                                                                    //count++;
+                                                                }
+                                                                else if (btn)
+                                                                {
+                                                                    if (count < @Model.checkFav.Count()) { continue; }
+                                                                    <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                                    </button>}
+                                                            }
+                                                        </form> }
+                                                    else
+                                                    { <form method="post">
+                                                            <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                            </button>
+                                                        </form> }
+                                                }
+                                                else
+                                                {
+                                                    <button v-on:click="greet" type="button" class="btnLoginYet btn rounded-pill btn-outline-danger " value="">
+                                                        <i class="bi fs-5 bi-heart"></i>
+                                                    </button>}
+                                                @*//END---我的最愛*@
                                             </div>
-                                            <p class="card-text">@item.h_description</p>
-                                            <div class="d-flex justify-content-between">
-                                                <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                                                <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                            <span>
+                                                <a href="@Url.Action("List", "OnlyOffRoute", new { id = item.h_ID })"> <img src="~/images/home/@item.h_img" class="card-img-top" alt="@item.h_name" /> </a>
+                                            </span>
+                                            <div class="card-body">
+                                                <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.h_name</h5>
+                                                <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                                    <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                                    <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                                </div>
+                                                <p class="card-text">@item.h_description</p>
+                                                <div class="d-flex justify-content-end">
+                                                    @*<div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>*@
+                                                    <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                 </div>
                             }
                         </div>
                     </div>
@@ -158,11 +223,18 @@
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         <span>Q1</span>
-                                        <span>如何推薦私人單車路線呢？</span>
+                                        <span>
+                                            加入會員後,你可以享有......
+                                        </span>
                                     </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faq1">
-                                    <div class="accordion-body">請先註冊加入會員,即可以開通薦私人景點功能喔!</div>
+                                    <div class="accordion-body">
+                                        (1)和其他的車友分享交流:針對各路線進行留言評分與收藏我的最愛<br />
+                                        (2)紀錄旅程中的心動時刻:私人單車路線遊記<br />
+                                        (3)完善的旅遊行程一條龍服務:購買單車旅遊套裝行程<br />
+                                        (4)揪團騎車:使用揪團騎鐵馬聊天室
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +248,7 @@
                                     </button>
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#faq2">
-                                    <div class="accordion-body">可以參考系統分級:初級(10公里以內)中級(10-20公里)與高級(大於20公里),評估個人能力需求後進行選擇喔!</div>
+                                    <div class="accordion-body">可以參考系統分級:初級(約10公里以內)中級(約10-20公里)與高級(約大於20公里),評估個人能力需求後進行選擇喔!</div>
                                 </div>
                             </div>
                         </div>
@@ -186,12 +258,12 @@
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                                         <span>Q3</span>
-                                        <span>Lorem ipsum dolor sit amet.</span>
+                                        <span>找不到騎車好夥伴嗎?別擔心,關於聊天室使用</span>
                                     </button>
                                 </h2>
                                 <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#faq3">
                                     <div class="accordion-body">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet quae unde odio doloremque commodi natus tenetur distinctio, eaque vitae repellat.
+                                        會員專屬線上揪團騎鐵馬聊天室,請先看清楚版規後再進行留言喔!
                                     </div>
                                 </div>
                             </div>
@@ -202,60 +274,12 @@
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                                         <span>Q4</span>
-                                        <span>Lorem ipsum dolor sit amet.</span>
+                                        <span> 如何推薦私人單車路線呢？</span>
                                     </button>
                                 </h2>
                                 <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#faq4">
                                     <div class="accordion-body">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem necessitatibus aliquam vitae soluta recusandae doloribus, odio dolor odit rerum deserunt.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 最新活動 -->
-                    <div class="tab-pane fade show" id="nav-progress" role="tabpanel" aria-labelledby="nav-progress-tab">
-                        <div class="card overflow-hidden mb-3">
-                            <div class="row g-0">
-                                <div class="col-5 col-md-4">
-                                    <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news01" />
-                                </div>
-                                <div class="col-7 col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
-                                        <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
-                                        <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
-                                        <a class="text-info font-14 fw-bold" href="#">MORE</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card overflow-hidden mb-3">
-                            <div class="row g-0">
-                                <div class="col-5 col-md-4">
-                                    <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news02" />
-                                </div>
-                                <div class="col-7 col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
-                                        <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
-                                        <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
-                                        <a class="text-info font-14 fw-bold" href="#">MORE</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card overflow-hidden mb-3">
-                            <div class="row g-0">
-                                <div class="col-5 col-md-4">
-                                    <img class="w-100 h-100 object-fit: cover" src="images/banner1.jpg" alt="news03" />
-                                </div>
-                                <div class="col-7 col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title fw-bold">自行車同好會｜免費參加送帆布袋</h5>
-                                        <p class="card-text mb-2 font-14 text-lightBrown">2021-6-20</p>
-                                        <p class="card-text mb-2 text-lightBrown d-none d-lg-block">大家安安！謝謝每位單車同好的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！</p>
-                                        <a class="text-info font-14 fw-bold" href="#">MORE</a>
+                                        請先註冊加入會員,即可以開通薦私人路線功能喔!
                                     </div>
                                 </div>
                             </div>
@@ -275,12 +299,7 @@
                     {
                         <li>
                             <div class="card mb-3">
-                                <div class="position-absolute" style="top: 15px; right: 15px">
-                                    <button type="button" class="btn btn-outline-danger rounded-pill">
-                                        <i class="bi bi-heart fs-6"></i>
-                                    </button>
-                                </div>
-                                <img src="images/@item.p_artitle_img_info" class="card-img-top" alt="@item.p_artitle_title" />
+                                <img src="@Url.Content(item.p_artitle_img_info)" class="card-img-top" alt="@item.p_artitle_title" />
                                 <div class="card-body">
                                     <div class="d-flex justify-content-end border-bottom border-1 border-gray-200 pb-2 mb-2">
                                         <span>@item.p_datetime</span>
@@ -289,12 +308,86 @@
                                     <div class="d-flex justify-content-end py-2">
                                         <div class="badge bg-light text-darkBrown px-3">紀錄者:@item.u_username</div>
                                     </div>
-                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, facilis.</p>
-                                    <a href="./articlepage.html" class="btn btn-primary w-100 fw-bold">看更多</a>
+                                    <div class="d-flex justify-content-between py-2">
+                                        <div><i class="bi bi-eye fs-4"></i><span class="ms-2">@item.p_seen_num</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.p_star_num</span></div>
+                                    </div>
+                                    @if (Session["id"] != null)
+                                    {
+                                        <a href="@Url.Action("privateRoutePage", "PrivateRoute")?articletitleid=@item.p_userID" class="btn btn-primary w-100 fw-bold">看更多</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" @@click="loginFirst" class="btn btn-primary w-100 fw-bold">看更多</a>
+                                    }
                                 </div>
                             </div>
                         </li>
                     }
+                </ul>
+                <div class="mb-3">
+                    <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">最熱門關鍵字排行</h5>
+                </div>
+                <ul class="list-unstyled">
+
+                    <li>
+                        <div class="card mb-3">
+                            <div class="btn-group-vertical">
+                                @{int ranking = 0; }
+                                @foreach (var item in Model.hashtagNamandSum)
+                                {
+                                    if (Session["id"] != null)
+                                    {
+                                        ranking++;
+                                        if (ranking % 2 == 1)
+                                        {
+
+                                            <button type="button" onclick="window.location.href = '@Url.Action("privateRoute","privateRoute", new { hashtag = item.Name})'" class="btn btn-lg  btn-primary">
+                                                # @item.Name @item.Number 件
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" onclick="window.location.href = '@Url.Action("privateRoute","privateRoute", new { hashtag = item.Name})'" class="btn btn-lg  btn-light">
+                                                # @item.Name @item.Number 件
+                                            </button>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        ranking++;
+                                        if (ranking % 2 == 1)
+                                        {
+
+                                            <button type="button" @@click="loginFirst" class="btn btn-lg  btn-primary">
+                                                # @item.Name @item.Number 件
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" @@click="loginFirst" class="btn btn-lg  btn-light">
+                                                # @item.Name @item.Number 件
+                                            </button>
+                                        }
+
+                                    }
+
+                                }
+                                @*<button type="button" class="btn btn-lg  btn-primary">#西子灣 2336件</button>
+        <button type="button" class="btn btn-lg  btn-light">#約會勝地 1456件</button>
+        <button type="button" class="btn btn-lg  btn-primary">#旗津一日遊 742件</button>
+        <button type="button" class="btn btn-lg  btn-light">#海產 650件</button>
+        <button type="button" class="btn btn-lg  btn-primary">#貓 230件</button>
+        <button type="button" class="btn btn-lg  btn-light">#高雄 222件</button>
+        <button type="button" class="btn btn-lg  btn-primary">#文藝 185件</button>
+        <button type="button" class="btn btn-lg  btn-light">#美食 165件</button>
+        <button type="button" class="btn btn-lg  btn-primary">#海鮮 138件</button>
+        <button type="button" class="btn btn-lg  btn-light">#旗津 102件</button>
+        <button type="button" class="btn btn-primary fw-bold ">看更多</button>*@
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <!-- end of右側欄 -->
@@ -308,6 +401,7 @@
 </div>
 
 <script src="~/Scripts/js/homePage.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
 <script src="https://unpkg.com/vue@next"></script>
 <script type="module">
     const app = Vue.createApp({
@@ -315,6 +409,57 @@
             return { isVisible: false };
         },
         methods: {
+            loginFirst() {
+                swal.fire({
+                    position: 'center',
+                    text: "請先登入會員!",
+                    icon: "info",
+                    timer: 2000,
+                    width: 300,
+                    showConfirmButton: false,
+                })
+            },
+            animateBanner() {
+                let siteAnimate = ScrollReveal({
+                    reset: false,
+                    origin: 'right',
+                    distance: '500px',
+                    easing: 'ease-in-out',
+                });
+                ScrollReveal().reveal('.bannerText', { duration: 2000, origin: 'bottom', delay: 50 });
+                ScrollReveal().reveal('.hotspot', { duration: 2000, origin: 'left', delay: 50 });
+            },
+            scrollReveal() {
+                window.sr = ScrollReveal();
+                sr.reveal(
+                    '.card-box',
+                    {
+                        duration: 600,
+                        distance: '20px',
+                        easing: 'ease-out',
+                        origin: 'bottom',
+                        reset: true,
+                        scale: 1,
+                        viewFactor: 0,
+                        afterReveal: revealChildren,
+                    },
+                    150
+                );
+
+                var revealChildren = sr.reveal(
+                    '.card-title, .card-text',
+                    {
+                        duration: 500,
+                        scale: 1,
+                        distance: '20px',
+                        origin: 'bottom',
+                        reset: true,
+                        easing: 'ease-out',
+                        viewFactor: 1,
+                    },
+                    75
+                );
+            },
             handleScroll() {
                 const backToTopButton = document.querySelector('.goTop');
                 if (window.scrollY > 1000) {
@@ -331,66 +476,38 @@
                     behavior: 'smooth',
                 });
             },
-            handleSearchScroll() {
-                const backToBackButton = document.querySelectorAll('.goBack');
-                backToBackButton.forEach((item) => {
-                    item.addEventListener(onclick, this.backToBack);
-                });
-            },
-            backToBack: function () {
-                window.scrollTo({
-                    top: 1850,
-                    behavior: 'smooth',
-                });
+            @*addSearch() {
+                console.log(addSearch);
+                this.updateScrollNextTick();
+            },*@
+            @*updateScrollNextTick() {
+                this.$nextTick(() => {
+                    let elmnt = document.getElementById("hotroute");
+                    elmnt.scrollIntoView({ behavior: "smooth" });
+                })
+            },*@
+            onSubmit() {
+                @*console.log("Submitted");*@
+                this.$nextTick(() => {
+                    let elmnt = document.getElementById("hotroute");
+                    elmnt.scrollIntoView({ behavior: "smooth" });
+                })
             },
         },
         mounted() {
+            this.animateBanner();
+            this.scrollReveal();
+            @*this.updateScrollNextTick();*@
+            this.onSubmit();
             window.addEventListener('scroll', this.handleScroll);
-            window.addEventListener('scroll', this.handleSearchScroll);
+
         },
     });
     app.mount('#app');
 </script>
 
-@*<script>
-            function scrollToDiv() {
-                const backToBackBtn = document.querySelector('.gotoBack');
-                console.log(backToBackBtn);
-                backToBackBtn.addEventListener(onclick, ()=>setTimeout(function () {
-                    window.scrollTo({
-                        top: 1850,
-                        behavior: 'smooth',
-                    });
-                },1000));
 
-            }
-            ScriptManager.RegisterStartupScript(Page, typeof (Page), "backToBackBtn", "scrollToDiv()", true);
-    </script>*@
 
-@*<script>
-        function test() {
-            const backToBackBtn = document.querySelector('.gotoBack');
-            console.log(backToBackBtn);
-            backToBackBtn.addEventListener('click', scrollTo(0, 1850))
-        }
-        test();
-    </script>*@
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    console.log('hi1');
-    $('#searchForm').on('submit', function () {
-        console.log('hi2');
-        $('html, body').animate({
-            scrollTop: $("#hotroute").offset().top
-        }, 3000);
-        return false;
-    });
-    @*$("#searchForm").submit(function () {
-        console.log('hi2')
-        $('html, body').animate({
-            scrollTop: $("#hotroute").offset().top
-        }, 2000);
-        return false;
-    });*@
-</script>
+
+<script src="~/Scripts/js/myFavorite.js"></script>

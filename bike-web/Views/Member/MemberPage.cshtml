@@ -35,13 +35,15 @@
                 <ul class="list-unstyled list-inline mb-0">
                     @foreach (var item in Model.private_Routes)
                     {
-                    <li class="py-2">
-                        <a href="@Url.Action("", "")" class="text-black">@item.article_title</a><!--連到私人路線-->
-                        @*<a class="float-end" href="@Url.Action("DeleteByPR","Member")">刪除</a>*@
-                        <a href="@Url.Action("EditbyPrivateRoute","Member",new { id = item.id})" class="btn btn-primary" px-4 me-5>編輯</a>
-                        <a href="@Url.Action("DeleteByPrivate", "Member", new { id = item.id})" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
-                        @*<a class="float-end" href="@Url.Action("EditByPR","Member")">編輯</a>*@
-                    </li>
+                        <li class="py-2">
+                            <a href="@Url.Action("privateRoutePage", "PrivateRoute",new{articletitleid =item.id})" class="text-black">@item.article_title</a><!--連到私人路線-->
+                            @*<a class="float-end" href="@Url.Action("DeleteByPR","Member")">刪除</a>*@
+                            @*<a href="@Url.Action("EditbyPrivateRoute","Member",new { id = item.id})" class="btn btn-primary" px-4 me-5>編輯</a>*@
+                            <a href="@Url.Action("Delete", "Member", new{id = item.id})" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
+
+                            @*<a href="Delete/@item.id" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>*@
+                            @*<a class="float-end" href="@Url.Action("EditByPR","Member")">編輯</a>*@
+                        </li>
                     }
                 </ul>
             </div>
@@ -57,14 +59,16 @@
             <div class="card-header bg-primary">我的最愛</div>
             <div class="card-body">
                 <ul class="list-unstyled mb-0">
-                    @foreach(var item in Model.userFavoritesByOF)
+                    @foreach (var item in Model.userFavoritesByOF)
                     {
-                        <li class="py-2">
-                            <a href="@Url.Action("","")">@item.official_By_Home_title</a><!--連到網站路線-->
-                            <a href="@Url.Action("DeleteByoffical_fav", "Member", new {id=item.official_route_id })" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
+                        var userFav = "userFav" + item.official_route_id;
+                        <li class="py-2 theRoute">
+                            <p class="userFav" hidden>@item.official_route_id</p>
+                            <a href="@Url.Action("List","OnlyOffRoute", new {id=item.official_route_id })">@item.official_By_Home_title</a><!--連到網站路線-->
+                            <a href="@Url.Action("DeleteByoffical_fav", "Member", new {articleID=item.official_route_id })" @*onclick="return confirm('您確定要刪除嗎?')"*@ class="btn btn-danger px-4 me-5 btnRemoveFav" value="@item.official_route_id">刪除</a>
                         </li>
-                    }
-                    @foreach(var item in Model.userFavoritesByPR)
+                    }                  
+                    @foreach (var item in Model.userFavoritesByPR)
                     {
                         <li class="py-2">
                             <a href="@Url.Action("","")">@item.article_title</a><!--連到私人路線-->
@@ -79,5 +83,5 @@
         </div>
     </div>
 </div>
-       
 
+<script src="~/Scripts/js/myFavorite2.js"></script>

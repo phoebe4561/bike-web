@@ -16,23 +16,23 @@ namespace bike_web.Controllers
             return View();
         }
 
-        public ActionResult theRoute(int id)
-        {
-            OfficialVM vm = null;
+        //public ActionResult theRoute(int id)
+        //{
+        //    //OfficialVM vm = null;
             
             
-            var 路線資訊 = (new OfficialR_F()).QrouteInfo(id);
-            var 路線評論 = (new OfficialR_F()).QrouteComment(id);
-            var 路線 = (new OfficialR_F()).QrouteHome(id);
+        //    //var 路線資訊 = (new OfficialR_F()).QrouteInfo(id);
+        //    //var 路線評論 = (new OfficialR_F()).QrouteComment(id);
+        //    //var 路線 = (new OfficialR_F()).QrouteHome(id);
 
-            vm = new OfficialVM()
-            {                
-                RouteInfo = 路線資訊,
-                RouteComment = 路線評論,
-                RouteHome = 路線
-            };             
+        //    //vm = new OfficialVM()
+        //    //{                
+        //    //    RouteInfo = 路線資訊,
+        //    //    RouteComment = 路線評論,
+        //    //    RouteHome = 路線
+        //    //};             
 
-            return View(vm);
-        }
+        //    //return View(vm);
+        //}
     }
 }

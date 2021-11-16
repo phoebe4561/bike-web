@@ -2,7 +2,13 @@
 @{
     ViewBag.Title = "高級List";
 }
-
+<style>
+    .colored-toast.swal2-icon-warning {
+        background-color: #87adbd !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+</style>
 <div id="app">
     <!-- ======= 進階篩選 ======= -->
     <div class="sidenav" :class="{ toggle: isToggle === true }">
@@ -41,7 +47,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelectDistance">長度</label>
                         </div>
-                        <select class="custom-select" name="searchDistance">
+                        <select class="custom-select searchDistance" name="searchDistance">
                             <option value="nodistance" selected>長度分類</option>
                             <option value="2">小於10km</option>
                             <option value="3">10-20km</option>
@@ -57,37 +63,72 @@
             }
         </div>
     </div>
-    <div class="container pt-4">
+    <div class="container pt-4 animation">
         <div class="row">
             @foreach (var item in Model.offcialAllRoute)
             {
-            <div class="col-lg-4 col-md-6">
-                <div class="portfolio-item card mb-3">
-                    <span>
-                        <a href="./officialSingleRoute.html"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
-                        <div class="portfolio-info">
-                            <h3>@item.h_name</h3>
-                        </div>
-                    </span>
-                    <div class="card-body">
-                        <div class="position-absolute" style="top: 20px; right: 20px">
-                            <button type="button" class="btn btn-outline-danger rounded-pill heartbtn">
-                                <i class="bi bi-heart fs-5"></i>
-                            </button>
-                        </div>
-                        <h5 class="border-bottom border-3 border-primary"></h5>
-                        <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
-                            <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
-                            <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
-                        </div>
-                        <p class="card-text">@item.h_description</p>
-                        <div class="d-flex justify-content-between">
-                            <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
-                            <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                int count = 0; bool btn = true;
+                <div class="col-lg-4 col-md-6">
+                    <div class="portfolio-item card mb-3">
+                        <span>
+                            <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                            <div class="portfolio-info">
+                                <h3>@item.h_name</h3>
+                            </div>
+                        </span>
+                        <div class="card-body">
+                            <div class="position-absolute" style="top: 20px; right: 20px">
+                                @*//mia:我的最愛*@
+                                @if (Session["id"] != null)
+                                {
+                                    if (@Model.checkFav != null)
+                                    {
+                                        <form method="post">
+                                            @foreach (var fav in @Model.checkFav)
+                                            {
+                                                count++;
+                                                if (fav.official_route_id == item.h_ID)
+                                                {
+                                                    btn = false;
+                                                    <button type="button" value="@item.h_ID" class="btnFav2 rounded-pill btn btn-danger ">
+                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID" @*value="@Model.p_ID"*@></i>
+                                                    </button>
+                                                    //count++;
+                                                }
+                                                else if (btn)
+                                                {
+                                                    if (count < @Model.checkFav.Count()) { continue; }
+                                                    <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                    </button>}
+                                            }
+                                        </form> }
+                                    else
+                                    { <form method="post">
+                                            <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                            </button>
+                                        </form> }
+                                }
+                                else
+                                {
+                                    <button v-on:click="greet" type="button" class="btnLoginYet btn rounded-pill btn-outline-danger " value="">
+                                        <i class="bi fs-5 bi-heart"></i>
+                                    </button>}
+                                @*//END---我的最愛*@
+                            </div>
+                            <h5 class="border-bottom border-3 border-primary"></h5>
+                            <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                            </div>
+                            <p class="card-text">@item.h_description</p>
+                            <div class="d-flex justify-content-end">
+                                <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             }
         </div>
 
@@ -103,10 +144,53 @@
             };
         },
         methods: {
+            btnSubmit() {
+                const keywordInput = document.querySelector('input');
+                const levelOption = document.querySelector('.searchRank');
+                const distanceOption = document.querySelector('.searchDistance');
+                const searchBtn = document.querySelector(".searchBtn");
+                const Toast = Swal.mixin({
+                    toast: true,
+                    width: '320px',
+                    position: 'bottom-start',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast',
+                    },
+                    showConfirmButton: false,
+                    timer: 1500,
+
+                    timerProgressBar: true
+                })
+                searchBtn.addEventListener("click", (e) => {
+                    if (keywordInput.value == '' && levelOption.value == 'nolevel' && distanceOption.value == 'nodistance') {
+
+                        e.preventDefault();
+
+                        Toast.fire({
+                            icon: 'warning',
+                            title: '請選擇篩選條件!'
+                        })
+                    }
+                });
+            },
+            animateBanner() {
+                let siteAnimate = ScrollReveal({
+                    reset: false,
+                    origin: 'right',
+                    distance: '500px',
+                    easing: 'ease-in-out',
+                });
+                ScrollReveal().reveal('.animation', { duration: 2000, origin: 'right', delay: 50 });
+            },
         },
         mounted() {
             this.isToggle = true;
+            this.animateBanner();
+            this.btnSubmit();
         },
     });
     app.mount('#app');
 </script>
+
+<script src="~/Scripts/js/myFavorite.js"></script>

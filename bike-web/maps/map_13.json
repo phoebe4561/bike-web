@@ -1,0 +1,107 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "葫蘆谷瀑布",
+        "site": "844高雄市六龜區新發公路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 22.92504218449474, 120.65227716818724 ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "寶山二集團櫻花公園",
+        "site": "848高雄市桃源區荖濃溪林道寶山巷"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 23.05936785653843, 120.73097866799114 ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "美濃民俗村",
+        "site": "843高雄市美濃區中山路二段421巷80號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 22.893224238720922, 120.51397656798784 ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "美濃客家文物館",
+        "site": "843高雄市美濃區民族路49-3號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 22.911007280252626, 120.55756262651107 ]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "六龜源通香腸",
+        "site": "844高雄市六龜區57號",
+        "phone": "+886922871451"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 22.64932263393682, 120.29857031157528 ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "鄭家粄條",
+        "site": "844高雄市六龜區太平路20號",
+        "phone": "+88676891678"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 22.995575427288937, 120.6355550146169 ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "03",
+        "name": "櫻花公園布農族野豬香腸",
+        "site": "848高雄市桃源區寶山巷",
+        "phone": "+886931098145"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 23.059240484941615, 120.73145473915518 ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "04",
+        "name": "隨緣素食自助餐",
+        "site": "844高雄市六龜區太平路41號",
+        "phone": "+88676893966"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 22.99573935024024, 120.63595180041101 ]
+      }
+    }
+  ]
+}

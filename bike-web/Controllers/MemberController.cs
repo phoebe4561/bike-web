@@ -2,6 +2,8 @@
 using bike_web.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,7 @@ namespace bike_web.Controllers
 {
     public class MemberController : Controller
     {
-        //
+
         // GET: Member
         [HttpPost]
         public ActionResult Login(string email, string password)
@@ -93,17 +95,22 @@ namespace bike_web.Controllers
             KSBikeEntities db = new KSBikeEntities();
             var userid = Convert.ToInt32(Session["id"]);
             MPVM.User = db.users.Where(e => e.id == userid).FirstOrDefault();
-            MPVM.private_Routes = db.private_route.Where(p => p.user_id == userid).ToList();
-            //MPVM.private_Routes_For_Ones = db.private_route.Where(p => p.user_id == userid).ToList();
             MPVM.userFavoritesByOF = (from o in db.Homes
+                                      where o.id > 1
+                                      //let f = db.user_favorite.Where(fav => o.id == fav.official_route_id).FirstOrDefault()
                                       join f in db.user_favorite on o.id equals f.official_route_id
+                                      where f.user_fav_id == userid
                                       select new UserFavorite
                                       {
                                           user_fav_id = f.user_fav_id,//哪一位使用者點了喜歡
                                           fav_id = f.id,//我的最愛的ID
                                           official_route_id = o.id,//網站路線的ID
                                           official_By_Home_title = o.hname//網站路線的標題
-                                      }).Take(5).ToList();
+
+                                      })./*Take(5).*/ToList();
+
+
+            MPVM.private_Routes = db.private_route.Where(p => p.user_id == userid).ToList();    
             MPVM.userFavoritesByPR = (from p in db.private_route
                                       join f in db.user_favorite on p.id equals f.private_route_id
                                       select new UserFavorite
@@ -130,171 +137,285 @@ namespace bike_web.Controllers
             }
 
         }
-        public ActionResult routeEditPage() {
+        public ActionResult routeEditPage()
+        {
             if (Session["id"] != null)
             {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
-        }
-        [HttpPost]
-        public ActionResult routeEditPage(string article_title, string article_context, DateTime datetime)
-        {
-            var userId = Convert.ToInt32(Session["id"]);
-            var editDate = String.Format("{0:yyyy/MM/dd}", datetime);
-            string message = "";
-            KSBikeEntities db = new KSBikeEntities();
-            private_route PR = new private_route();
-            var article_title_exist = db.private_route
-                .Where(ed => ed.article_title == article_title)
-                .FirstOrDefault();
-
-            if (Session["id"] != null)
-            {
-                string photoName = "";
-                if (Request.Files.Count != 0)
-                {
-                    for (int i = 0; i < Request.Files.Count; i++)
-                    {
-                        var file = Request.Files[i];
-                        photoName = Guid.NewGuid().ToString() + ".jpg";
-                        var path = Path.Combine(Server.MapPath("../../imageForPrivateRoute/"), photoName);
-                    }
-                }//這裡要改
-                if (article_title_exist != null)
-                {
-                    message = "titleAndUserdouble";
-                }
-                else
-                {
-                    PR.article_title = article_title;
-                    PR.user_id = userId;
-                    PR.datetime = Convert.ToDateTime(editDate);
-                    PR.article_img_info = photoName;
-                    PR.article_context = article_context;
-                    message = "ok";
-                    db.private_route.Add(PR);
-                    db.SaveChanges();
-                }
-
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            if (Request.IsAjaxRequest())
-            {
-                return Json(message, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return View();
-            }
-        }
-        public ActionResult EditbyPrivateroute(int? id)
-        {
-            if(Session["id"]!=null)
-            {
                 KSBikeEntities db = new KSBikeEntities();
-                var get = db.private_route
-                    .Where(g => g.id == id)
-                    .FirstOrDefault();
-                return View(get);
+                EditPrivateRouteViewModel x = new EditPrivateRouteViewModel();
+                x.hashtags = db.hashtags.Select(b => b.hashtag_name).Distinct().ToList();
+
+                return View(x);
             }
             else
             {
                 return RedirectToAction("Index", "Home");
             }
+
         }
+
+        [ValidateInput(false)]
         [HttpPost]
-        public ActionResult EditbyPrivateroute(private_route pr)
+        public ActionResult routeEditPage(EditPrivateRouteViewModel editPrivateRouteViewModel)
         {
+            //處理圖片
+            string fileName = Path.GetFileNameWithoutExtension(editPrivateRouteViewModel.ImageFile.FileName);
+            string extension = Path.GetExtension(editPrivateRouteViewModel.ImageFile.FileName);
+            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            editPrivateRouteViewModel.p_artitle_img_info = "~/postedImage/" + fileName;
+            fileName = Path.Combine(Server.MapPath("~/postedImage/"), fileName);
+            editPrivateRouteViewModel.ImageFile.SaveAs(fileName);
 
+
+            //處理編輯器
+
+
+
+
+            SqlDateTime myDateTime = DateTime.Now;
+            int privateRouteId = 0;
             KSBikeEntities db = new KSBikeEntities();
-            var get = db.private_route
-                .Where(g => g.id == pr.id)
-                .FirstOrDefault();
-            var getdouble = db.private_route
-                .Where(g => g.article_title == pr.article_title)
-                .FirstOrDefault();
-            if(get !=null)
+            private_route x = new private_route();
+
+
+            try
             {
-                if (getdouble == null)
+                x.fav_num = 0;
+                x.seem_num = 0;
+                x.star_num_sum = 0;
+                x.sum_people_give_star = 0;
+                x.article_img_id = 0;//最好取消
+                //試試看
+                x.private_route_comment = null;
+
+
+
+                x.user_id = Convert.ToInt32(Session["ID"]);
+                x.article_title = editPrivateRouteViewModel.p_artitle_title;
+                System.Diagnostics.Debug.WriteLine(x.article_title);
+
+
+                x.datetime = (DateTime)myDateTime;
+                System.Diagnostics.Debug.WriteLine(x.datetime);
+                x.article_context = editPrivateRouteViewModel.p_content;
+                System.Diagnostics.Debug.WriteLine(x.article_context);
+                x.article_img_info = editPrivateRouteViewModel.p_artitle_img_info;
+                System.Diagnostics.Debug.WriteLine(x.article_img_info);
+
+
+
+                db.private_route.Add(x);
+                db.SaveChanges();
+
+
+
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+            //x.fav_num = 0;
+            //x.seem_num = 0;
+            //x.star_num_sum = 0;
+            //x.sum_people_give_star = 0;
+            //x.article_img_id = 0;//最好取消
+            ////試試看
+            //x.private_route_comment = null;
+
+
+
+            //x.user_id = Convert.ToInt32(Session["ID"]);
+            //x.article_title = editPrivateRouteViewModel.p_artitle_title;
+            //x.datetime = (DateTime)myDateTime;
+            //x.article_context = editPrivateRouteViewModel.p_content;
+            //x.article_img_info = editPrivateRouteViewModel.p_artitle_img_info;
+
+
+
+
+            //db.private_route.Add(x);
+            //db.SaveChanges();
+
+            privateRouteId = x.id;
+
+
+            if (editPrivateRouteViewModel.HashTag != null)
+            {
+                string hashTag = editPrivateRouteViewModel.HashTag.Trim();
+                string[] hashtagList = hashTag.Split(' ');
+                foreach (string item in hashtagList)
                 {
-                    if (!ModelState.IsValidField("article_title"))
+
+
+
+                    try
                     {
-                        var emptyValue = new ValueProviderResult(
-                            string.Empty,
-                            string.Empty,
-                            System.Globalization.CultureInfo.CurrentCulture);
-                        ModelState.SetModelValue(
-                            "article_title",
-                            emptyValue);
+                        hashtag y = new hashtag();
+                        y.official_route_id = 0;
+                        y.private_route_id = privateRouteId;
+                        y.hashtag_name = item;
+                        db.hashtags.Add(y);
+                        db.SaveChanges();
+
+
                     }
-                    get.article_title = pr.article_title;
-                    get.article_context = pr.article_context;
-                    db.SaveChanges();
+                    catch
+                    {
+                        throw;
+                    }
+
+
+
+
+
                 }
-                else
-                {
-                    
-                    ModelState.AddModelError("article_title", "您輸入的標題已存在，請重新輸入");
-                    return View();
-                }
+
+
+
+
+
+
             }
-            return RedirectToAction("MemberPage","Member");
+
+
+
+
+
+
+            ModelState.Clear();
+
+
+
+
+
+
+
+
+
+
+            return RedirectToAction("Index", "Home");
+
         }
 
-        //public ActionResult editByPrivateRoute(int? id)
+        [HttpPost]
+        public JsonResult UploadFiles(HttpPostedFileBase uploadFiles)
+        {
+            string returnImagePath = string.Empty;
+            string filename, extension,/* imageName,*/ imageSavePath;
+            System.Diagnostics.Debug.WriteLine(uploadFiles);
+            if (uploadFiles.ContentLength > 0)
+            {
+                filename = Path.GetFileNameWithoutExtension(uploadFiles.FileName);
+                extension = Path.GetExtension(uploadFiles.FileName);
+                filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+
+                //editPrivateRouteViewModel.p_artitle_img_info = "~/postedImage/" + filename;
+                imageSavePath = Path.Combine(Server.MapPath("~/postedImage/"), filename);
+                uploadFiles.SaveAs(imageSavePath);
+                returnImagePath = "/postedImage/" + filename;
+
+
+
+
+                //imageName = filename + DateTime.Now.ToString("yyyy_MM_dd_HHmmss");
+                //imageSavePath = Server.MapPath("/postedImage/") + imageName + extension;
+                //uploadFiles.SaveAs(imageSavePath);
+
+
+                //returnImagePath = "/postedImage/" + imageName + extension;
+            }
+            return Json(Convert.ToString(returnImagePath), JsonRequestBehavior.AllowGet);
+
+
+
+
+
+        }
+
+
+        ////[HttpGet]
+        ////public ActionResult SearchHint(string key)
+        ////{
+        ////    KSBikeEntities db = new KSBikeEntities();
+        ////    List<string> hints = db.hashtags.Where(s => s.hashtag_name.Contains(key)).Distinct().Take(5).Select(x =>x.hashtag_name).ToList();
+        ////    return Json(hints, JsonRequestBehavior.AllowGet);
+
+        ////}
+
+
+        //[HttpPost]
+        //public JsonResult FileUpload( HttpPostedFileBase ImageFile)
         //{
-        //    KSBikeEntities db = new KSBikeEntities();
-        //    var get = db.private_route
-        //        .Where(g => g.id == id)
-        //        .FirstOrDefault();
-        //    return View(get);
+
+        //    String path = "";
+        //    string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
+        //    string extension = Path.GetExtension(ImageFile.FileName);
+        //    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+        //    //editPrivateRouteViewModel.p_artitle_img_info = "~/postedImage/" + fileName;
+        //    fileName = Path.Combine(Server.MapPath("~/postedImage/"), fileName);
+        //    ImageFile.SaveAs(fileName);
+        //    path += "~/postedImage/" + fileName;
+
+        //    return Json(new { path }, JsonRequestBehavior.AllowGet);
+
+
+
         //}
-
-
-        public ActionResult DeleteByPrivate(int id)
+        [HttpPost]
+        public ActionResult DeleteByoffical_fav(int articleID)
         {
-            KSBikeEntities db = new KSBikeEntities();
-            var Delete = db.private_route.FirstOrDefault(d => d.id == id);
-            if(Delete!=null)
-            {
-                db.private_route.Remove(Delete);
-                db.SaveChanges();
-            }
-            
-            return RedirectToAction("MemberPage", "Member");
-        }
-        public ActionResult DeleteByoffical_fav(int id)
-        {
-            KSBikeEntities db = new KSBikeEntities();
-            var Delete = db.user_favorite.FirstOrDefault(d => d.official_route_id == id);
-            if (Delete != null)
-            {
-                db.user_favorite.Remove(Delete);
-                db.SaveChanges();
-            }
 
-            return RedirectToAction("MemberPage", "Member");
-        }
-        public ActionResult DeleteByPrivate_fav(int id)
-        {
+            string message = "";
+            int userID = Convert.ToInt32(Session["id"]);
             KSBikeEntities db = new KSBikeEntities();
-            var Delete = db.user_favorite.FirstOrDefault(d => d.private_route_id == id);
-            if (Delete != null)
-            {
-                db.user_favorite.Remove(Delete);
-                db.SaveChanges();
-            }
 
-            return RedirectToAction("MemberPage", "Member");
+            var myfav = db.user_favorite.Where(m => m.user_fav_id == userID && m.official_route_id == articleID).FirstOrDefault();
+
+            user_favorite x = new user_favorite();
+            SqlDateTime myDateTime = DateTime.Now;
+            x.datetime = (DateTime)myDateTime;
+            x.official_route_id = 0;
+            db.SaveChanges();
+            message = "delete";
+
+            return Json(message, JsonRequestBehavior.AllowGet);
         }
+
+
+
+
+
+        [HttpPost]
+        public ActionResult Delete(int? id) 
+        {
+
+            int Sid = Convert.ToInt32(Session["id"]);
+            KSBikeEntities db = new KSBikeEntities();
+
+            var myfav = db.user_favorite.Where(m => m.user_fav_id == Sid && m.private_route_id == id).FirstOrDefault();
+
+
+
+            db.user_favorite.Remove(myfav);
+            db.SaveChanges();
+
+
+
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        
 
     }
+
 }

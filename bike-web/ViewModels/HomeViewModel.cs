@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bike_web.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -22,6 +23,10 @@ namespace bike_web.ViewModels
         public double? oc_allStar { get; set; }
         [DisplayName("星星評分")]
         public int oc_artitleTitleID { get; set; }
+
+        //mia
+        public user_favorite checkFav { get; set; }
+
     }
 
     public class popularArticle
@@ -42,11 +47,39 @@ namespace bike_web.ViewModels
         public int u_userID { get; set; }
     }
 
+    //mia
+    public class userFav {
+        public int id { get; set; }
+        public int user_fav_id { get; set; }
+        public int private_route_id { get; set; }
+        public int official_route_id { get; set; }
+        public System.DateTime datetime { get; set; }
+
+    }
+
+
+    public class hashtagNamandSum
+    {
+        public string Name { get; set; }
+        public int Number { get; set; }
+
+
+    }
+
+
     public class HomeViewModel
     {
         public List<popularRoute> offcialPopularRoute { get; set; }
         public List<popularRoute> offcialAllRoute { get; set; }
         public List<popularArticle> privatePopularArticle { get; set; }
+
+
+        //mia
+        public List<userFav> checkFav { get; set; }
+
+
+        //德威
+        public List<hashtagNamandSum> hashtagNamandSum { get; set; }
 
     }
 }

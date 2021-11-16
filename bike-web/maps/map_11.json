@@ -1,0 +1,118 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "高雄展覽館",
+        "site": "806高雄市前鎮區成功二路39號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.607893793978718, 120.2983211679824]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "光榮碼頭",
+        "site": "802高雄市苓雅區海邊路31號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.618412239250404, 120.29226470021952]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "駁二",
+        "site": "803高雄市鹽埕區大義街2-3號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.618471669496863, 120.28559794819866]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "西子灣",
+        "site": "804高雄市鼓山區蓮海路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.625796975235463, 120.26368207254441]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "柴山秘境",
+        "site": "804高雄市鼓山區柴山大路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.651004098156474, 120.25058718050197]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "厚得福",
+        "site": "802高雄市苓雅區成功一路214號",
+        "phone": "+88672692912"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.617003881420604, 120.29677099681854]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "天池冬瓜茶",
+        "site": "803高雄市鹽埕區新樂街113號",
+        "phone": "+88675517165"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.623857682297082, 120.28541087730086]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "03",
+        "name": "早頓小室",
+        "site": "804高雄市鼓山區捷興二街29-1號",
+        "phone": "+886937087749"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.62138128635952, 120.27421719869692]
+      }
+    },{
+      "type": "Feature",
+      "properties": {
+        "id": "04",
+        "name": "奶茶一條街",
+        "site": "803高雄市鹽埕區新樂街",
+        "phone": "milktea"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.624978831724558, 120.28319844019987]
+      }
+    }
+  ]
+}

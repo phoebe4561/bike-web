@@ -52,6 +52,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -134,6 +140,7 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\offRouteController.cs" />
     <Compile Include="Controllers\OnlyOffRouteController.cs" />
+    <Compile Include="Controllers\PrivateRouteController.cs" />
     <Compile Include="Controllers\shopIndexController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -159,13 +166,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KSBike.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\OfficialR_F.cs" />
     <Compile Include="Models\official_route_comment.cs">
       <DependentUpon>KSBike.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\official_route_data.cs">
       <DependentUpon>KSBike.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OnlyOffR_F.cs" />
     <Compile Include="Models\order.cs">
       <DependentUpon>KSBike.tt</DependentUpon>
     </Compile>
@@ -193,7 +200,9 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\MemberPageViewModel.cs" />
     <Compile Include="ViewModels\offRouteViewModel.cs" />
-    <Compile Include="ViewModels\OfficialVM.cs" />
+    <Compile Include="ViewModels\PrivateComment.cs" />
+    <Compile Include="ViewModels\PrivateRouteandCommentViewModel.cs" />
+    <Compile Include="ViewModels\PrivateRouteViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModels.cs" />
     <Compile Include="ViewModels\RoutePageDataViewModel.cs" />
     <Compile Include="ViewModels\UserFavorite.cs" />
@@ -209,9 +218,13 @@
     <Content Include="Content\css\bootstrap-utilities.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\home\point1.jpg" />
+    <Content Include="Images\home\point2-1-1展覽館.jpg" />
+    <Content Include="Images\home\point3-1愛河之心.jpg" />
     <Content Include="Images\home\橋頭.jpg" />
     <Content Include="Images\home\美濃.jpg" />
     <Content Include="Images\home\美麗島.jpg" />
@@ -264,6 +277,158 @@
     <Content Include="Images\image_mia\supply3-1高雄市客家文物館.jpg" />
     <Content Include="Images\image_mia\supply3-2家樂福.jpg" />
     <Content Include="Images\image_mia\supply3-3高雄市電影館.jpg" />
+    <Content Include="Images\offRoute\10\food1.jpg" />
+    <Content Include="Images\offRoute\10\food2.jpg" />
+    <Content Include="Images\offRoute\10\spot1.jpg" />
+    <Content Include="Images\offRoute\10\spot2.jpg" />
+    <Content Include="Images\offRoute\10\spot3.jpg" />
+    <Content Include="Images\offRoute\10\supply1.jpg" />
+    <Content Include="Images\offRoute\11\eat2-1-1厚德福.jpg" />
+    <Content Include="Images\offRoute\11\eat2-1厚德福.jpg" />
+    <Content Include="Images\offRoute\11\eat2-2天池冬瓜茶.jpg" />
+    <Content Include="Images\offRoute\11\eat2-3早頓小室.jpg" />
+    <Content Include="Images\offRoute\11\eat2-4-1奶茶街.jpg" />
+    <Content Include="Images\offRoute\11\point2-1-1展覽館.jpg" />
+    <Content Include="Images\offRoute\11\point2-1-2展覽館.jpg" />
+    <Content Include="Images\offRoute\11\point2-1展覽館.jpg" />
+    <Content Include="Images\offRoute\11\point2-2光榮碼頭.jpg" />
+    <Content Include="Images\offRoute\11\point2-3駁二.jpg" />
+    <Content Include="Images\offRoute\11\point2-4西子灣.jpg" />
+    <Content Include="Images\offRoute\11\point2-5柴山.jpg" />
+    <Content Include="Images\offRoute\11\supply2-1流行音樂中心.jpg" />
+    <Content Include="Images\offRoute\11\supply2-2駁二.jpg" />
+    <Content Include="Images\offRoute\11\supply2-3棧貳庫KW2.jpg" />
+    <Content Include="Images\offRoute\12\eat3-1-1鹿仔草冰店.jpg" />
+    <Content Include="Images\offRoute\12\eat3-2龍鶴家.jpeg" />
+    <Content Include="Images\offRoute\12\eat3-3郭家肉粽.jpg" />
+    <Content Include="Images\offRoute\12\eat3-4港園牛肉麵.jpg" />
+    <Content Include="Images\offRoute\12\point3-0高雄市電影館.jpg" />
+    <Content Include="Images\offRoute\12\point3-1愛河之心.jpg" />
+    <Content Include="Images\offRoute\12\point3-2高雄市立美術館.jpg" />
+    <Content Include="Images\offRoute\12\point3-3中都濕地公園.jpg" />
+    <Content Include="Images\offRoute\12\point3-4高雄市立歷史博物館.jpg" />
+    <Content Include="Images\offRoute\12\supply3-1高雄市客家文物館.jpg" />
+    <Content Include="Images\offRoute\12\supply3-2家樂福.jpg" />
+    <Content Include="Images\offRoute\12\supply3-3高雄市電影館.jpg" />
+    <Content Include="Images\offRoute\13\eat1-2.jpg" />
+    <Content Include="Images\offRoute\13\eat1-3.jpg" />
+    <Content Include="Images\offRoute\13\eat1-4.jpg" />
+    <Content Include="Images\offRoute\13\eat1.jpg" />
+    <Content Include="Images\offRoute\13\point1-2.jpg" />
+    <Content Include="Images\offRoute\13\point1-3.jpg" />
+    <Content Include="Images\offRoute\13\point1-4.jpg" />
+    <Content Include="Images\offRoute\13\point1.jpg" />
+    <Content Include="Images\offRoute\13\point2-1-2展覽館.jpg" />
+    <Content Include="Images\offRoute\13\point2-1展覽館.jpg" />
+    <Content Include="Images\offRoute\13\supply1-2.jpg" />
+    <Content Include="Images\offRoute\13\supply1-3.jpg" />
+    <Content Include="Images\offRoute\13\supply1.jpg" />
+    <Content Include="Images\offRoute\1\food1.jpg" />
+    <Content Include="Images\offRoute\1\food2.jpg" />
+    <Content Include="Images\offRoute\1\spot1.jpg" />
+    <Content Include="Images\offRoute\1\spot2.jpg" />
+    <Content Include="Images\offRoute\1\spot3.jpg" />
+    <Content Include="Images\offRoute\1\supply1.jpg" />
+    <Content Include="Images\offRoute\2\food1.jpg" />
+    <Content Include="Images\offRoute\2\food2.jpg" />
+    <Content Include="Images\offRoute\2\spot1.jpg" />
+    <Content Include="Images\offRoute\2\spot2.jpg" />
+    <Content Include="Images\offRoute\2\spot3.jpg" />
+    <Content Include="Images\offRoute\2\supply1.JPG" />
+    <Content Include="Images\offRoute\3\food1.jpg" />
+    <Content Include="Images\offRoute\3\food2.jpeg" />
+    <Content Include="Images\offRoute\3\spot1.jpg" />
+    <Content Include="Images\offRoute\3\spot2.jpg" />
+    <Content Include="Images\offRoute\4\food1.jpg" />
+    <Content Include="Images\offRoute\4\food2.jpg" />
+    <Content Include="Images\offRoute\4\spot1.jpg" />
+    <Content Include="Images\offRoute\4\spot2.jpg" />
+    <Content Include="Images\offRoute\5\food1.jpg" />
+    <Content Include="Images\offRoute\5\food2.jpg" />
+    <Content Include="Images\offRoute\5\spot1.jpg" />
+    <Content Include="Images\offRoute\5\spot2.jpg" />
+    <Content Include="Images\offRoute\6\food1.jpg" />
+    <Content Include="Images\offRoute\6\food2.jpg" />
+    <Content Include="Images\offRoute\6\spot1.jpg" />
+    <Content Include="Images\offRoute\6\spot2.jpg" />
+    <Content Include="Images\offRoute\6\supply1.jpg" />
+    <Content Include="Images\offRoute\7\eat1-2.jpg" />
+    <Content Include="Images\offRoute\7\eat1-3.jpg" />
+    <Content Include="Images\offRoute\7\eat1-4.jpg" />
+    <Content Include="Images\offRoute\7\eat1.jpg" />
+    <Content Include="Images\offRoute\7\point1-2.jpg" />
+    <Content Include="Images\offRoute\7\point1-3.jpg" />
+    <Content Include="Images\offRoute\7\point1-4.jpg" />
+    <Content Include="Images\offRoute\7\point1.jpg" />
+    <Content Include="Images\offRoute\7\point2-1-2展覽館.jpg" />
+    <Content Include="Images\offRoute\7\point2-1展覽館.jpg" />
+    <Content Include="Images\offRoute\7\supply1-2.jpg" />
+    <Content Include="Images\offRoute\7\supply1-3.jpg" />
+    <Content Include="Images\offRoute\7\supply1.jpg" />
+    <Content Include="Images\offRoute\8\eat2-1-1厚德福.jpg" />
+    <Content Include="Images\offRoute\8\eat2-2天池冬瓜茶.jpg" />
+    <Content Include="Images\offRoute\8\eat2-3早頓小室.jpg" />
+    <Content Include="Images\offRoute\8\eat2-4-1奶茶街.jpg" />
+    <Content Include="Images\offRoute\8\point2-1-1展覽館.jpg" />
+    <Content Include="Images\offRoute\8\point2-2光榮碼頭.jpg" />
+    <Content Include="Images\offRoute\8\point2-3駁二.jpg" />
+    <Content Include="Images\offRoute\8\point2-4西子灣.jpg" />
+    <Content Include="Images\offRoute\8\point2-5柴山.jpg" />
+    <Content Include="Images\offRoute\8\supply2-1流行音樂中心.jpg" />
+    <Content Include="Images\offRoute\8\supply2-2駁二.jpg" />
+    <Content Include="Images\offRoute\8\supply2-3棧貳庫KW2.jpg" />
+    <Content Include="Images\offRoute\9\eat3-1-1鹿仔草冰店.jpg" />
+    <Content Include="Images\offRoute\9\eat3-2龍鶴家.jpeg" />
+    <Content Include="Images\offRoute\9\eat3-3郭家肉粽.jpg" />
+    <Content Include="Images\offRoute\9\eat3-4港園牛肉麵.jpg" />
+    <Content Include="Images\offRoute\9\point3-1愛河之心.jpg" />
+    <Content Include="Images\offRoute\9\point3-2高雄市立美術館.jpg" />
+    <Content Include="Images\offRoute\9\point3-3中都濕地公園.jpg" />
+    <Content Include="Images\offRoute\9\point3-4高雄市立歷史博物館.jpg" />
+    <Content Include="Images\offRoute\9\supply3-1高雄市客家文物館.jpg" />
+    <Content Include="Images\offRoute\9\supply3-2家樂福.jpg" />
+    <Content Include="Images\offRoute\9\supply3-3高雄市電影館.jpg" />
+    <Content Include="postedImage\163175387277971_P13297223212032669.jpg" />
+    <Content Include="postedImage\163175387277971_P13297223215650183.jpg" />
+    <Content Include="postedImage\2b20c764-26f7-4dae-83ee-8a7aa034be0a214351940.jpg" />
+    <Content Include="postedImage\465763214958434.jpg" />
+    <Content Include="postedImage\banner1214539886.jpg" />
+    <Content Include="postedImage\cook %281%29210734793.jpg" />
+    <Content Include="postedImage\cook212301476.jpg" />
+    <Content Include="postedImage\D04215024577.jpg" />
+    <Content Include="postedImage\I1211410184.jpg" />
+    <Content Include="postedImage\I1211447554.jpg" />
+    <Content Include="postedImage\I1211840590.jpg" />
+    <Content Include="postedImage\I1212156760.jpg" />
+    <Content Include="postedImage\I1212634020.jpg" />
+    <Content Include="postedImage\I1212703864.jpg" />
+    <Content Include="postedImage\I1213011664.jpg" />
+    <Content Include="postedImage\I1213413133.jpg" />
+    <Content Include="postedImage\I1213805775.jpg" />
+    <Content Include="postedImage\I1214324610.jpg" />
+    <Content Include="postedImage\I1214947890.jpg" />
+    <Content Include="postedImage\I1215142104.jpg" />
+    <Content Include="postedImage\I1215626223.jpg" />
+    <Content Include="postedImage\I2210100841.png" />
+    <Content Include="postedImage\I2210246033.png" />
+    <Content Include="postedImage\I2211213704.png" />
+    <Content Include="postedImage\I2211242711.png" />
+    <Content Include="postedImage\I2212838652.png" />
+    <Content Include="postedImage\I2212849358.png" />
+    <Content Include="postedImage\I2215244193.png" />
+    <Content Include="postedImage\I2215738688.png" />
+    <Content Include="postedImage\I2215814717.png" />
+    <Content Include="postedImage\I2215943904.png" />
+    <Content Include="postedImage\I3210710681.jpg" />
+    <Content Include="postedImage\I3215502603.jpg" />
+    <Content Include="postedImage\I4215540815.jpg" />
+    <Content Include="postedImage\point3-1愛河之心212040109.jpg" />
+    <Content Include="postedImage\下載214147389.jpg" />
+    <Content Include="postedImage\李德威 %282%29211035514.jpg" />
+    <Content Include="postedImage\李德威 %283%29211242122.jpg" />
+    <Content Include="postedImage\美濃獅子頭水圳自行車道214306184.jpg" />
+    <Content Include="postedImage\美濃獅子頭水圳自行車道214523014.jpg" />
+    <Content Include="postedImage\螢幕擷取畫面 2021-07-07 003757212107199.png" />
     <Content Include="Images\winni\A02.jpg" />
     <Content Include="Images\winni\A03.jpg" />
     <Content Include="Images\winni\AA01.jpg" />
@@ -285,6 +450,11 @@
     <Content Include="Images\winni\min01.jpg" />
     <Content Include="Images\winni\min03.jpg" />
     <Content Include="Images\winni\min04.jpg" />
+    <Content Include="Images\winni\Nmin01.jpg" />
+    <Content Include="Images\winni\Nmin03.jpg" />
+    <Content Include="Images\winni\POne.jpg" />
+    <Content Include="Images\winni\PPThree.jpg" />
+    <Content Include="Images\winni\PTwo.jpg" />
     <Content Include="maps\map_1.geojson" />
     <EntityDeploy Include="Models\KSBike.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -299,6 +469,12 @@
     <Content Include="maps\map_4.json" />
     <Content Include="maps\map_5.json" />
     <Content Include="maps\map_6.json" />
+    <Content Include="maps\map_11.json" />
+    <Content Include="maps\map_12.json" />
+    <Content Include="maps\map_13.json" />
+    <Content Include="maps\map_7.json" />
+    <Content Include="maps\map_8.json" />
+    <Content Include="maps\map_9.json" />
     <None Include="Scripts\vendor\js\jquery-3.4.1.intellisense.js" />
     <Content Include="Images\0f5fbb52-895a-4639-a534-b041afcaa39a.jpg" />
     <Content Include="Images\2b20c764-26f7-4dae-83ee-8a7aa034be0a.jpg" />
@@ -352,6 +528,13 @@
       <LastGenOutput>KSBike.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\js\homePage.js" />
+    <Content Include="Scripts\js\myFavorite.js" />
+    <Content Include="Scripts\js\myFavorite2.js" />
+    <Content Include="Scripts\js\OfficialR.js" />
+    <Content Include="Scripts\js\offRoute1.js" />
+    <Content Include="Scripts\js\privateRoute.js" />
+    <Content Include="Scripts\js\privateRoutePage.js" />
+    <Content Include="Scripts\js\vue.min.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.min.js" />
     <Content Include="Scripts\vendor\js\jquery-3.4.1.slim.js" />
@@ -386,14 +569,21 @@
     <Content Include="Views\offRoute\高級List.cshtml" />
     <Content Include="Views\OnlyOffRoute\List.cshtml" />
     <Content Include="Views\Home\chatroom.cshtml" />
-    <Content Include="Views\COfficialR\theRoute.cshtml" />
+    <Content Include="Views\offRoute\noResult.cshtml" />
+    <Content Include="Views\OnlyOffRoute\findHashtag.cshtml" />
+    <Content Include="Views\PrivateRoute\privateRoute.cshtml" />
+    <Content Include="Views\PrivateRoute\privateRoutePage.cshtml" />
+    <Content Include="Views\shopIndex\AddToCart.cshtml" />
+    <Content Include="Views\shopIndex\GoBuy.cshtml" />
+    <Content Include="Views\shopIndex\myorder.cshtml" />
+    <Content Include="Views\shopIndex\Oneday.cshtml" />
+    <Content Include="Views\shopIndex\shopIndex.cshtml" />
+    <Content Include="Views\shopIndex\shoppingCar.cshtml" />
+    <Content Include="Views\shopIndex\ThreeDay.cshtml" />
+    <Content Include="Views\shopIndex\Twoday.cshtml" />
+    <Content Include="Views\Shared\_PrivateRouteCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Member\routeEditPage.cshtml" />
-    <Content Include="Views\offRoute\List.cshtml" />
-    <Content Include="Views\offRoute\初級List.cshtml" />
-    <Content Include="Views\offRoute\中級List.cshtml" />
-    <Content Include="Views\offRoute\高級List.cshtml" />
     <Content Include="Views\Member\editByPrivateRoute.cshtml" />
   </ItemGroup>
   <ItemGroup>

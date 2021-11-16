@@ -35,7 +35,7 @@ namespace bike_web.Controllers
         [HttpPost]
         public ActionResult AddToCart(AddCartViewModel vModel)
         {
-            var Sid = Convert.ToInt32(Session["ID"]);
+            var Sid = Convert.ToInt32(Session["id"]);
             var Sname = Session["username"].ToString();
             
                 product prod = db.products.FirstOrDefault(p => p.id == vModel.AddId);
@@ -152,7 +152,21 @@ namespace bike_web.Controllers
            
         }
 
-       
+        public ActionResult Oneday() 
+        {
+            return View();        
+        }
+
+        public ActionResult Twoday()
+        {
+            return View();
+        }
+
+        public ActionResult ThreeDay()
+        {
+            return View();
+        }
+
     }
 }
 
