@@ -1,0 +1,106 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "愛河之心",
+        "site": "804高雄市鼓山區龍德路2號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.65267358397288, 120.30315016798313]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "美術館",
+        "site": "804高雄市鼓山區美術館路80號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.65670668603247, 120.28655109681937]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "中都濕地公園",
+        "site": "807高雄市三民區同盟三路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.64651475288706, 120.28661532274705]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "歷史博物館",
+        "site": "803高雄市鹽埕區中正四路272號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.626851054822062, 120.28686376983465]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "鹿仔草冰店",
+        "site": "807高雄市三民區綏遠二街188號",
+        "phone": "+88673229576"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.64932263393682, 120.29857031157528]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "龍鶴家",
+        "site": "804高雄市鼓山區青海路277號",
+        "phone": "+88675527775"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.651324222489635, 120.28529407850381]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "03",
+        "name": "肉粽泰Tai",
+        "site": "803高雄市鹽埕區北斗街19號",
+        "phone": "+88675512747"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.63163035765405, 120.2842401870244]
+      }
+    },{
+      "type": "Feature",
+      "properties": {
+        "id": "04",
+        "name": "港園牛肉麵",
+        "site": "803高雄市鹽埕區大成街55號",
+        "phone": "+88675613842"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.621107243709094, 120.28779695678239]
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+﻿@model bike_web.ViewModels.PrivateRouteData
+
+<div class="col-12 col-md-4 " >
+    
+    <div class="card mb-3">
+        <div class="position-absolute" style="top: 20px; right: 20px">
+            
+
+            @if (Model.p_fav == 0)
+            {
+
+
+            <button type="button" value="@Model.p_ID" class="btnFav btn rounded-pill btn-outline-danger ">
+                
+                <i class="iFav bi fs-5 bi-heart" value="@Model.p_ID"></i>
+
+            </button>
+
+            }
+            else
+            {
+            <button type="button" value="@Model.p_ID" class="btnFav rounded-pill btn btn-danger ">
+            
+                <i class="iFav bi fs-5 bi-heart" value="@Model.p_ID"></i>
+
+
+            </button>
+
+            }
+
+
+        </div>
+        <div style="height: 300px; overflow:hidden">
+            <img style="height: auto;" src="@Url.Content(Model.p_artitle_img_info)" class="card-img-top" alt="..." />
+        </div>
+        
+        <div class="card-body ">
+            <div class="d-flex justify-content-between py-2">
+                <div class="badge bg-light text-darkBrown px-3">紀錄者:@Model.u_username</div>
+                <div class="px-3"><span>@Model.p_datetime</span></div>
+
+            </div>
+           
+                
+               
+            
+
+            <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@Model.p_artitle_title</h5>
+
+            <div class="card-text" style="height:300px; overflow:hidden;">
+                @{if (Model.hashtag != null)
+                    {
+                        foreach (string hashtag in Model.hashtag)
+                        {
+
+                            <p style="display: inline;"><a href="@Url.Action("privateRoute","PrivateRoute",new{hashtag =hashtag})" class="link-info"> #@hashtag </a></p>
+
+
+
+                        }
+
+                    }
+                }
+
+                @Html.Raw(@Model.p_content)
+            </div>
+
+            <br>
+            <a href="@Url.Action("privateRoutePage","PrivateRoute",new{articletitleid =Model.p_ID})" class="btn btn-primary w-100 fw-bold">看更多</a>
+            <div class="d-flex justify-content-between">
+                <div><i class="bi bi-eye fs-4"></i><span class="ms-2">@Model.p_seen_num</span></div>
+                @{double star;
+                }
+                @if (Model.p_sum_people_give_star_num is null)
+                {
+                    star = 0;
+
+                }
+                else if (Model.p_sum_people_give_star_num == 0)
+                {
+                    star = 0;
+                }
+                else
+                {
+                    star = (double)Math.Round((decimal)(int)Model.p_star_num_sum / (int)Model.p_sum_people_give_star_num, 2);
+                }
+                <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@star</span></div>
+            </div>
+        </div>
+    </div>
+</div>

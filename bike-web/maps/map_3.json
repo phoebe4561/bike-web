@@ -1,0 +1,105 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "龜山停車場",
+        "site": "813高雄市左營區"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.68033562471327, 120.29161925704054]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "舊城國小",
+        "site": "813高雄市左營區蓮潭路47號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.683311360278914, 120.29282736265148]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "拱辰門",
+        "site": "813高雄市左營區義民巷"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.680509466995094, 120.29008583894839]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "廍後北極殿",
+        "site": "813高雄市左營區海平路2號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.68482566239422, 120.28662012360296]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "孔廟",
+        "site": "813高雄市左營區蓮潭路400號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.689548522066787, 120.29899138726712]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "龜山停車場",
+        "site": "813高雄市左營區"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.68033562471327, 120.29161925704054]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "豫湘美食",
+        "site": "813高雄市左營區城峰路311號",
+        "phone": "+88675882685"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.676307474185062, 120.29205523894831]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "羣島Shaka islands",
+        "site": "813高雄市左營區新庄仔路46號",
+        "phone": "+88675883883"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.678822170434778, 120.29539068638366]
+      }
+    }
+  ]
+}

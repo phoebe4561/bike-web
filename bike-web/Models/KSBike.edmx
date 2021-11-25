@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KSBikeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KSBikeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="hashtag">
           <Key>
             <PropertyRef Name="id" />
@@ -14,6 +14,17 @@
           <Property Name="private_route_id" Type="int" Nullable="false" />
           <Property Name="hashtag_name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Home">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hname" Type="varchar" MaxLength="50" />
+          <Property Name="hdescription" Type="text" />
+          <Property Name="hrank" Type="varchar" MaxLength="50" />
+          <Property Name="hdistance" Type="decimal" Precision="5" Scale="1" />
+          <Property Name="himg" Type="text" />
+        </EntityType>
         <EntityType Name="official_route_comment">
           <Key>
             <PropertyRef Name="id" />
@@ -21,7 +32,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="article_title_id" Type="int" Nullable="false" />
           <Property Name="comment_user_id" Type="int" Nullable="false" />
-          <Property Name="all_star_summary" Type="int" />
+          <Property Name="all_star_summary" Type="decimal" Precision="3" Scale="2" />
           <Property Name="user_give_star_num" Type="int" Nullable="false" />
           <Property Name="comment" Type="text" />
           <Property Name="datetime" Type="datetime" />
@@ -30,17 +41,12 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="officiak_route_type" Type="int" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="official_homepage_img" Type="text" />
-          <Property Name="official_route_title" Type="nvarchar" MaxLength="50" />
-          <Property Name="official_route_description" Type="text" />
           <Property Name="official_data_catalog" Type="nvarchar" MaxLength="50" />
           <Property Name="official_data_img" Type="text" />
           <Property Name="official_data_img_info" Type="nvarchar" MaxLength="50" />
           <Property Name="official_data_content" Type="text" />
-          <Property Name="distance_decimal" Type="decimal" Precision="5" Scale="2" />
-          <Property Name="rank" Type="nvarchar" MaxLength="50" />
+          <Property Name="home_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="orders">
           <Key>
@@ -91,7 +97,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="product_name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="product_price" Type="int" Nullable="false" />
           <Property Name="product_img" Type="nvarchar" MaxLength="200" />
           <Property Name="product_num" Type="int" />
         </EntityType>
@@ -116,35 +122,11 @@
           <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="birthday" Type="date" />
         </EntityType>
-        <Association Name="FK_hashtag_official_route_data">
-          <End Role="official_route_data" Type="Self.official_route_data" Multiplicity="1" />
-          <End Role="hashtag" Type="Self.hashtag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="official_route_data">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="hashtag">
-              <PropertyRef Name="official_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_hashtag_private_route">
-          <End Role="private_route" Type="Self.private_route" Multiplicity="1" />
-          <End Role="hashtag" Type="Self.hashtag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="private_route">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="hashtag">
-              <PropertyRef Name="private_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_official_route_comment_official_route_data">
-          <End Role="official_route_data" Type="Self.official_route_data" Multiplicity="1" />
+        <Association Name="FK_official_route_comment_Home">
+          <End Role="Home" Type="Self.Home" Multiplicity="1" />
           <End Role="official_route_comment" Type="Self.official_route_comment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="official_route_data">
+            <Principal Role="Home">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="official_route_comment">
@@ -200,30 +182,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_user_favorite_official_route_data">
-          <End Role="official_route_data" Type="Self.official_route_data" Multiplicity="1" />
-          <End Role="user_favorite" Type="Self.user_favorite" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="official_route_data">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_favorite">
-              <PropertyRef Name="official_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_user_favorite_private_route">
-          <End Role="private_route" Type="Self.private_route" Multiplicity="1" />
-          <End Role="user_favorite" Type="Self.user_favorite" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="private_route">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_favorite">
-              <PropertyRef Name="private_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_user_favorite_users">
           <End Role="users" Type="Self.users" Multiplicity="1" />
           <End Role="user_favorite" Type="Self.user_favorite" Multiplicity="*" />
@@ -238,6 +196,7 @@
         </Association>
         <EntityContainer Name="KSBikeModelStoreContainer">
           <EntitySet Name="hashtag" EntityType="Self.hashtag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Home" EntityType="Self.Home" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="official_route_comment" EntityType="Self.official_route_comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="official_route_data" EntityType="Self.official_route_data" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
@@ -246,16 +205,8 @@
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_favorite" EntityType="Self.user_favorite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_hashtag_official_route_data" Association="Self.FK_hashtag_official_route_data">
-            <End Role="official_route_data" EntitySet="official_route_data" />
-            <End Role="hashtag" EntitySet="hashtag" />
-          </AssociationSet>
-          <AssociationSet Name="FK_hashtag_private_route" Association="Self.FK_hashtag_private_route">
-            <End Role="private_route" EntitySet="private_route" />
-            <End Role="hashtag" EntitySet="hashtag" />
-          </AssociationSet>
-          <AssociationSet Name="FK_official_route_comment_official_route_data" Association="Self.FK_official_route_comment_official_route_data">
-            <End Role="official_route_data" EntitySet="official_route_data" />
+          <AssociationSet Name="FK_official_route_comment_Home" Association="Self.FK_official_route_comment_Home">
+            <End Role="Home" EntitySet="Home" />
             <End Role="official_route_comment" EntitySet="official_route_comment" />
           </AssociationSet>
           <AssociationSet Name="FK_official_route_comment_users" Association="Self.FK_official_route_comment_users">
@@ -274,34 +225,26 @@
             <End Role="users" EntitySet="users" />
             <End Role="private_route_comment" EntitySet="private_route_comment" />
           </AssociationSet>
-          <AssociationSet Name="FK_user_favorite_official_route_data" Association="Self.FK_user_favorite_official_route_data">
-            <End Role="official_route_data" EntitySet="official_route_data" />
-            <End Role="user_favorite" EntitySet="user_favorite" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_favorite_private_route" Association="Self.FK_user_favorite_private_route">
-            <End Role="private_route" EntitySet="private_route" />
-            <End Role="user_favorite" EntitySet="user_favorite" />
-          </AssociationSet>
           <AssociationSet Name="FK_user_favorite_users" Association="Self.FK_user_favorite_users">
             <End Role="users" EntitySet="users" />
             <End Role="user_favorite" EntitySet="user_favorite" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KSBikeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="hashtag">
+        <EntityType Name="Home">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="official_route_id" Type="Int32" Nullable="false" />
-          <Property Name="private_route_id" Type="Int32" Nullable="false" />
-          <Property Name="hashtag_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="official_route_data" Relationship="Self.FK_hashtag_official_route_data" FromRole="hashtag" ToRole="official_route_data" />
-          <NavigationProperty Name="private_route" Relationship="Self.FK_hashtag_private_route" FromRole="hashtag" ToRole="private_route" />
+          <Property Name="hname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hdescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="hrank" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hdistance" Type="Decimal" Precision="5" Scale="1" />
+          <Property Name="himg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="official_route_comment" Relationship="Self.FK_official_route_comment_Home" FromRole="Home" ToRole="official_route_comment" />
         </EntityType>
         <EntityType Name="official_route_comment">
           <Key>
@@ -310,31 +253,12 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="article_title_id" Type="Int32" Nullable="false" />
           <Property Name="comment_user_id" Type="Int32" Nullable="false" />
-          <Property Name="all_star_summary" Type="Int32" />
+          <Property Name="all_star_summary" Type="Decimal" Precision="3" Scale="2" />
           <Property Name="user_give_star_num" Type="Int32" Nullable="false" />
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="datetime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="official_route_data" Relationship="Self.FK_official_route_comment_official_route_data" FromRole="official_route_comment" ToRole="official_route_data" />
+          <NavigationProperty Name="Home" Relationship="Self.FK_official_route_comment_Home" FromRole="official_route_comment" ToRole="Home" />
           <NavigationProperty Name="user" Relationship="Self.FK_official_route_comment_users" FromRole="official_route_comment" ToRole="users" />
-        </EntityType>
-        <EntityType Name="official_route_data">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="officiak_route_type" Type="Int32" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="official_homepage_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="official_route_title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="official_route_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="official_data_catalog" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="official_data_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="official_data_img_info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="official_data_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="distance_decimal" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="rank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="hashtags" Relationship="Self.FK_hashtag_official_route_data" FromRole="official_route_data" ToRole="hashtag" />
-          <NavigationProperty Name="official_route_comment" Relationship="Self.FK_official_route_comment_official_route_data" FromRole="official_route_data" ToRole="official_route_comment" />
-          <NavigationProperty Name="user_favorite" Relationship="Self.FK_user_favorite_official_route_data" FromRole="official_route_data" ToRole="user_favorite" />
         </EntityType>
         <EntityType Name="order">
           <Key>
@@ -353,25 +277,6 @@
           <Property Name="order_pay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="user" Relationship="Self.FK_orders_users" FromRole="orders" ToRole="users" />
         </EntityType>
-        <EntityType Name="private_route">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="article_title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="article_img_id" Type="Int32" />
-          <Property Name="article_img_info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="article_context" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="datetime" Type="DateTime" Precision="3" />
-          <Property Name="fav_num" Type="Int32" />
-          <Property Name="seem_num" Type="Int32" />
-          <Property Name="star_num_sum" Type="Int32" />
-          <Property Name="sum_people_give_star" Type="Int32" />
-          <NavigationProperty Name="hashtags" Relationship="Self.FK_hashtag_private_route" FromRole="private_route" ToRole="hashtag" />
-          <NavigationProperty Name="private_route_comment" Relationship="Self.FK_private_route_comment_private_route" FromRole="private_route" ToRole="private_route_comment" />
-          <NavigationProperty Name="user_favorite" Relationship="Self.FK_user_favorite_private_route" FromRole="private_route" ToRole="user_favorite" />
-        </EntityType>
         <EntityType Name="private_route_comment">
           <Key>
             <PropertyRef Name="id" />
@@ -382,8 +287,8 @@
           <Property Name="user_give_star_num" Type="Int32" Nullable="false" />
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="datetime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="private_route" Relationship="Self.FK_private_route_comment_private_route" FromRole="private_route_comment" ToRole="private_route" />
           <NavigationProperty Name="user" Relationship="Self.FK_private_route_comment_users" FromRole="private_route_comment" ToRole="users" />
+          <NavigationProperty Name="private_route" Relationship="KSBikeModel.FK_private_route_comment_private_route" FromRole="private_route_comment" ToRole="private_route" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -391,22 +296,9 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="product_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="product_price" Type="Int32" Nullable="false" />
           <Property Name="product_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="product_num" Type="Int32" />
-        </EntityType>
-        <EntityType Name="user_favorite">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_fav_id" Type="Int32" Nullable="false" />
-          <Property Name="private_route_id" Type="Int32" Nullable="false" />
-          <Property Name="official_route_id" Type="Int32" Nullable="false" />
-          <Property Name="datetime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="official_route_data" Relationship="Self.FK_user_favorite_official_route_data" FromRole="user_favorite" ToRole="official_route_data" />
-          <NavigationProperty Name="private_route" Relationship="Self.FK_user_favorite_private_route" FromRole="user_favorite" ToRole="private_route" />
-          <NavigationProperty Name="user" Relationship="Self.FK_user_favorite_users" FromRole="user_favorite" ToRole="users" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -421,37 +313,13 @@
           <NavigationProperty Name="official_route_comment" Relationship="Self.FK_official_route_comment_users" FromRole="users" ToRole="official_route_comment" />
           <NavigationProperty Name="orders" Relationship="Self.FK_orders_users" FromRole="users" ToRole="orders" />
           <NavigationProperty Name="private_route_comment" Relationship="Self.FK_private_route_comment_users" FromRole="users" ToRole="private_route_comment" />
-          <NavigationProperty Name="user_favorite" Relationship="Self.FK_user_favorite_users" FromRole="users" ToRole="user_favorite" />
+          <NavigationProperty Name="user_favorite" Relationship="KSBikeModel.FK_user_favorite_users" FromRole="user" ToRole="user_favorite" />
         </EntityType>
-        <Association Name="FK_hashtag_official_route_data">
-          <End Role="official_route_data" Type="Self.official_route_data" Multiplicity="1" />
-          <End Role="hashtag" Type="Self.hashtag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="official_route_data">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="hashtag">
-              <PropertyRef Name="official_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_hashtag_private_route">
-          <End Role="private_route" Type="Self.private_route" Multiplicity="1" />
-          <End Role="hashtag" Type="Self.hashtag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="private_route">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="hashtag">
-              <PropertyRef Name="private_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_official_route_comment_official_route_data">
-          <End Role="official_route_data" Type="Self.official_route_data" Multiplicity="1" />
+        <Association Name="FK_official_route_comment_Home">
+          <End Role="Home" Type="Self.Home" Multiplicity="1" />
           <End Role="official_route_comment" Type="Self.official_route_comment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="official_route_data">
+            <Principal Role="Home">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="official_route_comment">
@@ -471,18 +339,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_user_favorite_official_route_data">
-          <End Role="official_route_data" Type="Self.official_route_data" Multiplicity="1" />
-          <End Role="user_favorite" Type="Self.user_favorite" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="official_route_data">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_favorite">
-              <PropertyRef Name="official_route_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_orders_users">
           <End Role="users" Type="Self.user" Multiplicity="1" />
           <End Role="orders" Type="Self.order" Multiplicity="*" />
@@ -492,30 +348,6 @@
             </Principal>
             <Dependent Role="orders">
               <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_private_route_comment_private_route">
-          <End Role="private_route" Type="Self.private_route" Multiplicity="1" />
-          <End Role="private_route_comment" Type="Self.private_route_comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="private_route">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="private_route_comment">
-              <PropertyRef Name="article_title_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_user_favorite_private_route">
-          <End Role="private_route" Type="Self.private_route" Multiplicity="1" />
-          <End Role="user_favorite" Type="Self.user_favorite" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="private_route">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_favorite">
-              <PropertyRef Name="private_route_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -531,11 +363,107 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_user_favorite_users">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
-          <End Role="user_favorite" Type="Self.user_favorite" Multiplicity="*" />
+        <EntityContainer Name="KSBikeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Homes" EntityType="Self.Home" />
+          <EntitySet Name="official_route_comment" EntityType="Self.official_route_comment" />
+          <EntitySet Name="orders" EntityType="Self.order" />
+          <EntitySet Name="private_route_comment" EntityType="Self.private_route_comment" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK_official_route_comment_Home" Association="Self.FK_official_route_comment_Home">
+            <End Role="Home" EntitySet="Homes" />
+            <End Role="official_route_comment" EntitySet="official_route_comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_official_route_comment_users" Association="Self.FK_official_route_comment_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="official_route_comment" EntitySet="official_route_comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_users" Association="Self.FK_orders_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_private_route_comment_users" Association="Self.FK_private_route_comment_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="private_route_comment" EntitySet="private_route_comment" />
+          </AssociationSet>
+          <EntitySet Name="hashtags" EntityType="KSBikeModel.hashtag" />
+          <EntitySet Name="official_route_data" EntityType="KSBikeModel.official_route_data" />
+          <EntitySet Name="private_route" EntityType="KSBikeModel.private_route" />
+          <EntitySet Name="user_favorite" EntityType="KSBikeModel.user_favorite" />
+          <AssociationSet Name="FK_private_route_comment_private_route" Association="KSBikeModel.FK_private_route_comment_private_route">
+            <End Role="private_route" EntitySet="private_route" />
+            <End Role="private_route_comment" EntitySet="private_route_comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_favorite_users" Association="KSBikeModel.FK_user_favorite_users">
+            <End Role="user" EntitySet="users" />
+            <End Role="user_favorite" EntitySet="user_favorite" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="hashtag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="official_route_id" Type="Int32" Nullable="false" />
+          <Property Name="private_route_id" Type="Int32" Nullable="false" />
+          <Property Name="hashtag_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="official_route_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="official_data_catalog" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="official_data_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="official_data_img_info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="official_data_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="home_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="private_route">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="article_title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="article_img_id" Type="Int32" />
+          <Property Name="article_img_info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="article_context" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+          <Property Name="fav_num" Type="Int32" />
+          <Property Name="seem_num" Type="Int32" />
+          <Property Name="star_num_sum" Type="Int32" />
+          <Property Name="sum_people_give_star" Type="Int32" />
+          <NavigationProperty Name="private_route_comment" Relationship="KSBikeModel.FK_private_route_comment_private_route" FromRole="private_route" ToRole="private_route_comment" />
+        </EntityType>
+        <EntityType Name="user_favorite">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_fav_id" Type="Int32" Nullable="false" />
+          <Property Name="private_route_id" Type="Int32" Nullable="false" />
+          <Property Name="official_route_id" Type="Int32" Nullable="false" />
+          <Property Name="datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="user" Relationship="KSBikeModel.FK_user_favorite_users" FromRole="user_favorite" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_private_route_comment_private_route">
+          <End Type="KSBikeModel.private_route" Role="private_route" Multiplicity="1" />
+          <End Type="KSBikeModel.private_route_comment" Role="private_route_comment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="users">
+            <Principal Role="private_route">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="private_route_comment">
+              <PropertyRef Name="article_title_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_favorite_users">
+          <End Type="KSBikeModel.user" Role="user" Multiplicity="1" />
+          <End Type="KSBikeModel.user_favorite" Role="user_favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="user_favorite">
@@ -543,70 +471,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KSBikeEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="hashtags" EntityType="Self.hashtag" />
-          <EntitySet Name="official_route_comment" EntityType="Self.official_route_comment" />
-          <EntitySet Name="official_route_data" EntityType="Self.official_route_data" />
-          <EntitySet Name="orders" EntityType="Self.order" />
-          <EntitySet Name="private_route" EntityType="Self.private_route" />
-          <EntitySet Name="private_route_comment" EntityType="Self.private_route_comment" />
-          <EntitySet Name="products" EntityType="Self.product" />
-          <EntitySet Name="user_favorite" EntityType="Self.user_favorite" />
-          <EntitySet Name="users" EntityType="Self.user" />
-          <AssociationSet Name="FK_hashtag_official_route_data" Association="Self.FK_hashtag_official_route_data">
-            <End Role="official_route_data" EntitySet="official_route_data" />
-            <End Role="hashtag" EntitySet="hashtags" />
-          </AssociationSet>
-          <AssociationSet Name="FK_hashtag_private_route" Association="Self.FK_hashtag_private_route">
-            <End Role="private_route" EntitySet="private_route" />
-            <End Role="hashtag" EntitySet="hashtags" />
-          </AssociationSet>
-          <AssociationSet Name="FK_official_route_comment_official_route_data" Association="Self.FK_official_route_comment_official_route_data">
-            <End Role="official_route_data" EntitySet="official_route_data" />
-            <End Role="official_route_comment" EntitySet="official_route_comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_official_route_comment_users" Association="Self.FK_official_route_comment_users">
-            <End Role="users" EntitySet="users" />
-            <End Role="official_route_comment" EntitySet="official_route_comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_favorite_official_route_data" Association="Self.FK_user_favorite_official_route_data">
-            <End Role="official_route_data" EntitySet="official_route_data" />
-            <End Role="user_favorite" EntitySet="user_favorite" />
-          </AssociationSet>
-          <AssociationSet Name="FK_orders_users" Association="Self.FK_orders_users">
-            <End Role="users" EntitySet="users" />
-            <End Role="orders" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_private_route_comment_private_route" Association="Self.FK_private_route_comment_private_route">
-            <End Role="private_route" EntitySet="private_route" />
-            <End Role="private_route_comment" EntitySet="private_route_comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_favorite_private_route" Association="Self.FK_user_favorite_private_route">
-            <End Role="private_route" EntitySet="private_route" />
-            <End Role="user_favorite" EntitySet="user_favorite" />
-          </AssociationSet>
-          <AssociationSet Name="FK_private_route_comment_users" Association="Self.FK_private_route_comment_users">
-            <End Role="users" EntitySet="users" />
-            <End Role="private_route_comment" EntitySet="private_route_comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_favorite_users" Association="Self.FK_user_favorite_users">
-            <End Role="users" EntitySet="users" />
-            <End Role="user_favorite" EntitySet="user_favorite" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="KSBikeModelStoreContainer" CdmEntityContainer="KSBikeEntities">
-          <EntitySetMapping Name="hashtags">
-            <EntityTypeMapping TypeName="KSBikeModel.hashtag">
-              <MappingFragment StoreEntitySet="hashtag">
+          <EntitySetMapping Name="Homes">
+            <EntityTypeMapping TypeName="KSBikeModel.Home">
+              <MappingFragment StoreEntitySet="Home">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="official_route_id" ColumnName="official_route_id" />
-                <ScalarProperty Name="private_route_id" ColumnName="private_route_id" />
-                <ScalarProperty Name="hashtag_name" ColumnName="hashtag_name" />
+                <ScalarProperty Name="hname" ColumnName="hname" />
+                <ScalarProperty Name="hdescription" ColumnName="hdescription" />
+                <ScalarProperty Name="hrank" ColumnName="hrank" />
+                <ScalarProperty Name="hdistance" ColumnName="hdistance" />
+                <ScalarProperty Name="himg" ColumnName="himg" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -620,23 +499,6 @@
                 <ScalarProperty Name="user_give_star_num" ColumnName="user_give_star_num" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="datetime" ColumnName="datetime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="official_route_data">
-            <EntityTypeMapping TypeName="KSBikeModel.official_route_data">
-              <MappingFragment StoreEntitySet="official_route_data">
-                <ScalarProperty Name="officiak_route_type" ColumnName="officiak_route_type" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="official_homepage_img" ColumnName="official_homepage_img" />
-                <ScalarProperty Name="official_route_title" ColumnName="official_route_title" />
-                <ScalarProperty Name="official_route_description" ColumnName="official_route_description" />
-                <ScalarProperty Name="official_data_catalog" ColumnName="official_data_catalog" />
-                <ScalarProperty Name="official_data_img" ColumnName="official_data_img" />
-                <ScalarProperty Name="official_data_img_info" ColumnName="official_data_img_info" />
-                <ScalarProperty Name="official_data_content" ColumnName="official_data_content" />
-                <ScalarProperty Name="distance_decimal" ColumnName="distance_decimal" />
-                <ScalarProperty Name="rank" ColumnName="rank" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -657,23 +519,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="private_route">
-            <EntityTypeMapping TypeName="KSBikeModel.private_route">
-              <MappingFragment StoreEntitySet="private_route">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="article_title" ColumnName="article_title" />
-                <ScalarProperty Name="article_img_id" ColumnName="article_img_id" />
-                <ScalarProperty Name="article_img_info" ColumnName="article_img_info" />
-                <ScalarProperty Name="article_context" ColumnName="article_context" />
-                <ScalarProperty Name="datetime" ColumnName="datetime" />
-                <ScalarProperty Name="fav_num" ColumnName="fav_num" />
-                <ScalarProperty Name="seem_num" ColumnName="seem_num" />
-                <ScalarProperty Name="star_num_sum" ColumnName="star_num_sum" />
-                <ScalarProperty Name="sum_people_give_star" ColumnName="sum_people_give_star" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="private_route_comment">
             <EntityTypeMapping TypeName="KSBikeModel.private_route_comment">
               <MappingFragment StoreEntitySet="private_route_comment">
@@ -691,20 +536,9 @@
               <MappingFragment StoreEntitySet="products">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="product_name" ColumnName="product_name" />
-                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="product_price" ColumnName="product_price" />
                 <ScalarProperty Name="product_img" ColumnName="product_img" />
                 <ScalarProperty Name="product_num" ColumnName="product_num" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="user_favorite">
-            <EntityTypeMapping TypeName="KSBikeModel.user_favorite">
-              <MappingFragment StoreEntitySet="user_favorite">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="user_fav_id" ColumnName="user_fav_id" />
-                <ScalarProperty Name="private_route_id" ColumnName="private_route_id" />
-                <ScalarProperty Name="official_route_id" ColumnName="official_route_id" />
-                <ScalarProperty Name="datetime" ColumnName="datetime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -717,6 +551,56 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="birthday" ColumnName="birthday" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hashtags">
+            <EntityTypeMapping TypeName="KSBikeModel.hashtag">
+              <MappingFragment StoreEntitySet="hashtag">
+                <ScalarProperty Name="hashtag_name" ColumnName="hashtag_name" />
+                <ScalarProperty Name="private_route_id" ColumnName="private_route_id" />
+                <ScalarProperty Name="official_route_id" ColumnName="official_route_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="official_route_data">
+            <EntityTypeMapping TypeName="KSBikeModel.official_route_data">
+              <MappingFragment StoreEntitySet="official_route_data">
+                <ScalarProperty Name="home_id" ColumnName="home_id" />
+                <ScalarProperty Name="official_data_content" ColumnName="official_data_content" />
+                <ScalarProperty Name="official_data_img_info" ColumnName="official_data_img_info" />
+                <ScalarProperty Name="official_data_img" ColumnName="official_data_img" />
+                <ScalarProperty Name="official_data_catalog" ColumnName="official_data_catalog" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="private_route">
+            <EntityTypeMapping TypeName="KSBikeModel.private_route">
+              <MappingFragment StoreEntitySet="private_route">
+                <ScalarProperty Name="sum_people_give_star" ColumnName="sum_people_give_star" />
+                <ScalarProperty Name="star_num_sum" ColumnName="star_num_sum" />
+                <ScalarProperty Name="seem_num" ColumnName="seem_num" />
+                <ScalarProperty Name="fav_num" ColumnName="fav_num" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="article_context" ColumnName="article_context" />
+                <ScalarProperty Name="article_img_info" ColumnName="article_img_info" />
+                <ScalarProperty Name="article_img_id" ColumnName="article_img_id" />
+                <ScalarProperty Name="article_title" ColumnName="article_title" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_favorite">
+            <EntityTypeMapping TypeName="KSBikeModel.user_favorite">
+              <MappingFragment StoreEntitySet="user_favorite">
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="official_route_id" ColumnName="official_route_id" />
+                <ScalarProperty Name="private_route_id" ColumnName="private_route_id" />
+                <ScalarProperty Name="user_fav_id" ColumnName="user_fav_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

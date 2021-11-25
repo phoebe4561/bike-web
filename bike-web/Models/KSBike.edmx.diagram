@@ -4,27 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="57d11f5cae764bc1976f93f76492cc1a" Name="Diagram1">
-        <EntityTypeShape EntityType="KSBikeModel.hashtag" Width="1.5" PointX="6" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KSBikeModel.official_route_comment" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KSBikeModel.official_route_data" Width="1.5" PointX="3.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KSBikeModel.order" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KSBikeModel.private_route" Width="1.5" PointX="3.75" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KSBikeModel.private_route_comment" Width="1.5" PointX="6" PointY="6.75" IsExpanded="true" />
+      <Diagram DiagramId="49dea267b44b465d8a86da989baa37e4" Name="Diagram1">
+        <EntityTypeShape EntityType="KSBikeModel.Home" Width="1.5" PointX="3.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KSBikeModel.official_route_comment" Width="2.25" PointX="5.375" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KSBikeModel.order" Width="1.5" PointX="2.125" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KSBikeModel.private_route_comment" Width="2.5" PointX="4.375" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KSBikeModel.product" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KSBikeModel.user_favorite" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KSBikeModel.user" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
-        <AssociationConnector Association="KSBikeModel.FK_hashtag_official_route_data" ManuallyRouted="false" />
-        <AssociationConnector Association="KSBikeModel.FK_hashtag_private_route" ManuallyRouted="false" />
-        <AssociationConnector Association="KSBikeModel.FK_official_route_comment_official_route_data" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KSBikeModel.user" Width="1.5" PointX="0.5" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="KSBikeModel.FK_official_route_comment_Home" ManuallyRouted="false" />
         <AssociationConnector Association="KSBikeModel.FK_official_route_comment_users" ManuallyRouted="false" />
-        <AssociationConnector Association="KSBikeModel.FK_user_favorite_official_route_data" ManuallyRouted="false" />
         <AssociationConnector Association="KSBikeModel.FK_orders_users" ManuallyRouted="false" />
-        <AssociationConnector Association="KSBikeModel.FK_private_route_comment_private_route" ManuallyRouted="false" />
-        <AssociationConnector Association="KSBikeModel.FK_user_favorite_private_route" ManuallyRouted="false" />
         <AssociationConnector Association="KSBikeModel.FK_private_route_comment_users" ManuallyRouted="false" />
-        <AssociationConnector Association="KSBikeModel.FK_user_favorite_users" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="KSBikeModel.hashtag" Width="1.5" PointX="4.375" PointY="7.75" />
+        <EntityTypeShape EntityType="KSBikeModel.official_route_data" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="KSBikeModel.private_route" Width="3" PointX="2.125" PointY="13.875" />
+        <EntityTypeShape EntityType="KSBikeModel.user_favorite" Width="3" PointX="2.75" PointY="10.875" />
+        <AssociationConnector Association="KSBikeModel.FK_private_route_comment_private_route" />
+        <AssociationConnector Association="KSBikeModel.FK_user_favorite_users" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

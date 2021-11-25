@@ -1,0 +1,87 @@
+﻿@model bike_web.ViewModels.MemberPageViewModel
+@{
+    ViewBag.Title = "memberPage";
+}
+
+<div class="container-fluid bg-lighter py-5">
+    <!-- 個人資訊 -->
+    <div class="d-flex justify-content-center py-3">
+        <div class="card bg-lighter" style="width: 40rem">
+            <div class="card-header bg-primary">個人資訊</div>
+            <div class="card-body">
+                <div class="row">
+
+                    @{
+                        <div class="col-md-6">
+                            <ul class="list-unstyled mb-0">
+                                <li class="py-2">姓名：<span>@Model.User.username</span></li>
+                                <li class="py-2">信箱：<span>@Model.User.email</span></li>
+                                <li class="py-2">生日：<span>@String.Format("{0:yyyy/MM/dd}", Model.User.birthday)</span></li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+
+    <!-- 我的推薦 -->
+
+    <div class="d-flex justify-content-center py-3">
+        <div class="card bg-lighter" style="width: 40rem">
+            <div class="card-header bg-primary">我的推薦</div>
+            <div class="card-body">
+                <ul class="list-unstyled list-inline mb-0">
+                    @foreach (var item in Model.private_Routes)
+                    {
+                        <li class="py-2">
+                            <a href="@Url.Action("privateRoutePage", "PrivateRoute",new{articletitleid =item.id})" class="text-black">@item.article_title</a><!--連到私人路線-->
+                            @*<a class="float-end" href="@Url.Action("DeleteByPR","Member")">刪除</a>*@
+                            @*<a href="@Url.Action("EditbyPrivateRoute","Member",new { id = item.id})" class="btn btn-primary" px-4 me-5>編輯</a>*@
+                            <a href="@Url.Action("Delete", "Member", new{id = item.id})" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
+
+                            @*<a href="Delete/@item.id" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>*@
+                            @*<a class="float-end" href="@Url.Action("EditByPR","Member")">編輯</a>*@
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+
+
+
+    <!-- 我的最愛 -->
+    <div class="col d-flex justify-content-center py-3">
+        <div class="card bg-lighter" style="width: 40rem">
+            <div class="card-header bg-primary">我的最愛</div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    @foreach (var item in Model.userFavoritesByOF)
+                    {
+                        var userFav = "userFav" + item.official_route_id;
+                        <li class="py-2 theRoute">
+                            <p class="userFav" hidden>@item.official_route_id</p>
+                            <a href="@Url.Action("List","OnlyOffRoute", new {id=item.official_route_id })">@item.official_By_Home_title</a><!--連到網站路線-->
+                            <a href="@Url.Action("DeleteByoffical_fav", "Member", new {articleID=item.official_route_id })" @*onclick="return confirm('您確定要刪除嗎?')"*@ class="btn btn-danger px-4 me-5 btnRemoveFav" value="@item.official_route_id">刪除</a>
+                        </li>
+                    }                  
+                    @foreach (var item in Model.userFavoritesByPR)
+                    {
+                        <li class="py-2">
+                            <a href="@Url.Action("","")">@item.article_title</a><!--連到私人路線-->
+                            <a href="@Url.Action("DeleteByPrivate_fav", "Member", new {id=item.private_route_id})" onclick="return confirm('您確定要刪除嗎?')" class="btn btn-danger px-4 me-5">刪除</a>
+                        </li>
+                    }
+
+
+                </ul>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/js/myFavorite2.js"></script>

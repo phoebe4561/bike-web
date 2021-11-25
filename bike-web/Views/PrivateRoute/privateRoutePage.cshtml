@@ -1,0 +1,336 @@
+﻿@using bike_web.ViewModels
+
+
+@{
+    ViewBag.Title = "privateRoutePage";
+}
+@section Scripts {
+
+    <script src="@Url.Content("~/Scripts/vendor/js/jquery-3.4.1.js")" type="text/javascript"></script>
+    <script src="~/Scripts/js/privateRoutePage.js"></script>
+    <style type="text/css">
+
+        .s {
+            font-size: 40px;
+        }
+
+        .infoStar {
+            font-size: 40px;
+            color: #F4D19B;
+        }
+
+        #messagebody {
+            display: none;
+        }
+
+        .infomessage {
+            border-width: 3px;
+            border-style: solid;
+            border-color: #D7E9F7;
+            padding: 1px;
+        }
+    </style>
+
+
+}
+
+
+
+
+
+@model bike_web.ViewModels.PrivateRouteandCommentViewModel
+<body class="container">
+    <div class="row  justify-content-center">
+        <img src="@Url.Content(Model.熱門文章.p_artitle_img_info)" alt="" class="">
+        <div class="text-center">
+            <p class="fw-bold text-center font-32 my-3 pb-3">@Model.熱門文章.p_artitle_title</p>
+            <div class="d-flex justify-content-between ">
+                <h3><span class="badge bg-light text-darkBrown ml-3  mt-5 ">紀錄者:@Model.熱門文章.u_username</span></h3>
+                <div>
+                    @if (Model.熱門文章.p_fav == 0)
+                    {
+                        <button type="button" value="@Model.熱門文章.p_ID" class="btnFav btn rounded-pill btn-outline-danger h-50 ">
+                            <i class="iFav bi fs-5 bi-heart" value="@Model.熱門文章.p_ID"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" value="@Model.熱門文章.p_ID" class="btnFav rounded-pill btn btn-danger h-50 ">
+                            <i class="iFav bi fs-5 bi-heart" value="@Model.熱門文章.p_ID"></i>
+                        </button>
+                    }
+                </div>
+            </div>
+            <div class="d-flex justify-content-between py-2">
+                <div class=" px-3 font-20"><span>@Model.熱門文章.p_datetime</span></div>
+            </div>
+            <div class="d-flex justify-content-end py-2 ">
+                @{if (Model.HashTags != null)
+                    {
+                        foreach (string hashtag in Model.HashTags)
+                        {
+                            <a href="@Url.Action("privateRoute", "PrivateRoute", new { hashtag = hashtag })" class="link-info"><p> #@hashtag </p></a><p>&nbsp</p>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <hr class="divider" />
+        <div class="text-left">
+            @Html.Raw(@Model.熱門文章.p_content)
+        </div>
+        <div class="d-flex justify-content-between">
+            <div><i class="bi bi-eye fs-4"></i><span class="ms-2">@Model.熱門文章.p_seen_num</span></div>
+            @*重新計算星星*@
+            @{double star;
+            }
+            @if (Model.熱門文章.p_sum_people_give_star_num is null)
+            {
+                star = 0;
+
+            }
+            else if (Model.熱門文章.p_sum_people_give_star_num == 0)
+            {
+                star = 0;
+            }
+            else
+            {
+                star = (double)Math.Round((decimal)(int)Model.熱門文章.p_star_num_sum / (int)Model.熱門文章.p_sum_people_give_star_num, 2);
+            }
+            <div id="starNumber" class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@star</span></div>
+        </div>
+    </div>
+    @*@model List<private_route_comment>*@
+
+    @*透過ajax傳送*@
+    <div class="card">
+        <!--Submit form-->
+        @*@using (Html.BeginForm("Submit", "Comment"))
+            {*@
+        <form id="commentForm" method="post" action="~/PrivateRoute/saveMessage">
+
+
+
+            <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">我的評價</h5>
+            <div class="card-body ">
+                <div class="row  justify-content-start">
+                    <div class="col-2 text-center score_star">
+                        <span id="star1" class="s">★</span>
+                        <span id="star2" class="s">★</span>
+                        <span id="star3" class="s">★</span>
+                        <span id="star4" class="s">★</span>
+                        <span id="star5" class="s">★</span>
+                        <p id="starCount"></p>
+                        <input name="txtNum" id="starNum" style="display:none;" />
+                    </div>
+                </div>
+                <div class="row  justify-content-center">
+                    <div class="text-center my-2 ">
+                        @*原本id有exampleFormControlTextarea1*@
+                        <textarea name="txtComment" wrap="hard" style="word-wrap : break-word;" class="form-control comment" id="txtComment" placeholder="內容" rows="3"></textarea>
+                    </div>
+                </div>
+                @*<input type="button" class="btn btn-primary send" value="送出" disabled>*@
+                <button id="btnSave" type="button" class="btn btn-primary send" value="@Model.熱門文章.p_ID" @*ValidateRequest=”false”*@ disabled>送出</button>
+            </div>
+        </form>
+
+        <!--捕捉星星-->
+        <script>
+            let spans = document.querySelectorAll("body div form div div div span.s");
+            for (let span of spans) {
+                span.addEventListener("mouseover", mouseOver);
+                span.addEventListener("mouseout", mouseOut);
+                span.addEventListener("click", Click);
+                span.addEventListener("dblclick", dblClick);
+            }
+            let starCount = document.getElementById('starCount');
+            let starNum = document.getElementById('starNum');
+
+            var startruehere;
+            starCount.innerHTML = '目前尚未評分';
+            starNum.innerHTML = 0;
+
+            function mouseOver() {
+                let starhere = this.id.charAt(4);
+                for (let j = 0; j < 5; j++) {
+                    spans[j].style.color = "#000";
+                }
+                for (let i = 0; i < starhere; i++) {
+                    spans[i].style.color = "#F4D19B";
+                }
+                starCount.innerHTML = '確定評分為' + starhere + '星級嗎?';
+            }
+            function mouseOut() {
+                for (let j = 0; j < 5; j++) {
+                    spans[j].style.color = "#000";
+                }
+                for (let i = 0; i < startruehere; i++) {
+                    spans[i].style.color = "#F4D19B";
+                }
+                if (startruehere > 0 && startruehere < 6) {
+                    starCount.innerHTML = startruehere + "星級";
+                    starNum.value = startruehere;
+                }
+                else {
+                    starCount.innerHTML = '目前尚未評分';
+                    starNum.value = 0;
+                }
+
+            }
+
+
+
+            function Click() {
+                startruehere = this.id.charAt(4);
+
+
+                for (let j = 0; j < 5; j++) {
+                    spans[j].style.color = "#000";
+                }
+                for (let i = 0; i < startruehere; i++) {
+                    spans[i].style.color = "#F4D19B";
+                }
+
+                starCount.innerHTML = startruehere + "星級";
+                starNum.value = startruehere;
+
+            }
+
+            function dblClick() {
+                for (let j = 0; j < 5; j++) {
+                    spans[j].style.color = "#F4D19B";
+                }
+                startruehere = 0;
+                starCount.innerHTML = '目前尚未評分';
+                starNum.value = 0;
+            }
+
+
+
+
+
+
+
+
+        </script>
+
+        <form>
+            <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">路線相關評價</h5>
+            <div class="card-body ">
+                <div class="row  justify-content-center">
+                    <div class="text-center my-2 ">
+
+
+                        @*從這裡開始匯入評論*@
+                        <div class="messageList" id="messagebody1" rows="3">
+                            @{
+                                int count = 0;
+                                Model.留言資訊.Reverse();
+                                foreach (var t in Model.留言資訊)
+                                {
+                                    count++;
+                                    <div class="infomessage">
+                                        <p class="infoName">@t.comment_user_name</p>
+                                        @if (@t.user_give_star_num.ToString() == "1")
+                                        {
+                                            <p class="infoStar">★</p>
+                                        }
+                                        else if (@t.user_give_star_num.ToString() == "2")
+                                        {
+                                            <p class="infoStar">★★</p>
+                                        }
+                                        else if (@t.user_give_star_num.ToString() == "3")
+                                        {
+                                            <p class="infoStar">★★★</p>
+                                        }
+                                        else if (@t.user_give_star_num.ToString() == "4")
+                                        {
+                                            <p class="infoStar">★★★★</p>
+                                        }
+                                        else if (@t.user_give_star_num.ToString() == "5")
+                                        {
+                                            <p class="infoStar">★★★★★</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="infoStar"></p>
+                                        }
+                                        <p class="infoText">@t.comment</p>
+                                        <p class="infoTime">@t.datetime</p>
+                                    </div>
+                                    if (count == 5)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+
+                        </div>
+                        <nav aria-label="Page navigation example" id="commentPage">
+                            <ul class="pagination justify-content-center">
+                                @{ int pageNumber = 0;
+
+
+                                    if (Model.留言資訊.Count % 5 > 0)
+                                    {
+                                        pageNumber = (Model.留言資訊.Count / 5) + 1;
+
+                                    }
+                                    else
+                                    {
+                                        pageNumber = Model.留言資訊.Count / 5;
+                                    }
+
+                                    if (pageNumber == 0)
+                                    {
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        for (int i = 1; i <= pageNumber; i++)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <li class="page-item  disabled"><a class="page-link active" href="javascript:;">@i</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="page-item"><a class="page-link" href="javascript:;">@i</a></li>
+                                            }
+                                        }
+                                    }
+
+
+
+                                }
+
+
+                            </ul>
+                        </nav>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+</body>

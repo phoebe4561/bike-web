@@ -1,0 +1,444 @@
+﻿@model bike_web.ViewModels.offRouteViewModel
+@{
+    ViewBag.Title = "List";
+}
+<style>
+    .colored-toast.swal2-icon-warning {
+        background-color: #87adbd !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+</style>
+<div id="app">
+    <!-- ======= 進階篩選 ======= -->
+    <div class="sidenav" :class="{ toggle: isToggle === true }">
+        <a href="#" class="closebtn" @@click.prevent="isToggle = !isToggle">
+            <i class="fa fa-angle-left fa-2"></i>
+        </a>
+        <div class="d-flex flex-column align-items-center mt-5">
+            @using (Html.BeginForm("初級List", "offRoute", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <!-- ======= 關鍵字 ======= -->
+                <div class="form-group mb-3">
+                    <label class="col-form-label font-24"><span class="pe-2"><i class="fas fa-suitcase-rolling"></i></span>景點搜尋</label>
+                    <div class="form-group input-group" style="width: 250px">
+                        <input type="text" class="form-control" name="searchKeyword" placeholder="請輸入關鍵字" />
+                    </div>
+                </div>
+                <!-- ======= 等級 ======= -->
+                <div class="form-group mb-3">
+                    <label class="col-form-label font-24"><span class="pe-2"><i class="fas fa-chart-line"></i></span>難度搜尋</label>
+                    <div class="input-group" style="width: 250px">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelectLevel">等級</label>
+                        </div>
+                        <select class="custom-select searchRank" name="searchRank">
+                            <option value="nolevel" selected>等級分類</option>
+                            <option value="初級">初級路線</option>
+                            <option value="中級">中級路線</option>
+                            <option value="高級">高級路線</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- ======= 長度 ======= -->
+                <div class="form-group mb-3">
+                    <label class="col-form-label font-24"><span class="pe-2"><i class="fas fa-road"></i></span>距離搜尋</label>
+                    <div class="input-group" style="width: 250px">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelectDistance">長度</label>
+                        </div>
+                        <select class="custom-select searchDistance" name="searchDistance">
+                            <option value="nodistance" selected>長度分類</option>
+                            <option value="2">小於10km</option>
+                            <option value="3">10-20km</option>
+                            <option value="4">大於20km</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary me-3 searchBtn">開始搜尋</button>
+                    <button type="reset" class="btn btn-outline-secondary">重置欄位</button>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- navbar -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 my-4">
+                <ul class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active py-3 bold" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">
+                            全部路線
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link py-3 bold" id="nav-low-tab" data-bs-toggle="tab" data-bs-target="#nav-low" type="button" role="tab" aria-controls="nav-low" aria-selected="false">
+                            初級路線
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link py-3 bold" id="nav-middle-tab" data-bs-toggle="tab" data-bs-target="#nav-middle" type="button" role="tab" aria-controls="nav-middle" aria-selected="false">
+                            中級路線
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link py-3 bold" id="nav-high-tab" data-bs-toggle="tab" data-bs-target="#nav-high" type="button" role="tab" aria-controls="nav-high" aria-selected="false">
+                            高級路線
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container animation">
+        <!-- all route -->
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                <div class="row">
+                    @foreach (var item in Model.offcialAllRoute)
+                    {
+                        int count = 0; bool btn = true;
+                        <div class="col-lg-4 col-md-6">
+                            <div class="portfolio-item card mb-3">
+                                <span>
+                                    <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                    <div class="portfolio-info">
+                                        <h3>@item.h_name</h3>
+                                    </div>
+                                </span>
+                                <div class="card-body">
+                                    <div class="position-absolute" style="top: 20px; right: 20px">
+                                        @*//mia:我的最愛*@
+                                        @if (Session["id"] != null)
+                                        {
+                                            if (@Model.checkFav != null)
+                                            {
+                                                <form method="post">
+                                                    @foreach (var fav in @Model.checkFav)
+                                                    {
+                                                        count++;
+                                                        if (fav.official_route_id == item.h_ID)
+                                                        {
+                                                            btn = false;
+                                                            <button type="button" value="@item.h_ID" class="btnFav2 rounded-pill btn btn-danger ">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID" @*value="@Model.p_ID"*@></i>
+                                                            </button>
+                                                            //count++;
+                                                        }
+                                                        else if (btn)
+                                                        {
+                                                            if (count < @Model.checkFav.Count()) { continue; }
+                                                            <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                            </button>}
+                                                    }
+                                                </form> }
+                                            else
+                                            { <form method="post">
+                                                    <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                    </button>
+                                                </form> }
+                                        }
+                                        else
+                                        {
+                                            <button v-on:click="greet" type="button" class="btnLoginYet btn rounded-pill btn-outline-danger " value="">
+                                                <i class="bi fs-5 bi-heart"></i>
+                                            </button>}
+                                        @*//END---我的最愛*@
+                                    </div>
+                                    <h5 class="border-bottom border-3 border-primary"></h5>
+                                    <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                    </div>
+                                    <p class="card-text">@item.h_description</p>
+                                    <div class="d-flex justify-content-end">
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- low route -->
+            <div class="row tab-pane fade show" id="nav-low" role="tabpanel" aria-labelledby="nav-low-tab">
+                <div class="row">
+                    @foreach (var item in Model.offcialLowRoute)
+                    {
+                        int count = 0; bool btn = true;
+                        <div class="col-lg-4 col-md-6">
+                            <div class="portfolio-item card mb-3">
+                                <span>
+                                    <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                    <div class="portfolio-info">
+                                        <h3>@item.h_name</h3>
+                                    </div>
+                                </span>
+                                <div class="card-body">
+                                    <div class="position-absolute" style="top: 20px; right: 20px">
+                                        @*//mia:我的最愛*@
+                                        @if (Session["id"] != null)
+                                        {
+                                            if (@Model.checkFav != null)
+                                            {
+                                                <form method="post">
+                                                    @foreach (var fav in @Model.checkFav)
+                                                    {
+                                                        count++;
+                                                        if (fav.official_route_id == item.h_ID)
+                                                        {
+                                                            btn = false;
+                                                            <button type="button" value="@item.h_ID" class="btnFav2 rounded-pill btn btn-danger ">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID" @*value="@Model.p_ID"*@></i>
+                                                            </button>
+                                                            //count++;
+                                                        }
+                                                        else if (btn)
+                                                        {
+                                                            if (count < @Model.checkFav.Count()) { continue; }
+                                                            <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                            </button>}
+                                                    }
+                                                </form> }
+                                            else
+                                            { <form method="post">
+                                                    <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                    </button>
+                                                </form> }
+                                        }
+                                        else
+                                        {
+                                            <button v-on:click="greet" type="button" class="btnLoginYet btn rounded-pill btn-outline-danger " value="">
+                                                <i class="bi fs-5 bi-heart"></i>
+                                            </button>}
+                                        @*//END---我的最愛*@
+                                    </div>
+
+                                    <h5 class="border-bottom border-3 border-primary"></h5>
+                                    <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                    </div>
+                                    <p class="card-text">@item.h_description</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- middle route -->
+            <div class="row tab-pane fade show" id="nav-middle" role="tabpanel" aria-labelledby="nav-middle-tab">
+                <div class="row">
+                    @foreach (var item in Model.offcialMiddleRoute)
+                    {
+                        int count = 0; bool btn = true;
+                        <div class="col-lg-4 col-md-6">
+                            <div class="portfolio-item card mb-3">
+                                <span>
+                                    <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                    <div class="portfolio-info">
+                                        <h3>@item.h_name</h3>
+                                    </div>
+                                </span>
+                                <div class="card-body">
+                                    <div class="position-absolute" style="top: 20px; right: 20px">
+                                        @*//mia:我的最愛*@
+                                        @if (Session["id"] != null)
+                                        {
+                                            if (@Model.checkFav != null)
+                                            {
+                                                <form method="post">
+                                                    @foreach (var fav in @Model.checkFav)
+                                                    {
+                                                        count++;
+                                                        if (fav.official_route_id == item.h_ID)
+                                                        {
+                                                            btn = false;
+                                                            <button type="button" value="@item.h_ID" class="btnFav2 rounded-pill btn btn-danger ">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID" @*value="@Model.p_ID"*@></i>
+                                                            </button>
+                                                            //count++;
+                                                        }
+                                                        else if (btn)
+                                                        {
+                                                            if (count < @Model.checkFav.Count()) { continue; }
+                                                            <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                            </button>}
+                                                    }
+                                                </form> }
+                                            else
+                                            { <form method="post">
+                                                    <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                    </button>
+                                                </form> }
+                                        }
+                                        else
+                                        {
+                                            <button v-on:click="greet" type="button" class="btnLoginYet btn rounded-pill btn-outline-danger " value="">
+                                                <i class="bi fs-5 bi-heart"></i>
+                                            </button>}
+                                        @*//END---我的最愛*@
+                                    </div>
+                                    <h5 class="border-bottom border-3 border-primary"></h5>
+                                    <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                    </div>
+                                    <p class="card-text">@item.h_description</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- high route -->
+            <div class="row tab-pane fade show" id="nav-high" role="tabpanel" aria-labelledby="nav-high-tab">
+                <div class="row">
+                    @foreach (var item in Model.offcialHighRoute)
+                    {
+                        int count = 0; bool btn = true;
+                        <div class="col-lg-4 col-md-6">
+                            <div class="portfolio-item card mb-3">
+                                <span>
+                                    <a href="@Url.Action("List","OnlyOffRoute",new {id=item.h_ID})"><img src="~/images/home/@item.h_img" class="card-img-top portfolio-img" alt="@item.h_name" /></a>
+                                    <div class="portfolio-info">
+                                        <h3>@item.h_name</h3>
+                                    </div>
+                                </span>
+                                <div class="card-body">
+                                    <div class="position-absolute" style="top: 20px; right: 20px">
+                                        @*//mia:我的最愛*@
+                                        @if (Session["id"] != null)
+                                        {
+                                            if (@Model.checkFav != null)
+                                            {
+                                                <form method="post">
+                                                    @foreach (var fav in @Model.checkFav)
+                                                    {
+                                                        count++;
+                                                        if (fav.official_route_id == item.h_ID)
+                                                        {
+                                                            btn = false;
+                                                            <button type="button" value="@item.h_ID" class="btnFav2 rounded-pill btn btn-danger ">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID" @*value="@Model.p_ID"*@></i>
+                                                            </button>
+                                                            //count++;
+                                                        }
+                                                        else if (btn)
+                                                        {
+                                                            if (count < @Model.checkFav.Count()) { continue; }
+                                                            <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                                <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                            </button>}
+                                                    }
+                                                </form> }
+                                            else
+                                            { <form method="post">
+                                                    <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger " value="@item.h_ID">
+                                                        <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                                    </button>
+                                                </form> }
+                                        }
+                                        else
+                                        {
+                                            <button v-on:click="greet" type="button" class="btnLoginYet btn rounded-pill btn-outline-danger " value="">
+                                                <i class="bi fs-5 bi-heart"></i>
+                                            </button>}
+                                        @*//END---我的最愛*@
+                                    </div>
+                                    <h5 class="border-bottom border-3 border-primary"></h5>
+                                    <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                        <div class="badge bg-light font-20 text-darkBrown px-3">長度:@item.h_distance km</div>
+                                        <div class="badge bg-darkBrown font-20 px-3">難度:<span class="text-primary font-20">@item.h_rank</span></div>
+                                    </div>
+                                    <p class="card-text">@item.h_description</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div><i class="bi bi-eye fs-4"></i><span class="ms-2">0</span></div>
+                                        <div class="text-primary"><i class="bi bi-star-fill fs-4"></i><span class="ms-2">@item.oc_allStar</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://unpkg.com/vue@next"></script>
+<script type="module">
+    const app = Vue.createApp({
+        data() {
+            return {
+                isToggle: false,
+            };
+        },
+        methods: {
+            btnSubmit() {
+                const keywordInput = document.querySelector('input');
+                const levelOption = document.querySelector('.searchRank');
+                const distanceOption = document.querySelector('.searchDistance');
+                const searchBtn = document.querySelector(".searchBtn");
+                const Toast = Swal.mixin({
+                    toast: true,
+                    width: '320px',
+                    position: 'bottom-start',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast',
+                    },
+                    showConfirmButton: false,
+                    timer: 1500,
+
+                    timerProgressBar: true
+                })
+                searchBtn.addEventListener("click", (e) => {
+                    if (keywordInput.value == '' && levelOption.value == 'nolevel' && distanceOption.value == 'nodistance') {
+
+                        e.preventDefault();
+
+                        Toast.fire({
+                            icon: 'warning',
+                            title: '請選擇篩選條件!'
+                        })
+                    }
+                });
+            },
+            animateBanner() {
+                let siteAnimate = ScrollReveal({
+                    reset: false,
+                    origin: 'right',
+                    distance: '500px',
+                    easing: 'ease-in-out',
+                });
+                ScrollReveal().reveal('.animation', { duration: 2000, origin: 'bottom', delay: 50 });
+            },
+        },
+        mounted() {
+            this.isToggle = true;
+            this.animateBanner();
+            this.btnSubmit();
+        },
+    });
+    app.mount('#app');
+</script>
+<script src="~/Scripts/js/myFavorite.js"></script>

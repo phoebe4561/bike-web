@@ -1,0 +1,117 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "旗津老街",
+        "site": "805高雄市旗津區廟前路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.61371788662937, 120.26857104994501]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "高雄燈塔",
+        "site": "80541高雄市旗津區旗下巷34號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.6181336959116, 120.2652289040035]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "旗後砲台",
+        "site": "805高雄市旗津區旗後山"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.613314201860916, 120.26411662539756]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "旗津海岸公園",
+        "site": "805高雄市旗津區旗津三路990號"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.60152720676772, 120.2737499860698]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "旗津風車公園",
+        "site": "805高雄市旗津區旗津二路旗津風車公園"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.588639476580745, 120.28542140909359]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "勞動女性紀念公園",
+        "site": "805高雄市旗津區旗津三路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.594733669932847, 120.2810574054044]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "name": "旗津老街",
+        "site": "805高雄市旗津區廟前路"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.61371788662937, 120.26857104994501]
+      }
+    }
+  ],
+  "foods": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "01",
+        "name": "旗津手工汽水",
+        "site": "805高雄市旗津區旗津三路1100號",
+        "phone": "+886977393153"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.6106347643813, 120.26796376968015]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "02",
+        "name": "旗津老字號烤小卷",
+        "site": "805高雄市旗津區廟前路9號",
+        "phone": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.611678333839556, 120.267623276942]
+      }
+    }
+  ]
+}

@@ -1,0 +1,758 @@
+﻿
+@model bike_web.ViewModels.offRouteViewModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+@*<h1>avgStar : @ViewBag.avgStar</h1>*@
+<div id="app">
+    <!-- 路線介紹 -->
+    @foreach (var item in Model.offcialAllRoute)
+    {
+        if (@item.od_official_data_catalog == "banner")
+        {
+            string rank = $"{@item.h_rank}路線";
+            string rank2 = $"{@item.h_rank}List";
+            <div class="routeTitle bg-primary row align-items-center pt-4 pb-2 px-4">
+                <div class="col-md-6">
+                    <h1>
+                        @item.h_name
+                    </h1>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <span>
+                        <a href="@Url.Action(rank2,"offRoute")" class="btn btn-light mx-3" name="@item.h_rank">@rank</a>
+                    </span>
+                    <span class="text-secondary">@item.oc_allStar</span>
+                    @foreach (var tag in Model.RouteHashtag)
+                    {
+                        <a class="btn font-16 btn-outline-secondary mx-md-1" href="@Url.Action("findHashtag","OnlyOffRoute",new {homeID=@ViewBag.homeID,hashtag=tag.hashtag_name})">#@tag.hashtag_name</a>
+                    }
+                    @*//mia:我的最愛*@
+                    @if (Session["id"] != null)
+                    {
+                        int count2 = 0; bool btn = true;
+                        if (@Model.checkFav.Count > 0)
+                        {
+                            <form method="post">
+                                @foreach (var fav in @Model.checkFav)
+                                {
+                                    count2++;
+                                    if (fav.official_route_id == item.h_ID)
+                                    {
+                                        btn = false;
+                                        <button type="button" value="@item.h_ID" class="btnFav2 rounded-pill btn btn-danger mx-2">
+                                            <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID" @*value="@Model.p_ID"*@></i>
+                                        </button>
+                                        //count++;
+                                    }
+                                    else if (btn)
+                                    {
+                                        if (count2 < @Model.checkFav.Count()) { continue; }
+                                        <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger  mx-2" value="@item.h_ID">
+                                            <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                        </button>}
+                                }
+                            </form> }
+                        else
+                        { <form method="post">
+                                <button type="button" class="btnFav2 btn rounded-pill btn-outline-danger  mx-2" value="@item.h_ID">
+                                    <i class="iFav2 bi fs-5 bi-heart" value="@item.h_ID"></i>
+                                </button>
+                            </form> }
+                    }
+                    else
+                    {
+                        <button v-on:click="greet" type="button" class="btnLoginYet btn rounded-pill btn-outline-danger  mx-2" value="">
+                            <i class="bi fs-5 bi-heart"></i>
+                        </button>}
+                    @*//END---我的最愛*@
+                </div>
+            </div>
+        }
+    }
+
+    <div class="container-fluid">
+        <div class="row py-2">
+            <!--路線info-->
+            @foreach (var item in Model.offcialAllRoute)
+            {
+                if (@item.od_official_data_catalog == "banner")
+                {
+                    <div class="col-12 col-md-6">
+                        <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">路線介紹</h3>
+                        <p>
+                            @item.h_description
+                        </p>
+                        <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">交通資訊</h3>
+                        @*<p>原來的//@item.od_official_data_img_content</p>*@
+                        <label for="pointOutput" class="inputData" id="test123" hidden>@item.od_official_data_img_content</label>
+                        <p class="card-text outputData" id="pointOutput">123</p>
+                    </div>
+
+                }
+            }
+            <!--carosuel-->
+            <div class="col-12 col-md-6">
+
+                @*<img src="~/Images/home/@item.h_img" alt="@item.h_name" class="img-fluid" />*@
+
+
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @{
+                            int count = 0;
+                            foreach (var data in Model.offcialAllRoute)
+                            {
+                                if (@data.od_official_data_catalog.Contains("point"))
+                                {
+                                    if (count == 0)
+                                    {
+                                        <div class="carousel-item active ">
+                                            <img src="~/Images/offRoute/@data.h_ID/@data.od_official_data_img" class="d-block w-100 h-100" alt="...">
+                                            <div class="carousel-caption">
+                                                <h3>@data.od_official_data_img_info</h3>
+                                            </div>
+                                        </div>
+                                    }
+                                    if (count > 0)
+                                    {
+                                        <div class="carousel-item">
+                                            <img src="~/Images/offRoute/@data.h_ID/@data.od_official_data_img" class="d-block w-100 h-100" alt="...">
+                                            <div class="carousel-caption">
+                                                <h3>@data.od_official_data_img_info</h3>
+                                            </div>
+                                        </div>
+                                    }
+                                    count++;
+                                }
+                            }
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bg-info" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon  bg-info" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <!-- 地圖 / 評論 -->
+    <div class="container-fluid bg-lighter py-2">
+        <h5 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4 mb-3">路線地圖</h5>
+        <hr />
+
+        <div class="row">
+            <!-- map -->
+            <div class="col-md-9">
+                <div class="form-group mb-2">
+                    <input placeholder="輸入景點名稱,下方可見評論" type="text" class="form-control" ref="site" v-model="site" />
+                </div>
+                <div id="map" class="ratio ratio-16x9"></div>
+                <div class="row my-2">
+                    <div class="spotTag my-2 font-24">
+                        <span><img src="~/Images/mapicon/Ubike03.png" alt="routeicon" width="35" height="40" /></span> 騎車路線:
+                    </div>
+                    <div class="spotGroup">
+                        <button type="button" class="btn btn-outline-secondary mx-1 my-2" v-for="f in features" @@click="openInfoWindows(f.properties.id)">{{ f.properties.name }}</button>
+                    </div>
+                </div>
+                <div class="row my-2 font-24">
+                    <div class="spotTag my-2"><img src="~/Images/mapicon/food.png" alt="foodicon" width="35" height="40" />鄰近美食:</div>
+                    <div class="spotGroup">
+                        <button type="button" class="btn btn-outline-secondary mx-1 my-2" v-for="f in foods" @@click="openInfoWindows(f.properties.id)">{{ f.properties.name }}</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 右邊路線評論  -->
+            <div class="col-md-3 py-md-0 py-3">
+                <div class="card">
+                    <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">
+                        路線相關評價<span class="font-24 s mx-1" style="color: #F4D19B">★</span>@ViewBag.avgStar
+                    </h5>
+                    <div class="card-body">
+
+                        @{
+                            count = 0;
+                            foreach (var data in Model.RouteComment)
+                            {
+                                count++;
+                                var stars = data.user_give_star_num;
+                                var timeSTR = @data.datetime.ToString();
+                                var time = timeSTR.Substring(0, timeSTR.IndexOf(' '));
+                                <div class="card-title border-bottom border-2 pb-1">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <label class="font-18"> @data.userName </label>
+                                        </div>
+                                        <p class="mb-0">@time</p>
+                                    </div>
+                                    @for (int i = 0; i < stars; i++)
+                                    {
+                                        <span class="font-24 s" style="color: #F4D19B">★</span>}
+                                    <h6>@data.comment</h6>
+                                </div>
+                                if (count > 4)
+                                {
+                                    if (@Model.RouteComment.Count() == 5) { continue; }
+                                    <div class="text-center">
+                                        <button type="button" id="btnRouteComment" class="btn btn-primary px-4" data-toggle="modal" data-target="#modalComment">查看更多</button>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade " id="modalComment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center bg-light">
+                                                    <h5 class="modal-title">所有評論</h5>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">X</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @foreach (var data2 in Model.RouteComment)
+                                                    {
+                                                        var stars2 = data2.user_give_star_num;
+                                                        var timeSTR2 = @data2.datetime.ToString();
+                                                        var time2 = timeSTR2.Substring(0, timeSTR2.IndexOf(' '));
+                                                        <div class="card-title border-bottom border-2 pb-1">
+                                                            <div class="d-flex justify-content-between">
+                                                                <div>
+                                                                    <label class="font-18"> @data2.userName </label>
+                                                                </div>
+                                                                <p class="mb-0">@time2</p>
+                                                            </div>
+                                                            @for (int i = 0; i < stars2; i++)
+                                                            {
+                                                                <span class="font-24 s" style="color: #F4D19B">★</span>}
+                                                            <h6>@data2.comment</h6>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class=" bg-lighter text-center py-3">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    break;
+                                }
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 放評論摘要的div -->
+        <div class="row" v-if="place != null">
+            <div class="col" v-if="place.reviews != null">
+                <div class="commentContainer p-3">
+                    <div class="font-24 text-center my-2">網友評論：</div>
+                    <div class="row" v-for="p in place.reviews">
+                        <div class="col">
+                            <ul class="list-unstyled">
+                                <li class="media d-flex align-items-center">
+                                    <img :src="p.profile_photo_url" class="img-fluid mr-3" />
+                                    <div class="media-body ms-3">
+                                        <h5 class="mt-0 mb-1">
+                                            <a target="_blank" :href="p.author_url">{{ p.author_name }}</a>
+                                        </h5>
+                                        <p>{{ p.text }}</p>
+                                        <h6>{{ p.relative_time_description }}</h6>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 評價留言 -->
+        <div id="formComment">
+            <form method="post" class="py-3" action="~/OnlyOffRoute/SaveReview">
+                <h5 class="text-center bg-light rounded-1 border-start border-end border-4 border-primary py-2 fw-bold tracking-3">我的評價</h5>
+                <div class="card-body">
+                    <!-- 暱稱直接抓資料庫註冊的名字(信箱)即可 -->
+                    <div class="row">
+                        <div class="col-6" id="commentStar">
+                            <span id="star1" class="font-32 s">★</span>
+                            <span id="star2" class="font-32 s">★</span>
+                            <span id="star3" class="font-32 s">★</span>
+                            <span id="star4" class="font-32 s">★</span>
+                            <span id="star5" class="font-32 s">★</span>
+                            <p id="starCount"></p>
+                            <input name="txtNum" id="starNum" style="display:none;" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="my-2 ">
+                            @if (Session["id"] == null)
+                            {<textarea class="form-control" placeholder="請先登入會員" rows="3" readonly></textarea>}
+                            else
+                            {<textarea name="userComment" class="form-control" id="userComment" placeholder="告訴我們你的想法吧 !" rows="3"></textarea>
+                                <input name="txtUserID" value="@Session["id"]" style="display:none;" />
+                            }
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="commentBtn" disabled>送出</button>
+                    <span id="btnCommentTxt" class="text-warning mx-2"></span>
+                </div>
+                <input type="hidden" name="homeID" value="@ViewBag.homeID" />
+            </form>
+        </div>
+    </div>
+
+    <!-- middle navbar -->
+    <div class="container-fluid border-bottom border-1 border-gray-300">
+        <div class="container">
+            <ul class="nav nav-tabs justify-content-between justify-content-lg-start" id="nav-tab" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active py-3"
+                            id="nav-intro-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-intro"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-intro"
+                            aria-selected="true">
+                        景點
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link py-3"
+                            id="nav-food-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-food"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-food"
+                            aria-selected="false">
+                        美食
+                    </button>
+                </li>
+
+                <li class="nav-item">
+                    <button class="nav-link py-3"
+                            id="nav-supply-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-supply"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-supply"
+                            aria-selected="false">
+                        補給站
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link py-3"
+                            id="nav-fix-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-fix"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-fix"
+                            aria-selected="false">
+                        維修站
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- main content -->
+    <div class="container py-2">
+        <div class="row">
+            <div class="tab-content" id="myTabContent">
+                <!-- 官方景點介紹 -->
+                <div class="tab-pane fade show active" id="nav-intro" role="tabpanel" aria-labelledby="nav-intro-tab">
+                    <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">景點</h3>
+                    <div class="row">
+                        @foreach (var item in Model.offcialAllRoute)
+                        {
+                            if (@item.od_official_data_catalog.Contains("point"))
+                            {
+                                var stars = Int32.Parse(@item.od_official_data_catalog.Substring(@item.od_official_data_catalog.Length - 1));
+                                <div class="col-12 col-md-6">
+                                    <div class="card mb-3">
+                                        <img src="~/Images/offRoute/@item.h_ID/@item.od_official_data_img" class="card-img-top img-fluid" alt="@item.od_official_data_img_info" />
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.od_official_data_img_info</h5>
+                                            <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                                <div class="badge bg-light font-20 text-darkBrown px-3">
+                                                    <!-- 評分星星 -->
+                                                    @*<img src="image_mia/star.png" height="22px" /><img src="image_mia/star.png" height="22px" />*@
+                                                    @for (int i = 0; i < stars; i++)
+                                                    {<span class="font-24 s" style="color: #F4D19B">★</span>}
+                                                </div>
+                                            </div>
+                                            <label for="pointOutput" class="inputData" id="pointTxt" hidden>@item.od_official_data_img_content</label>
+                                            <p class="card-text outputData" id="pointOutput"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <!-- 官方美食介紹 -->
+                <div class="tab-pane fade show" id="nav-food" role="tabpanel" aria-labelledby="nav-food-tab">
+                    <h3 class="font-24 ps-3 border-start border-4 border-primary fw-bold my-4">美食</h3>
+                    <div class="row">
+                        @foreach (var item in Model.offcialAllRoute)
+                        {
+                            if (@item.od_official_data_catalog.Contains("food"))
+                            {
+                                var stars = Int32.Parse(@item.od_official_data_catalog.Substring(@item.od_official_data_catalog.Length - 1));
+                                <div class="col-12 col-md-6">
+                                    <div class="card mb-3">
+                                        <a name="anchor美食1"></a>
+                                        <img src="~/Images/offRoute/@item.h_ID/@item.od_official_data_img" class="card-img-top img-fluid" alt="@item.od_official_data_img_info" />
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold text-center font-32 my-3 border-bottom border-1 border-primary pb-3">@item.od_official_data_img_info</h5>
+                                            <div class="d-flex justify-content-between pb-2 mb-2 flex-lg-row flex-md-column">
+                                                <div class="badge bg-light font-20 text-darkBrown px-3">
+                                                    <!-- 評分星星 -->
+                                                    @for (int i = 0; i < stars; i++)
+                                                    {<span class="font-24 s" style="color: #F4D19B">★</span>}
+                                                </div>
+                                            </div>
+                                            <label for="pointOutput" class="inputData" id="pointTxt" hidden>@item.od_official_data_img_content</label>
+                                            <p class="card-text outputData" id="pointOutput"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <!-- 補給站 -->
+                <div class="tab-pane fade show" id="nav-supply" role="tabpanel" aria-labelledby="nav-supply-tab">
+                    @foreach (var item in Model.offcialAllRoute)
+                    {
+                        if (@item.od_official_data_catalog == "supply")
+                        {
+                            string[] helperSplit = @item.od_official_data_img_content.Split('*');
+                            <div class="card overflow-hidden mb-3">
+                                <div class="row g-0">
+                                    <div class="col-5 col-md-4">
+                                        <img class="w-100 h-100 object-fit: cover" src="~/Images/offRoute/@item.h_ID/@item.od_official_data_img" alt="@item.od_official_data_img_info" />
+                                    </div>
+                                    <div class="col-7 col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold">@item.od_official_data_img_info</h5>
+
+                                            @foreach (string split in helperSplit)
+                                            {<p class="card-text mb-2 font-14 text-lightBrown">@split</p>}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <!-- 維修站 -->
+                <div class="tab-pane fade show" id="nav-fix" role="tabpanel" aria-labelledby="nav-fix-tab">
+
+                    <!-- 維修車站 -->
+                    <div class="accordion mb-3" id="faq1">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <span>維修車站</span>
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faq1">
+                                @{
+                                    foreach (var data in Model.offcialAllRoute)
+                                    {
+                                        if (@data.od_official_data_catalog == "helper" && data.od_official_data_img_info == "維修車站")
+                                        {
+                                            <div class="accordion-body">@data.od_official_data_img_content</div>
+                                            @*@Html.Raw(@data.od_official_data_img_content)*@
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 顧路幫手 -->
+                    <div class="accordion mb-3" id="faq2">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    <span>顧路幫手</span>
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#faq2">
+                                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#faq2">
+                                    @{
+                                        foreach (var data in Model.offcialAllRoute)
+                                        {
+                                            if (@data.od_official_data_catalog == "helper" && data.od_official_data_img_info == "顧路幫手")
+                                            {
+                                                <div class="accordion-body">@data.od_official_data_img_content</div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--欣-->
+                    @*<div class="tab-pane fade show" id="nav-fix" role="tabpanel" aria-labelledby="nav-fix-tab">
+                            @foreach (var item in Model.offcialAllRoute)
+                            {
+                                if (@item.od_official_data_catalog == "helper")
+                                {
+                                    <div class="accordion mb-3" id="@item.od_offRouteID">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="heading-@item.od_offRouteID">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.od_offRouteID" aria-expanded="true" aria-controls="collapse-@item.od_offRouteID">
+                                                    <span>維修車站: @item.od_official_data_img_info</span>
+                                                    <span></span>
+                                                </button>
+                                            </h2>
+                                            <div id="collapse-@item.od_offRouteID" class="accordion-collapse collapse show" aria-labelledby="heading-@item.od_offRouteID" data-bs-parent="#@item.od_offRouteID">
+                                                <div class="accordion-body">@item.od_official_data_img_content</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- google map API_KEY -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUX6kQOm-gu6o6Gl48_pkCuWkPfOeVjKw&libraries=places"></script>
+<script src="https://unpkg.com/vue@next"></script>
+
+<script>
+    const app = Vue.createApp({
+        data(){
+            return{
+              map: null,
+              features: [], // 存入每一個地點
+              foods: [], // 存入每一個食物
+              infowindowAll: {}, // 存入每一個marker上的info windows
+              location: { lat: 22.899016535135793, lng: 120.5370653 }, // 預設顯示的地點
+              polylinePathPoints: [], //路線連線
+              autocomplete: null,
+              site: '', // place API要綁定的搜尋框
+              place: null, // 存place確定後回傳的資料
+            }
+        },
+          methods: {
+          // init google map
+          initMap() {
+
+            // 建立地圖
+            this.map = new google.maps.Map(document.getElementById('map'), {
+              center: this.location,
+              zoom: 14,
+              mapTypeId: 'terrain',
+            });
+
+            // 放置多個marker
+                const url = location.href.split("/");
+                const localhost = url[2];
+                const id = url[url.length - 1];
+
+                fetch(`https://${localhost}/maps/map_${id}.json `)
+              .then((results) => results.json())
+              .then((result) => {
+                this.features = result.features;
+                this.foods = result.foods;
+
+                  //重新設置中心點
+                  this.map.setCenter({
+                      lat: this.features[1].geometry.coordinates[0],
+                      lng: this.features[1].geometry.coordinates[1],
+                  });
+
+                  Array.prototype.forEach.call(this.features, (r) => {
+                      //建立路線
+                      let polylineRoute = {
+                          lat: r.geometry.coordinates[0],
+                          lng: r.geometry.coordinates[1],
+                      };
+                      this.polylinePathPoints.push(polylineRoute);
+                      let polylinePath = new google.maps.Polyline({
+                          path: this.polylinePathPoints,
+                          geodesic: true,
+                          strokeColor: "#eb9371",
+                          strokeOpacity: 0.8,
+                          strokeWeight: 10,
+                          editable: false,
+                          geodesic: false,
+                          draggable: false,
+                      });
+                      polylinePath.setMap(this.map);
+
+                      //建立Marker
+                      let latLng = new google.maps.LatLng(
+                          r.geometry.coordinates[0],
+                          r.geometry.coordinates[1]
+                      );
+                      let marker = new google.maps.Marker({
+                          position: latLng,
+                          icon: `https://${localhost}/Images/mapicon/Ubike03.png`,
+                          map: this.map,
+                          animation: google.maps.Animation.DROP, // DROP掉下來、BOUNCE一直彈跳
+                          draggable: false,
+                      });
+
+                  // info window
+                  let infowindow = new google.maps.InfoWindow({
+                      content: `
+                    <div class="infoContainer p-2">
+                        <h6 class="text-center">${r.properties.name}</h6>
+                        <a href="https://www.google.com.tw/maps/place/${r.properties.site}"
+                        target="_blank"
+                        title="Google Map"
+                        ><i class="bi bi-house-fill mr-2"></i>${r.properties.site}</a>
+                    <div>`,
+                  });
+
+                  // 監聽 marker click 事件
+                  marker.addListener('click', (e) => {
+                    infowindow.open(this.map, marker);
+                  });
+
+                  // 加一個open的method，就可由外部按鈕開啟
+                  this.infowindowAll[r.properties.id] = {
+                    open: function () {
+                      infowindow.open(this.map, marker);
+                    },
+                  };
+                  });
+
+                 // 放置美食marker
+                Array.prototype.forEach.call(this.foods, (r) => {
+                  let latLng1 = new google.maps.LatLng(r.geometry.coordinates[0], r.geometry.coordinates[1]);
+                  let marker1 = new google.maps.Marker({
+                    position: latLng1,
+                    icon: `https://${localhost}/Images/mapicon/food.png`,
+                    map: this.map,
+                    animation: google.maps.Animation.DROP, // DROP掉下來、BOUNCE一直彈跳
+                    draggable: false,
+                  });
+
+                  // info window
+                  let infowindow1 = new google.maps.InfoWindow({
+                      content: `
+                      <div class="infoContainer p-2">
+                        <h6 class="text-center">${r.properties.name}</h6>
+                        <a href="https://www.google.com.tw/maps/place/${r.properties.site}"
+                          target="_blank"
+                          title="Google Map"
+                        ><i class="bi bi-house-fill mr-2"></i>${r.properties.site}</a>
+                        <div class="mt-1"><a href="tel:${r.properties.phone}"><i class="bi bi-telephone-forward mr-2"></i>${r.properties.phone}</a></div>
+                      <div>`,
+                  });
+
+                  // 監聽 marker click 事件
+                  marker1.addListener('click', (e) => {
+                    infowindow1.open(this.map, marker1);
+                  });
+
+                  // 加一個open的method，就可由外部按鈕開啟
+                  this.infowindowAll[r.properties.id] = {
+                    open: function () {
+                      infowindow1.open(this.map, marker1);
+                    },
+                  };
+                });
+              });
+          },
+
+          // 由外部按鈕開啟info windows
+          openInfoWindows(id) {
+            this.infowindowAll[id].open();
+          },
+          siteAuto() {
+
+            let options = {
+              componentRestrictions: { country: 'tw' }, // 限制在台灣範圍
+            };
+            this.autocomplete = new google.maps.places.Autocomplete(this.$refs.site, options);
+            this.autocomplete.addListener('place_changed', () => {
+              this.place = this.autocomplete.getPlace();
+                @*console.log(this.place);*@
+
+              if (this.place.geometry) {
+                let searchCenter = this.place.geometry.location;
+                this.map.panTo(searchCenter); // panTo是平滑移動、setCenter是直接改變地圖中心
+
+                // 放置標記
+                let search_marker = new google.maps.Marker({
+                  position: searchCenter,
+                  map: this.map,
+
+                });
+
+                // info window
+                let search_infowindow = new google.maps.InfoWindow({
+                    content: `
+                    <div class="infoContainer d-flex justify-content-center">
+                      <div class="infoContent p-2 my-1 text-center">
+                      <div class="row justify-content-between mx-0">
+                      <h6 class="text-center fs-24">${this.place.name}</h6>
+                      <a href="${this.place.website}"
+                              target="_blank"
+                              title="Google Map"
+                            >${this.place.website ? `<i class="bi bi-globe"></i>官網` : '無官網'}</a>
+                      </div>
+                      <a href="${this.place.url}"
+                              target="_blank"
+                              title="Google Map"
+                            ><i class="bi bi-house-fill"></i>${this.place.formatted_address}</a>
+                      <ul class="list-unstyled pt-0 mb-0 py-1 mt-2 bg-light rounded">
+                        <span><i class="bi bi-shop"></i>營業時間</span>
+                        <li>週一:${this.place.opening_hours ? `${this.place.opening_hours.weekday_text[0].slice(-13)}` : '無提供'}</li>
+                        <li>週二:${this.place.opening_hours ? `${this.place.opening_hours.weekday_text[1].slice(-13)}` : '無提供'}</li>
+                        <li>週三:${this.place.opening_hours ? `${this.place.opening_hours.weekday_text[2].slice(-13)}` : '無提供'}</li>
+                        <li>週四:${this.place.opening_hours ? `${this.place.opening_hours.weekday_text[3].slice(-13)}` : '無提供'}</li>
+                        <li>週五:${this.place.opening_hours ? `${this.place.opening_hours.weekday_text[4].slice(-13)}` : '無提供'}</li>
+                        <li>週六:${this.place.opening_hours ? `${this.place.opening_hours.weekday_text[5].slice(-13)}` : '無提供'}</li>
+                        <li>週日:${this.place.opening_hours ? `${this.place.opening_hours.weekday_text[6].slice(-13)}` : '無提供'}</li>
+                       </ul>
+                      </div>
+                  </div>
+                    `,
+                });
+                  search_infowindow.open(this.map, search_marker);
+                  this.site = '';
+              }
+            });
+          },
+        },
+        created() {
+          window.addEventListener('load', () => {
+            this.initMap();
+            this.siteAuto();
+          });
+        },
+    });
+    app.mount("#app");
+</script>
+
+@*<script src="~/Scripts/js/OfficialR.js"></script>*@
+<script src="~/Scripts/js/offRoute1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/Scripts/js/myFavorite.js"></script>
